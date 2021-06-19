@@ -54,7 +54,7 @@
                         {{ session('success') }}
                       </p>
                       <p class="mt-1 text-sm text-gray-500">
-                        Anyone with a link can now view this file.
+                        {{--Anyone with a link can now view this file.--}}
                       </p>
                     </div>
                     <div class="ml-4 flex-shrink-0 flex">

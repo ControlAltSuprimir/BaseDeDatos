@@ -2,13 +2,6 @@
     #profile {
         display: none
     }
-
-    {{-- .dropdown-container {
-        display: none;
-        background-color: #262626;
-        padding-left: 8px;
-    } --}}
-
 </style>
 
 
@@ -141,10 +134,12 @@
                 <div>Personas</div>
 
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                {{--
                 <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
                 </svg>
+                --}}
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             <div class="space-y-1" id="sub-menu-1">
@@ -154,10 +149,12 @@
                             Académicos
                     </a>
 
+                    {{--
                     <a href="#"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                         Alumnos
                     </a>
+                    --}}
 
                     <a href="#"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
@@ -185,10 +182,12 @@
                 </svg>
                 Investigación
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                {{--
                 <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
                 </svg>
+                --}}
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             <div class="space-y-1" id="sub-menu-2">
@@ -232,11 +231,12 @@
                 </svg>
                 Actividades
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
-                
+                {{--
                 <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
                 </svg>
+                --}}
             
             </button>
             <!-- Expandable link section, show/hide based on state. -->
@@ -281,10 +281,12 @@
                 </svg>
                 Administración
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                {{--
                 <svg id="spin" class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
                 </svg>
+                --}}
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             <div class="space-y-1" id="sub-menu-4">
@@ -323,10 +325,12 @@
                 </svg>
                 Reports
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                {{--
                 <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
                 </svg>
+                --}}
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             {{-- <div class="space-y-1" id="sub-menu-5">
@@ -391,6 +395,7 @@
     var click =false;
     function toggle_visibility(id) {
         var spin1 = document.getElementById("spin");
+        {{--
         if(!click){
             spin1.style.transform = "rotate(90deg)";
             click=true;
@@ -398,6 +403,7 @@
             click=false;
             spin1.style.transform = "rotate(180deg)";
            }
+           --}}
         var e = document.getElementById(id);
         if (e.style.display == 'block')
             e.style.display = 'none';

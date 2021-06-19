@@ -30,7 +30,7 @@ class filtrorevistas extends Component
         })
             ->search($this->search)
             ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate(5);
+            ->paginate(25);
 
 
         return view('livewire.tablas.revistas', [
@@ -42,7 +42,7 @@ class filtrorevistas extends Component
             ->where('id_Revista', '=', $this->filtro['id'])
             ->search($this->search)
             ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate(5);
+            ->paginate(25);
 
 
         return view('livewire.tablas.articulos', [
@@ -54,7 +54,7 @@ class filtrorevistas extends Component
             $items= Revistas::where('is_valid','=',1)
                 ->search($this->search)
                 ->orderBy($this->sortBy,$this->sortDirection)
-                ->paginate(5);
+                ->paginate(25);
         
         return view('livewire.tablas.revistas',[
             'items'=> $items

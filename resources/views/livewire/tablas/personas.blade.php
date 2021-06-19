@@ -5,7 +5,7 @@
                 <dt class="text-sm font-medium text-gray-500">
                     <input wire:model.debounce.300ms="search" type="text"
                         class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                        placeholder="Buscar Artículo">
+                        placeholder="Buscar Personas">
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
                     <div>
@@ -37,59 +37,38 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
+                                <th wire:click="sortBy('primer_apellido')" style="cursor: pointer;" scope="col"
                                     class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Título
-                                    @include('partials._sort-icon',['field'=>'titulo'])
+                                    Nombre
                                 </th>
                                 {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Title
                 </th> --}}
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Autores
+                                    Email
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Revista
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Estado de Publicación
+                                    Rut
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Odd row -->
-                            @foreach ($items as $articulo)
+                            @foreach ($items as $persona)
                                 <tr class="bg-white">
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {!! $articulo->tituloLink() !!}
+                                        {!! $persona->full_nameLink() !!}
                                     </td>
                                     {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {{$persona}}
                 </td> --}}
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {!! $articulo->autoresCompactInformal() !!}
+                                        {!! $persona->email !!}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {!! $articulo->revista->aliasLink() !!}
-                                    </td>
-                                    <td scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{--<a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>--}}
-                                        @if (isset($articulo->estado_publicacion))
-                                          @if ($articulo->estado_publicacion=='enRevision')
-                                            En Revisión
-                                          @elseif ($articulo->estado_publicacion=='publicado')
-                                            Publicado
-                                          @elseif ($articulo->estado_publicacion=='aceptado')
-                                            Aceptado
-                                          @elseif ($articulo->estado_publicacion=='enPrensa')
-                                            En Prensa
-                                          @endif
-                                            
-                                        @endif
+                                        {!! $persona->rut !!}
                                     </td>
                                 </tr>
                             @endforeach

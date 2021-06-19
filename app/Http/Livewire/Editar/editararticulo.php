@@ -4,6 +4,10 @@ namespace App\Http\Livewire\Editar;
 use App\Models\Personas;
 use App\Models\Revistas;
 use App\Models\Articulos;
+use App\Models\Proyectos;
+use App\Models\Tesis;
+use App\Models\ArticulosTesis;
+use App\Models\ProyectosArticulos;
 use App\Models\Indexaciones_Revistas;
 use Illuminate\Http\Request;
 use App\Models\Indexaciones;
@@ -15,6 +19,8 @@ class editararticulo extends Component
     public $allProducts = [];
     public $indexacionesAEditar = [];
     public $allPersonas = [];
+    public $allProyectos = [];
+    public $allTesis = [];
     public $extraPersonas = [];
     public $allRevistas = [];
     public $perfil;
@@ -23,6 +29,8 @@ class editararticulo extends Component
 
     public function mount($edit)
     {
+        $this->allTesis = Tesis::where('is_valid','=',1)->get();
+        $this->allProyectos = Proyectos::where('is_valid','=',1)->get();
         $this->allPersonas = Personas::where('is_valid','=',1)->get();
         $this->allRevistas = Revistas::where('is_valid','=',1)->get();
 

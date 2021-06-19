@@ -55,7 +55,7 @@ class Articulos extends Model
 
     public function tituloLink()
     {
-        return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/articulos/$this->id\" > {$this->titulo} </a>";
+        return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/articulos/$this->id\" >{$this->titulo}</a>";
     }
 
     public function autoresArray()
@@ -75,6 +75,18 @@ class Articulos extends Model
             $autoresArticulo[] = $autor->full_name();
         }
         $compact = implode(". ", $autoresArticulo);
+
+        return $compact;
+    }
+
+    public function autoresCompactInformal()
+    {
+        $compact = '';
+        $autoresArticulo = [];
+        foreach ($this->autores as $autor) {
+            $autoresArticulo[] = $autor->full_nameLinkInformal();
+        }
+        $compact = implode(", ", $autoresArticulo).".";
 
         return $compact;
     }

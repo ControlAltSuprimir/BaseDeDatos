@@ -12,9 +12,9 @@
     <div class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
         <?php $edit = $data['indexacion']->id; ?>
         <div class="px-4 py-3 bg-white-50 text-left sm:px-6">
-            {{ $edit }}
             @livewire('editar.editarindexacion',['edit'=>$edit])
         </div>
 
     </div>
+    @livewire('borrar.borrar_indexacion',['edit' =>$edit])
 </x-app-layout>
