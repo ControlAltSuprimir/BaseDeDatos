@@ -35,7 +35,16 @@ class Revistas extends Model
     }
     public function numeroPublicaciones()
     {
-        return $this->articulos()->count();
+        return $this->articulos->count();
+    }
+
+    public function fondecytQ(){
+        $clasificaciones=['R','B','MB','R/B/MB*','MB/B*'];
+        if ($this->Fondecyt == 1 && in_array($this->clasificacion_Fondecyt, $clasificaciones))
+        {
+            return $this->clasificacion_Fondecyt;
+        }
+        return "No Clasificada";
     }
 
     public function indexaciones()

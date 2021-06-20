@@ -45,15 +45,17 @@
                                 {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Title
                 </th> --}}
-                                <th scope="col"
+                                <th wire:click="sortBy('Fondecyt')" style="cursor: pointer;" scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Clasificación Fondecyt
                                 </th>
+                                {{--
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Indexaciones
                                 </th>
-                                <th scope="col"
+                                --}}
+                                <th wire:click="sortBy('publicaciones')" style="cursor: pointer;" scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Publicaciones
                                 </th>
@@ -70,19 +72,17 @@
                   {{$persona}}
                 </td> --}}
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        @if ($revista->Fondecyt == 1)
-                                            {{ $revista->clasificacion_Fondecyt }}
-                                        @else
-                                            No Clasificada
-                                        @endif
+                                        {{$revista->fondecytQ()}}
                                     </td>
+                                    {{--
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {!!$revista->lasIndexacionesLink()!!}
                                     </td>
+                                    --}}
                                     <td scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         {{--<a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>--}}
-                                        {{$revista->numeroPublicaciones()}}
+                                        {{$revista->articulos->count()}}
                                           {{--{{$revista->observaciones}}--}}
                                             
                                         
