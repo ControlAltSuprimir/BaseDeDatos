@@ -33,9 +33,9 @@ class crearproyecto extends Component
 
     public function mount()
     {
-        $this->allPersonas = Personas::where('is_valid','=',1)->get();
-        $this->allArticulos = Articulos::where('is_valid','=',1)->get();
-        $this->allTesis = Tesis::where('is_valid','=',1)->get();
+        $this->allPersonas = Personas::where('is_valid','=',1)->orderBy('primer_apellido')->get();
+        $this->allArticulos = Articulos::where('is_valid','=',1)->orderBy('titulo')->get();
+        $this->allTesis = Tesis::where('is_valid','=',1)->orderBy('')->get();
         $this->allAcademica = ActividadAcademica::where('is_valid','=',1)->get();
         $this->allExtension = ActividadExtension::where('is_valid','=',1)->get();
 

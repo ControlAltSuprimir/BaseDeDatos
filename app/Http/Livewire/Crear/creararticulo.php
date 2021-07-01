@@ -18,8 +18,8 @@ class creararticulo extends Component
 
     public function mount()
     {
-        $this->allPersonas = Personas::where('is_valid','=',1)->get();
-        $this->allRevistas = Revistas::where('is_valid','=',1)->get();
+        $this->allPersonas = Personas::where('is_valid','=',1)->orderBy('primer_apellido')->get();
+        $this->allRevistas = Revistas::where('is_valid','=',1)->orderBy('nombre')->get();
         $this->orderProducts = [
             ['product_id' => '', 'quantity' => 1]
         ];

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Base de Datos{{--{{ config('app.name', 'Laravel') }}--}}</title>
+    <title>Base de Datos{{-- {{ config('app.name', 'Laravel') }} --}}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -19,7 +19,19 @@
     @livewireStyles
 
     <!-- Scripts -->
+    {{--<script src="{{ mix('js/app.js') }}"></script>--}}
+    {{--<script src="{{ asset('js/app.js') }}"></script>--}}
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.0/chart.min.js"></script>
+
+
 </head>
 <div class="h-screen flex overflow-hidden bg-white">
     {{-- <x-jet-banner />
@@ -47,14 +59,11 @@
         <div class="flex flex-col w-64 border-r border-gray-200 pt-5 pb-4 bg-gray-100">
             <div class="flex items-center flex-shrink-0 px-6">
                 <a href="/dashboard">
-                <img class="h-10 px-3 w-auto" 
-                src="/img/logoBaner.png">
+                    <img class="h-10 px-3 w-auto" src="/img/logoBaner.png">
 
-                {{--
-                <img class="h-8 w-auto"
+                    {{-- <img class="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-logo-purple-500-mark-gray-700-text.svg"
-                    alt="Workflow">
-                    --}}
+                    alt="Workflow"> --}}
                 </a>
             </div>
             <!-- Sidebar component, swap this element with another sidebar if you like -->
@@ -64,12 +73,17 @@
     <!-- Main column -->
     <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
         {{ $slot }}
+        {{-- @yield('content') --}}
     </main>
 </div>
 
 @stack('modals')
 
+
 @livewireScripts
 </body>
+{{--@yield('footer-scripts')--}}
+{{-- @yield('scripts') --}}
+{{-- @stack('scripts') --}}
 
 </html>

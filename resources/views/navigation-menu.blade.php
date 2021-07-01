@@ -386,6 +386,15 @@
                     </span>
                 </a>
             </div>
+            {{--
+            <div class="flex-1 min-w-0">
+
+                <select class="js-example-basic-single" name="state">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+            --}}
         </div>
     </nav>
 </div>
@@ -436,4 +445,7 @@
         });
     }
 
+    
+
 </script>
+

@@ -103,6 +103,16 @@ class Articulos extends Model
         return $compact;
     }
 
+    public function clasificacion(){
+        if(isset($this->revista)){
+            if($this->revista->Fondecyt){
+                return $this->revista->clasificacion_Fondecyt;
+            }
+        }
+
+        return "No clasificada";
+    }
+
 
     public function descripcion()
     {

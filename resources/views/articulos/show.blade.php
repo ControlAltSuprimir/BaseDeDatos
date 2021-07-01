@@ -124,12 +124,12 @@
             </div>
 
             <div class="sm:col-span-1">
-                {{-- <dt class="text-sm font-medium text-gray-500">
-              Birthday
+                <dt class="text-sm font-medium text-gray-500">
+              Clasificación de la revista en que fue publicado
             </dt>
             <dd class="mt-1 text-sm text-gray-900">
-              June 8, 1990
-            </dd> --}}
+               {{ $data['articulo']->clasificacion()}}
+            </dd>
             </div>
 
             <div class="sm:col-span-2">

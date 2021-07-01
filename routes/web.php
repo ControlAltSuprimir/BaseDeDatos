@@ -19,7 +19,10 @@ use App\Http\Controllers\tesisinternaController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\viajesController;
 use App\Http\Controllers\visitaController;
+use App\Http\Controllers\chartController;
+
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +47,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard')->middleware('auth');
 
+
+/*Route::get('/hola', function () {
+    return view('dashboard');
+})->name('dashboard')->middleware('auth');*/
+
 Route::resource('academicos',academicosController::class)->middleware('auth');
 Route::resource('actividadacademica',actividadacademicaController::class)->middleware('auth');
 Route::resource('actividadextension',actividadextensionController::class)->middleware('auth');
@@ -63,3 +71,6 @@ Route::resource('tesisintera',tesisinternaController::class)->middleware('auth')
 Route::resource('user',userController::class)->middleware('auth');
 Route::resource('viajes',viajesController::class)->middleware('auth');
 Route::resource('visita',visitaController::class)->middleware('auth');
+
+
+Route::get('/graficos/{tipo}',[chartController::class,'show'])->middleware('auth');

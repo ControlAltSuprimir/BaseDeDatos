@@ -94,7 +94,7 @@
                                 wire:model="orderProducts.{{ $index }}.product_id"
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                                 <option value="">-- Selecciona Autor -- </option>
-
+                            {{--<option value=""><input type=""placeholder="hola"></option>--}}
                                 @foreach ($allPersonas as $persona)
                                     <option value="{{ $persona->id }}">
                                         {{ $persona->full_name() }}
@@ -213,20 +213,21 @@
 
                 <div class="mt-6 grid grid-cols-4 gap-6">
                 </div>
+                <div wire:ignore>
+                    <div class="col-span-4 sm:col-span-1" gap-6>
+                        <select name="revista" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
+                            class="select2 mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                            <option value="" selected>-- Selecciona la Revista --</option>
 
-                <div class="col-span-4 sm:col-span-1" gap-6>
-                    <select name="revista" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
-                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        <option value="">-- Selecciona la Revista --</option>
+                            @foreach ($allRevistas as $revista)
+                                <option value="{{ $revista->id }}">
+                                    {{ $revista->nombre }}
+                                    {{-- (${{ number_format($product->price, 2) }}) --}}
+                                </option>
+                            @endforeach
+                        </select>
 
-                        @foreach ($allRevistas as $revista)
-                            <option value="{{ $revista->id }}">
-                                {{ $revista->nombre }}
-                                {{-- (${{ number_format($product->price, 2) }}) --}}
-                            </option>
-                        @endforeach
-                    </select>
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -262,5 +263,12 @@
             </button>
         </div>
     </form>
+
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+        })
+    </script>
 
 </div>

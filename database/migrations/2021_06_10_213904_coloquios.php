@@ -14,20 +14,23 @@ class Coloquios extends Migration
     public function up()
     {
         //
-        Schema::create('coloquios', function (Blueprint $table) {
-            $table->id();
-            $table->integer('id_persona');
-            $table->foreign('id_persona')->references('id')->on('personas');
-            $table->integer('id_institucion');
-            $table->foreign('id_institucion')->references('id')->on('instituciones');
-            $table->string('titulo');
-            $table->date('fecha')->nullable();
-            $table->string('url',255);
-            $table->string('youtube',255);
-            $table->text('abstract')->nullable();
-            $table->boolean('is_valid')->default(1);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('coloquios')) {
+            Schema::create('coloquios', function (Blueprint $table) {
+                $table->id();
+                $table->integer('id_persona');
+                $table->foreign('id_persona')->references('id')->on('personas');
+                $table->integer('id_institucion');
+                $table->foreign('id_institucion')->references('id')->on('instituciones');
+                $table->string('titulo');
+                $table->date('fecha')->nullable();
+                $table->string('url',255);
+                $table->string('youtube',255);
+                $table->text('abstract')->nullable();
+                $table->boolean('is_valid')->default(1);
+                $table->timestamps();
+            });    
+        }
+        
     }
 
     /**
@@ -38,5 +41,6 @@ class Coloquios extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('coloquios');
     }
 }
