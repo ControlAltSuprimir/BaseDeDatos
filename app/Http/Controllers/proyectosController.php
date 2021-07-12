@@ -10,6 +10,7 @@ use App\Models\ProyectosPersonasColaboradores;
 use App\Models\ProyectosArticulos;
 use App\Models\ProyectosActividadesExtension;
 use App\Models\ProyectosTesistas;
+use App\Models\PersonaProyecto;
 
 use Illuminate\Http\Request;
 
@@ -24,10 +25,10 @@ class proyectosController extends Controller
     {
         //
 
-        $proyectos = Proyectos::where('is_valid','=',1)
-                                ->get();
+        $proyectos = Proyectos::where('is_valid', '=', 1)
+            ->get();
 
-        $data=compact('proyectos');
+        $data = compact('proyectos');
         //return $data;
         return view('proyectos.index');
     }
@@ -54,7 +55,9 @@ class proyectosController extends Controller
     public function store(Request $request)
     {
         //
-        //return $request;
+
+        return $request;
+
 
         $proyecto = new Proyectos;
         $proyecto->titulo = $request->titulo;
@@ -68,79 +71,57 @@ class proyectosController extends Controller
         $proyecto->descripcion = $request->observaciones;
         $proyecto->investigador_responsable = $request->investigador_responsable;
         $proyecto->is_valid = 1;
-        //$proyecto->is_valid = 1;
 
-        $participantes[] = $request->investigador_responsable;
+
+        $losParticipantes[] = [$request->investigador_responsable, 'Investigador Responsable', '', ''];
 
         $proyecto->save();
 
+        //participantes
 
-        //guardando coinvestigadores registrados
+        if (isset($request->participantes)) {
+            foreach ($request->participantes as $item) {
+                if (isset($item[0]) && !in_array($item, $losParticipantes)) {
+
+                    $participante = new PersonaProyecto;
+                    $participante->id_persona = $item[0];
+                    $participante->id_proyecto = $proyecto->id;
+                    $participante->participacion = $item[1];
+                    $participante->fecha = $item[2];
+                    $participante->descripcionParticipacion = $item[3];
+                    $participante->is_valid = 1;
+                    $participante->save();
 
 
-        if (isset($request->coinvestigadores)) {
-            foreach ($request->coinvestigadores as $item) {
-                if (isset($item) && !in_array($item, $participantes)) {
-                    $coinvestigador = new ProyectosPersonasCoinvestigadores;
-                    $coinvestigador->id_persona = $item;
-                    $coinvestigador->id_proyecto = $proyecto->id;
-                    $coinvestigador->is_valid = 1;
-                    $coinvestigador->save();
-                    $participantes[] = $item;
+                    $losParticipantes[] = $item;
                 }
             }
         }
+        //return $losParticipantes;
 
 
-        //guardando coinvestigadores no registrados
-        if (isset($request->extraCoinvestigadores)) {
-            foreach ($request->extraCoinvestigadores as $array) {
+        //guardando participantes no registrados
+        if (isset($request->extraParticipante)) {
+            foreach ($request->extraParticipante as $item) {
                 $persona = new Personas;
-                $persona->primer_nombre = $array["'primer_nombre'"];
-                $persona->primer_apellido = $array["'primer_apellido'"];
+                $persona->primer_nombre = $item["'primer_nombre'"];
+                $persona->primer_apellido = $item["'primer_apellido'"];
                 $persona->is_valid = 1;
                 $persona->save();
 
-                $extraCoinvestigador = new ProyectosPersonasCoinvestigadores;
-                $extraCoinvestigador->id_persona = $persona->id;
-                $extraCoinvestigador->id_proyecto = $proyecto->id;
-                $extraCoinvestigador->is_valid = 1;
-                $extraCoinvestigador->save();
-                //$participantes[] = $item;
+                $participante = new PersonaProyecto;
+                $participante->id_persona = $persona->id;
+                $participante->id_proyecto = $proyecto->id;
+                $participante->participacion = $item[1];
+                $participante->fecha = $item[2];
+                $participante->descripcionParticipacion = $item[3];
+                $participante->is_valid = 1;
+                $participante->save();
             }
         }
 
-        //guardando colaboradores registrados
-        if (isset($request->colaboradores)) {
-            foreach ($request->colaboradores as $item) {
-                if (isset($item) && !in_array($item, $participantes)) {
-                    $colaborador = new ProyectosPersonasColaboradores;
-                    $colaborador->id_persona = $item;
-                    $colaborador->id_proyecto = $proyecto->id;
-                    $colaborador->is_valid = 1;
-                    $colaborador->save();
-                    $participantes[] = $item;
-                }
-            }
-        }
 
-        //guardando colaboradores no registrados
-        if (isset($request->extraColaboradores)) {
-            foreach ($request->extraColaboradores as $array) {
-                $persona = new Personas;
-                $persona->primer_nombre = $array["'primer_nombre'"];
-                $persona->primer_apellido = $array["'primer_apellido'"];
-                $persona->is_valid = 1;
-                $persona->save();
 
-                $extraColaboradores = new ProyectosPersonasColaboradores;
-                $extraColaboradores->id_persona = $persona->id;
-                $extraColaboradores->id_proyecto = $proyecto->id;
-                $extraColaboradores->is_valid = 1;
-                $extraColaboradores->save();
-                //$participantes[] = $item;
-            }
-        }
 
         $articulosRepetidos = [];
         //guardando articulos relacionados
@@ -221,29 +202,27 @@ class proyectosController extends Controller
     public function show($id)
     {
         //
-        $proyecto=Proyectos::find($id);
-        $listaCoinvestigadores=$proyecto->coinvestigadores()->get();
-        $listaColaboradores=$proyecto->colaboradores()->get();
+        $proyecto = Proyectos::find($id);
+        $listaCoinvestigadores = $proyecto->coinvestigadores()->get();
+        $listaColaboradores = $proyecto->colaboradores()->get();
         $listaArticulos = $proyecto->articulos()->get();
         $listaTesis = $proyecto->tesistas()->get();
         $listaExtensiones = $proyecto->extensiones()->get();
 
         //
-        $articulos=[];
-        foreach($listaArticulos as $articulo)
-        {
-            $articulos[]=$articulo->descripcion();
+        $articulos = [];
+        foreach ($listaArticulos as $articulo) {
+            $articulos[] = $articulo->descripcion();
         }
 
-        
-        $tesis=[];
-        foreach($listaTesis as $tesista)
-        {
-            $tesis[]=$tesista->descripcion();
-        }
-        
 
-        $data = compact('proyecto','listaCoinvestigadores','listaColaboradores','articulos','tesis','listaExtensiones');
+        $tesis = [];
+        foreach ($listaTesis as $tesista) {
+            $tesis[] = $tesista->descripcion();
+        }
+
+
+        $data = compact('proyecto', 'listaCoinvestigadores', 'listaColaboradores', 'articulos', 'tesis', 'listaExtensiones');
         //$data = compact('proyecto','listaCoinvestigadores','listaColaboradores','articulos','listaExtensiones');
 
         //return $data;
@@ -289,94 +268,73 @@ class proyectosController extends Controller
         $proyecto->is_valid = 1;
         //$proyecto->is_valid = 1;
 
-        $participantes[] = $request->investigador_responsable;
+
 
         $proyecto->save();
 
 
         //guardando coinvestigadores registrados
 
-        ProyectosPersonasCoinvestigadores::where('id_proyecto', '=', $proyecto->id)
+        PersonaProyecto::where('id_proyecto', '=', $proyecto->id)
             ->where('is_valid', '=', 1)
             ->update(['is_valid' => 0]);
 
 
-        if (isset($request->coinvestigadores)) {
-            foreach ($request->coinvestigadores as $item) {
-                if (isset($item) && !in_array($item, $participantes)) {
-                    $coinvestigador = new ProyectosPersonasCoinvestigadores;
-                    $coinvestigador->id_persona = $item;
-                    $coinvestigador->id_proyecto = $proyecto->id;
-                    $coinvestigador->is_valid = 1;
-                    $coinvestigador->save();
-                    $participantes[] = $item;
+        $losParticipantes[] = [$request->investigador_responsable, 'Investigador Responsable', '', ''];
+
+
+
+        //participantes
+
+        if (isset($request->participantes)) {
+            foreach ($request->participantes as $item) {
+                if (isset($item[0]) && !in_array($item, $losParticipantes)) {
+
+                    $participante = new PersonaProyecto;
+                    $participante->id_persona = $item[0];
+                    $participante->id_proyecto = $proyecto->id;
+                    $participante->participacion = $item[1];
+                    $participante->fecha = $item[2];
+                    $participante->descripcionParticipacion = $item[3];
+                    $participante->is_valid = 1;
+                    $participante->save();
+
+
+                    $losParticipantes[] = $item;
                 }
             }
         }
+        //return $losParticipantes;
 
 
-        //guardando coinvestigadores no registrados
-
-        if (isset($request->extraCoinvestigadores)) {
-            foreach ($request->extraCoinvestigadores as $array) {
+        //guardando participantes no registrados
+        if (isset($request->extraParticipante)) {
+            foreach ($request->extraParticipante as $item) {
                 $persona = new Personas;
-                $persona->primer_nombre = $array["'primer_nombre'"];
-                $persona->primer_apellido = $array["'primer_apellido'"];
+                $persona->primer_nombre = $item["'primer_nombre'"];
+                $persona->primer_apellido = $item["'primer_apellido'"];
                 $persona->is_valid = 1;
                 $persona->save();
 
-                $extraCoinvestigador = new ProyectosPersonasCoinvestigadores;
-                $extraCoinvestigador->id_persona = $persona->id;
-                $extraCoinvestigador->id_proyecto = $proyecto->id;
-                $extraCoinvestigador->is_valid = 1;
-                $extraCoinvestigador->save();
-                //$participantes[] = $item;
+                $participante = new PersonaProyecto;
+                $participante->id_persona = $persona->id;
+                $participante->id_proyecto = $proyecto->id;
+                $participante->participacion = $item[1];
+                $participante->fecha = $item[2];
+                $participante->descripcionParticipacion = $item[3];
+                $participante->is_valid = 1;
+                $participante->save();
             }
         }
 
-        //guardando colaboradores registrados
-
-        ProyectosPersonasColaboradores::where('id_proyecto', '=', $proyecto->id)
-            ->where('is_valid', '=', 1)
-            ->update(['is_valid' => 0]);
-
-        if (isset($request->colaboradores)) {
-            foreach ($request->colaboradores as $item) {
-                if (isset($item) && !in_array($item, $participantes)) {
-                    $colaborador = new ProyectosPersonasColaboradores;
-                    $colaborador->id_persona = $item;
-                    $colaborador->id_proyecto = $proyecto->id;
-                    $colaborador->is_valid = 1;
-                    $colaborador->save();
-                    $participantes[] = $item;
-                }
-            }
-        }
-
-        //guardando colaboradores no registrados
-        if (isset($request->extraColaboradores)) {
-            foreach ($request->extraColaboradores as $array) {
-                $persona = new Personas;
-                $persona->primer_nombre = $array["'primer_nombre'"];
-                $persona->primer_apellido = $array["'primer_apellido'"];
-                $persona->is_valid = 1;
-                $persona->save();
-
-                $extraColaboradores = new ProyectosPersonasColaboradores;
-                $extraColaboradores->id_persona = $persona->id;
-                $extraColaboradores->id_proyecto = $proyecto->id;
-                $extraColaboradores->is_valid = 1;
-                $extraColaboradores->save();
-                //$participantes[] = $item;
-            }
-        }
+        
 
         $articulosRepetidos = [];
         //guardando articulos relacionados
 
         ProyectosArticulos::where('id_proyecto', '=', $proyecto->id)
-                                            ->where('is_valid','=',1)
-                                            ->update(['is_valid'=> 0]);
+            ->where('is_valid', '=', 1)
+            ->update(['is_valid' => 0]);
 
         if (isset($request->articulos)) {
             foreach ($request->articulos as $item) {
@@ -396,8 +354,8 @@ class proyectosController extends Controller
         //guardando tesis relacionados
 
         ProyectosTesistas::where('id_proyecto', '=', $proyecto->id)
-        ->where('is_valid','=',1)
-        ->update(['is_valid'=> 0]);
+            ->where('is_valid', '=', 1)
+            ->update(['is_valid' => 0]);
 
         if (isset($request->tesis)) {
             foreach ($request->tesis as $item) {
@@ -417,8 +375,8 @@ class proyectosController extends Controller
         //guardando proyectos relacionados
 
         ProyectosActividadesExtension::where('id_proyecto', '=', $proyecto->id)
-        ->where('is_valid','=',1)
-        ->update(['is_valid'=> 0]);
+            ->where('is_valid', '=', 1)
+            ->update(['is_valid' => 0]);
 
         if (isset($request->extension)) {
             foreach ($request->extension as $item) {

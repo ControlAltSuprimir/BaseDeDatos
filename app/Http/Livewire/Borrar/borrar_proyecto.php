@@ -16,6 +16,7 @@ use App\Models\ProyectosActividadesAcademicas;
 use App\Models\ProyectosActividadesExtension;
 use App\Models\ProyectosArticulos;
 use App\Models\ProyectosTesistas;
+use App\Models\PersonaProyecto;
 use App\Models\Tesis;
 use App\Models\Viajes;
 use App\Models\ProyectosViajes;
@@ -80,6 +81,7 @@ class borrar_proyecto extends Component
             $product->is_valid=0;
             ProyectosViajes::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             ProyectosTesistas::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
+            PersonaProyecto::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             ProyectosArticulos::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             ProyectosActividadesExtension::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             ProyectosActividadesAcademicas::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);

@@ -44,7 +44,8 @@ class editarproyecto extends Component
         $this->allAcademicas = ActividadAcademica::where('is_valid', '=', 1)->get();
         $this->allExtensiones = ActividadExtension::where('is_valid', '=', 1)->get();
 
-        $this->participantes = array('coinvestigadores' => [], 'extracoinvestigadores' => [], 'colaboradores' => [], 'extracolaboradores' => []);
+        $this->participantes = array('participantes'=>[],'extraparticipantes'=>[]);
+        //$this->participantes = array('coinvestigadores' => [], 'extracoinvestigadores' => [], 'colaboradores' => [], 'extracolaboradores' => []);
         //$this->participantesaEditar = array('coinvestigadores' => [], 'extracoinvestigadores' => [], 'colaboradores' => [], 'extracolaboradores' => []);
         $this->investigaciones = array('articulos' => [], 'tesis' => []);
         //$this->investigacionesaEditar = array('articulos' => [], 'tesis' => []);
@@ -52,7 +53,7 @@ class editarproyecto extends Component
         //$this->actividadesaEditar = array('extension' => [], 'academica' => []);
 
         $this->indices = array(
-            'participantes' => ['coinvestigadores', 'extracoinvestigadores', 'colaboradores', 'extracolaboradores'],
+            'participantes' => ['participantes','extraparticipantes'],
             'investigaciones' => ['articulos', 'tesis'],
             'actividades' => ['extension', 'academica']
         );
@@ -61,6 +62,8 @@ class editarproyecto extends Component
         $proyecto = Proyectos::find($id);
         //$investigador_responsable = Personas::find($proyecto->investigador_responsable);
         // Participantes
+        $participantes = $proyecto->participantes()->get();
+
         $coinvestigadores = $proyecto->coinvestigadores()->get();
         $colaboradores = $proyecto->colaboradores()->get();
         //Investigaciones
@@ -71,61 +74,29 @@ class editarproyecto extends Component
         $extensiones = $proyecto->las_extensiones()->get();
 
         //$tablaDeIndexaciones = [];
-
-        //Coinvestigadores
-        foreach ($coinvestigadores as $coinvestigador) {
-            /*$array = array(
-                'id' => $coinvestigador->id,
-                //'id_Persona' => $coinvestigador->id,
-                //'autor' => $coinvestigador->full_name(),
-            );*/
-            $this->participantes['coinvestigadores'][] = array(
-                'id' => $coinvestigador->id
+        //Participantes
+        foreach ($participantes as $participante) {
+            $this->participantes['participantes'][] = array(
+                'id' => $participante->id_persona,
+                'rol' => $participante->participacion,
+                'fecha' => $participante->fecha,
+                'descripcion' => $participante->descripcionParticipacion
             );
-            //$this->participantes['coinvestigadores'][] = $array['id'];
-            //$this->participantesaEditar['coinvestigadores'][] = $array;
-        }
-
-        //Colaboradores
-        foreach ($colaboradores as $colaborador) {
-            /*$array = array(
-                'id' => $colaborador->id,
-                //'id_Persona' => $colaborador->id,
-                //'autor' => $colaborador->full_name(),
-            );*/
-            $this->participantes['colaboradores'][] = array(
-                'id' => $colaborador->id
-            );
-            //$this->participantes['colaboradores'][] = $array['id'];
-            //$this->participantesaEditar['colaboradores'][] = $array;
+            
         }
 
         //Articulos
         foreach ($articulos as $articulo) {
-            /*$array = array(
-                'id' => $articulo->id,
-                //'id_Articulo' => $articulo->id,
-                //'titulo' => $articulo->titulo,
-            );*/
             $this->investigaciones['articulos'][] = array(
                 'id' => $articulo->id
             );
-            //$this->investigaciones['articulos'][] = $array['id'];
-            //$this->investigacionesaEditar['articulos'][] = $array;
         }
 
         //Tesis
         foreach ($tesises as $tesis) {
-            /*$array = array(
-                'id' => $tesis->id,
-                //'id_Tesis' => $tesis->id,
-                //'titulo' => $tesis->titulo,
-            );*/
             $this->investigaciones['tesis'][] = array(
                 'id' => $tesis->id
             );
-            //$this->investigaciones['tesis'][] = $array['id'];
-            //$this->investigacionesaEditar['tesis'][] = $array;
         }
 
         //Actividades Académicas

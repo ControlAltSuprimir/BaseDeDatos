@@ -72,6 +72,12 @@ class Proyectos extends Model
         return $this->hasMany(ProyectosActividadesAcademicas::class, 'id_proyecto');
     }
 
+    public function participantes()
+    {
+        return $this->hasMany(PersonaProyecto::class, 'id_proyecto')->where('is_valid','=',1);
+    }
+
+
     public function viajes()
     {
         return $this->belongsToMany(Viajes::class, 'proyecto_viajes', 'id_proyecto', 'id_viaje')->where('proyecto_viajes.is_valid', '=', 1);

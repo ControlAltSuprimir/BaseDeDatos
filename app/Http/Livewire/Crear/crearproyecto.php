@@ -35,15 +35,13 @@ class crearproyecto extends Component
     {
         $this->allPersonas = Personas::where('is_valid','=',1)->orderBy('primer_apellido')->get();
         $this->allArticulos = Articulos::where('is_valid','=',1)->orderBy('titulo')->get();
-        $this->allTesis = Tesis::where('is_valid','=',1)->orderBy('')->get();
+        $this->allTesis = Tesis::where('is_valid','=',1)->get();
         $this->allAcademica = ActividadAcademica::where('is_valid','=',1)->get();
         $this->allExtension = ActividadExtension::where('is_valid','=',1)->get();
 
         $this->participantes = array(
-            'coinvestigadores' => [],
-            'extracoinvestigadores' => [],
-            'colaboradores' => [],
-            'extracolaboradores' => []
+            'participantes' => [],
+            'extraparticipantes' => [],
         );
         $this->investigaciones = array(
             'articulos' => [],
@@ -55,7 +53,7 @@ class crearproyecto extends Component
         );
 
         $this->indices = array(
-            'participantes' => ['coinvestigadores', 'extracoinvestigadores', 'colaboradores','extracolaboradores'],
+            'participantes' => ['participantes','extraparticipantes'],
             'investigaciones' => ['articulos','tesis'],
             'actividades' => ['extension','academica']
         );

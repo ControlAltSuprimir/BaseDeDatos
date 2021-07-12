@@ -61,6 +61,11 @@ class Personas extends Model
         return $this->belongsToMany(Proyectos::class, 'proyectos_personas_colaboradores', 'id_persona', 'id_proyecto');
     }
 
+    public function otrosProyectos()
+    {
+        return $this->hasMany(PersonaProyecto::class, 'id_persona')->where('is_valid','=',1);
+    }
+
     public function programas()
     {
         return $this->hasMany(PersonasProgramas::class, 'id_Persona');
