@@ -151,6 +151,85 @@
     <br><br>
     <hr>
 
+    <div class="mt-6 sm:mt-2 2xl:mt-5">
+        <div class="border-b border-gray-200">
+            <div class="max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                    <!-- Current: "border-pink-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+                    <a href="#"
+                        class="border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                        aria-current="page">
+                        Participantes Relacionados
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    @if (count($data['listaParticipantes']) != 0)
+
+
+
+        <!-- Description list -->
+        <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th wire:click="sortBy('primer_apellido')" style="cursor: pointer;" scope="col"
+                            class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Participante
+                        </th>
+
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Rol
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Fecha de Participación
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Odd row -->
+                    @foreach ($data['listaParticipantes'] as $participante)
+                        <tr class="bg-white">
+                            <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {!! $participante->laPersona->full_nameLink() !!}
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {!! $participante->participacion !!}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {!! $participante->fecha !!}
+                            </td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+
+
+
+
+
+
+
+            </dl>
+        </div>
+    @else
+
+        <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
+            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                No hay participantes relacionados
+            </dl>
+        </div>
+
+    @endif
+    <br><br>
+    <hr>
+
     @if (count($data['articulos']) != 0)
 
         <div class="mt-6 sm:mt-2 2xl:mt-5">
@@ -169,24 +248,56 @@
         </div>
 
         <!-- Description list -->
-        <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
-            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                @foreach ($data['articulos'] as $articulo)
-                    <div class="sm:col-span-2">
-                        <dt class="text-sm font-medium text-gray-500">
-                            {{-- About --}}
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            {!! $articulo !!}
-                            {{-- Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu. --}}
-                        </dd>
-                    </div>
-                @endforeach
+        <div class="mt-6 max-w-12xl mx-auto px-0 sm:px-6 lg:px-0">
+            
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
+                                class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Título
+                            
+                            </th>
+                            
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Autores
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Revista
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Estado Publicación
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Odd row -->
+                        @foreach ($data['articulos'] as $articulo)
+                            <tr class="bg-white">
+                                <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    {!! $articulo->tituloLink() !!}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {!! $articulo->autoresCompact() !!}
+                                </td>
+                                
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $articulo->revista->nombre }}
+                                </td>
+                                
+                                <td scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {{ $articulo->estado_publicacion}}
+                                </td>
+                            </tr>
+                            @endforeach
+                    </tbody>
+                </table>
 
-
-
-
-            </dl>
+            
         </div>
     @else
         <div class="mt-6 sm:mt-2 2xl:mt-5">
@@ -232,11 +343,11 @@
                 @foreach ($data['tesis'] as $tesis)
                     <div class="sm:col-span-2">
                         <dt class="text-sm font-medium text-gray-500">
-                            
+
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             {!! $tesis !!}
-                            
+
                         </dd>
                     </div>
                 @endforeach

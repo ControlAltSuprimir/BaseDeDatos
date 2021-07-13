@@ -187,21 +187,24 @@
 
 
 
+    
+<div>
     <div class="mt-6 sm:mt-2 2xl:mt-5">
         <div class="border-b border-gray-200">
             <div class="max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
                 <nav class="-mb-px flex space-x-8" aria-label="Tabs">
                     <!-- Current: "border-pink-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-                    <a href="#"
-                        class="border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
-                        aria-current="page">
+                    <a href="#" 
+                    onclick="openCountry(event, 'Japan')"
+                        class="tablinks2 border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
                         Publicaciones Realizadas
                     </a>
+                    <a href="#" 
+                    onclick="openCountry(event, 'Chile')"
+                        class="tablinks2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                        Proyectos
+                    </a>
                     {{-- <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Artículos
-              </a>
-
-              <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                 Formación
               </a> --}}
                 </nav>
@@ -209,10 +212,53 @@
         </div>
     </div>
     <?php $filtro = [
-    'tipo' => 'persona',
-    'id' => $data['persona']->id,
-    ]; ?>
-    @livewire('tablas.filtroarticulos',['filtro'=>$filtro])
+                'tipo' => 'persona',
+                'id' => $data['persona']->id,
+            ]; ?>
+    <div>
+        <div id="Japan" class="tabcontent2 active" style="display: block">
+            @livewire('tablas.filtroarticulos',['filtro'=>$filtro])
+        </div>
+        <div id="Chile" class="tabcontent2 ">
+            @livewire('tablas.filtroproyectos',['filtro'=>$filtro])
+        </div>
+    </div>
+</div>
+
+
+
+    <script>
+        function openCountry(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent2");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks2");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+                tablinks[i].className = tablinks[i].className.replace(
+                    " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm",
+                    " border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                );
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className +=
+                " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm";
+
+        }
+    </script>
+
+
+    <style>
+        .tabcontent2 {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+    </style>
 
     
 

@@ -150,7 +150,7 @@
 
     {{-- Proyectos --}}
 
-    @if (count($data['proyectos']) != 0)
+    @if (!$data['proyectos']->isEmpty())
 
         <div class="mt-6 sm:mt-2 2xl:mt-5">
             <div class="border-b border-gray-200">
@@ -168,25 +168,57 @@
         </div>
 
         <!-- Description list -->
-        <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
-            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                @foreach ($data['proyectos'] as $proyecto)
-                    <div class="sm:col-span-2">
-                        <dt class="text-sm font-medium text-gray-500">
-                            {{-- About --}}
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            {!! $proyecto !!}
-                            {{-- Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu. --}}
-                        </dd>
-                    </div>
-                @endforeach
+        <div class="mt-6 max-w-12xl mx-auto px-0 sm:px-6 lg:px-0">
+            
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
+                            class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Título
+                        
+                        </th>
+                        
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Investigador Responsable
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Código Proyecto
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Duración Proyecto
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Odd row -->
+                    @foreach ($data['proyectos'] as $proyecto)
+                        <tr class="bg-white">
+                            <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {!! $proyecto->tituloLink() !!}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {!! $proyecto->responsable->full_nameLink() !!}
+                            </td>
+                            
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $proyecto->codigo_proyecto }}
+                            </td>
+                            
+                            <td scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ $proyecto->intervalo()}}
+                            </td>
+                        </tr>
+                        @endforeach
+                </tbody>
+            </table>
 
-
-
-
-            </dl>
-        </div>
+        
+    </div>
     @else
         <div class="mt-6 sm:mt-2 2xl:mt-5">
             <div class="border-b border-gray-200">

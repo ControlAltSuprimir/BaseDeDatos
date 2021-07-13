@@ -38,19 +38,14 @@ class editarproyecto extends Component
 
     public function mount($edit)
     {
-        $this->allPersonas = Personas::where('is_valid', '=', 1)->get();
-        $this->allArticulos = Articulos::where('is_valid', '=', 1)->get();
-        $this->allTesis = Tesis::where('is_valid', '=', 1)->get();
+        $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->get();
+        $this->allArticulos = Articulos::where('is_valid', '=', 1)->orderBy('titulo')->get();
+        $this->allTesis = Tesis::where('is_valid', '=', 1)->orderBy('titulo')->get();
         $this->allAcademicas = ActividadAcademica::where('is_valid', '=', 1)->get();
         $this->allExtensiones = ActividadExtension::where('is_valid', '=', 1)->get();
 
         $this->participantes = array('participantes'=>[],'extraparticipantes'=>[]);
-        //$this->participantes = array('coinvestigadores' => [], 'extracoinvestigadores' => [], 'colaboradores' => [], 'extracolaboradores' => []);
-        //$this->participantesaEditar = array('coinvestigadores' => [], 'extracoinvestigadores' => [], 'colaboradores' => [], 'extracolaboradores' => []);
-        $this->investigaciones = array('articulos' => [], 'tesis' => []);
-        //$this->investigacionesaEditar = array('articulos' => [], 'tesis' => []);
         $this->actividades = array('extension' => [], 'academica' => []);
-        //$this->actividadesaEditar = array('extension' => [], 'academica' => []);
 
         $this->indices = array(
             'participantes' => ['participantes','extraparticipantes'],
@@ -63,9 +58,6 @@ class editarproyecto extends Component
         //$investigador_responsable = Personas::find($proyecto->investigador_responsable);
         // Participantes
         $participantes = $proyecto->participantes()->get();
-
-        $coinvestigadores = $proyecto->coinvestigadores()->get();
-        $colaboradores = $proyecto->colaboradores()->get();
         //Investigaciones
         $articulos = $proyecto->articulos()->get();
         $tesises = $proyecto->tesistas()->get();
@@ -93,6 +85,7 @@ class editarproyecto extends Component
         }
 
         //Tesis
+        $this->investigaciones['tesis']=[];
         foreach ($tesises as $tesis) {
             $this->investigaciones['tesis'][] = array(
                 'id' => $tesis->id

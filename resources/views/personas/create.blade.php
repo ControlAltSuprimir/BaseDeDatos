@@ -25,7 +25,7 @@
               <div class="bg-white py-6 px-4 sm:p-6">
                 <div>
                   <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Información de Perfil</h2>
-                  <p class="mt-1 text-sm text-gray-500">Update your billing information. Please note that updating your location could affect your tax rates.</p>
+                  <p class="mt-1 text-sm text-gray-500">&emsp;</p>
                 </div>
     
                 <div class="mt-6 grid grid-cols-4 gap-6">

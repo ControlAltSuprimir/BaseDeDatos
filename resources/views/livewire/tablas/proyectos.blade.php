@@ -40,18 +40,16 @@
                                 <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
                                     class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Título
-                                    @include('partials._sort-icon',['field'=>'titulo'])
+                                
                                 </th>
-                                {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Title
-                </th> --}}
+                                
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Investigador Responsable
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Coinvestigadores 
+                                    Código del Proyecto 
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -66,15 +64,14 @@
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {!! $proyecto->tituloLink() !!}
                                     </td>
-                                    {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{$persona}}
-                </td> --}}
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {!! $proyecto->responsable->full_nameLink() !!}
                                     </td>
+                                    
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {!! $proyecto->autoresCompact() !!}
+                                        {!! $proyecto->codigo_proyecto !!}
                                     </td>
+                                    
                                     <td scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         {{--<a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>--}}

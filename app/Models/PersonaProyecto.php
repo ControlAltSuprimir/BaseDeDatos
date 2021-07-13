@@ -18,7 +18,7 @@ class PersonaProyecto extends Model
 
     public function laPersona()
     {
-        return $this->belongsTo(Personas::class, 'id_proyecto');
+        return $this->belongsTo(Personas::class, 'id_persona');
     }
 
 }

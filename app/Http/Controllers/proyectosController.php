@@ -56,7 +56,7 @@ class proyectosController extends Controller
     {
         //
 
-        return $request;
+        //return $request;
 
 
         $proyecto = new Proyectos;
@@ -203,6 +203,7 @@ class proyectosController extends Controller
     {
         //
         $proyecto = Proyectos::find($id);
+        $listaParticipantes = $proyecto->participantes()->get();
         $listaCoinvestigadores = $proyecto->coinvestigadores()->get();
         $listaColaboradores = $proyecto->colaboradores()->get();
         $listaArticulos = $proyecto->articulos()->get();
@@ -210,10 +211,11 @@ class proyectosController extends Controller
         $listaExtensiones = $proyecto->extensiones()->get();
 
         //
-        $articulos = [];
+        $articulos=$listaArticulos;
+        /*$articulos = [];
         foreach ($listaArticulos as $articulo) {
             $articulos[] = $articulo->descripcion();
-        }
+        }*/
 
 
         $tesis = [];
@@ -222,7 +224,7 @@ class proyectosController extends Controller
         }
 
 
-        $data = compact('proyecto', 'listaCoinvestigadores', 'listaColaboradores', 'articulos', 'tesis', 'listaExtensiones');
+        $data = compact('proyecto', 'listaParticipantes', 'listaColaboradores', 'articulos', 'tesis', 'listaExtensiones');
         //$data = compact('proyecto','listaCoinvestigadores','listaColaboradores','articulos','listaExtensiones');
 
         //return $data;

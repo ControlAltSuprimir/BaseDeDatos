@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Articulos;
 use App\Models\Personas;
 use App\Models\Persona_Articulo;
+use App\Models\ProyectosArticulos;
 use Illuminate\Http\Request;
 
 class articulosController extends Controller
@@ -51,59 +52,67 @@ class articulosController extends Controller
         $articulo->DOI = $request->DOI;
         $articulo->fecha_publicacion = $request->fecha_publicacion;
         $articulo->intervalo_paginas = $request->intervalo_paginas;
+        $articulo->estado_publicacion = $request->estadoPublicacion;
         $articulo->issue = $request->issue;
         $articulo->volumen = $request->volumen;
         $articulo->arxiv = $request->arxiv;
         $articulo->id_Revista = $request->revista;
         $articulo->descripcion = $request->descripcion;
-        $articulo->is_valid=1;
+        $articulo->is_valid = 1;
 
         $articulo->save();
 
-        $repeticiones=[];
-        if(isset($request->personas))
-        {
-            foreach($request->personas as $persona)
-            {
-                if(isset($persona) && !in_array($persona,$repeticiones))
-                {
+        $repeticiones = [];
+        if (isset($request->personas)) {
+            foreach ($request->personas as $persona) {
+                if (isset($persona) && !in_array($persona, $repeticiones)) {
                     $autor = new Persona_Articulo;
-                    $autor->id_Persona=$persona;
-                    $autor->id_Articulo=$articulo->id;
-                    $autor->is_valid=1;
+                    $autor->id_Persona = $persona;
+                    $autor->id_Articulo = $articulo->id;
+                    $autor->is_valid = 1;
                     $autor->save();
 
-                    $repeticiones[]=$persona;
+                    $repeticiones[] = $persona;
+                }
+            }
+        }
+
+        $listaProyectos = [];
+
+        if (isset($request->proyectos)) {
+            foreach ($request->proyectos as $proyecto) {
+                if (isset($proyecto) && !in_array($proyecto, $listaProyectos)) {
+                    $elProyecto = new ProyectosArticulos;
+                    $elProyecto->id_proyecto = $proyecto;
+                    $elProyecto->id_articulo = $articulo->id;
+                    $elProyecto->is_valid = 1;
+                    $elProyecto->save();
+
+                    $listaRepeticiones[] = $proyecto;
                 }
             }
         }
 
 
-        if(isset($request->extraPersonas))
-        {
-            foreach($request->extraPersonas as $extraPersona)
-            {
-                if(isset($extraPersona))
-                {
+        if (isset($request->extraPersonas)) {
+            foreach ($request->extraPersonas as $extraPersona) {
+                if (isset($extraPersona)) {
                     $extra = new Personas;
-                    $extra->primer_nombre=$extraPersona[0];
-                    $extra->primer_apellido=$extraPersona[1];
-                    $extra->is_valid=1;
+                    $extra->primer_nombre = $extraPersona[0];
+                    $extra->primer_apellido = $extraPersona[1];
+                    $extra->is_valid = 1;
                     $extra->save();
 
                     $autor = new Persona_Articulo;
-                    $autor->id_Persona=$extra->id;
-                    $autor->id_Articulo=$articulo->id;
-                    $autor->is_valid=1;
+                    $autor->id_Persona = $extra->id;
+                    $autor->id_Articulo = $articulo->id;
+                    $autor->is_valid = 1;
                     $autor->save();
-
                 }
             }
         }
 
         return redirect('/articulos/' . $articulo->id);
-
-
     }
 
     /**
@@ -119,13 +128,13 @@ class articulosController extends Controller
         $revista = $articulo->revista;
         $autores = $articulo->autoresCompact();
 
-        $proyectos = $articulo->proyectosArray();
+        $proyectos = $articulo->proyectos()->get();
 
         $tesis = $articulo->tesistasArray();
 
-        $data=compact('articulo','revista','proyectos','autores','tesis');
+        $data = compact('articulo', 'revista', 'proyectos', 'autores', 'tesis');
         //return $articulo;
-        return view('articulos.show',['data'=>$data]);
+        return view('articulos.show', ['data' => $data]);
     }
 
     /**
@@ -157,54 +166,69 @@ class articulosController extends Controller
         $articulo->DOI = $request->DOI;
         $articulo->fecha_publicacion = $request->fecha_publicacion;
         $articulo->intervalo_paginas = $request->intervalo_paginas;
+        $articulo->estado_publicacion = $request->estadoPublicacion;
         $articulo->issue = $request->issue;
         $articulo->volumen = $request->volumen;
         $articulo->arxiv = $request->arxiv;
         $articulo->id_Revista = $request->revista;
         $articulo->descripcion = $request->descripcion;
-        $articulo->is_valid=1;
+        $articulo->is_valid = 1;
 
         $articulo->save();
 
         Persona_Articulo::where('id_Articulo', '=', $articulo->id)
-                                            ->where('is_valid','=',1)
-                                            ->update(['is_valid'=> 0]);
-        $repeticiones=[];
-        if(isset($request->personas))
-        {
-            foreach($request->personas as $persona)
-            {
-                if(isset($persona) && !in_array($persona,$repeticiones))
-                {
-                    $autor = new Persona_Articulo;
-                    $autor->id_Persona=$persona;
-                    $autor->id_Articulo=$articulo->id;
-                    $autor->is_valid=1;
-                    $autor->save();
-                    $repeticiones[]=$persona;
+            ->where('is_valid', '=', 1)
+            ->update(['is_valid' => 0]);
 
+        $repeticiones = [];
+
+        if (isset($request->personas)) {
+            foreach ($request->personas as $persona) {
+                if (isset($persona) && !in_array($persona, $repeticiones)) {
+                    $autor = new Persona_Articulo;
+                    $autor->id_Persona = $persona;
+                    $autor->id_Articulo = $articulo->id;
+                    $autor->is_valid = 1;
+                    $autor->save();
+                    $repeticiones[] = $persona;
                 }
             }
         }
 
-        if(isset($request->extraPersonas))
-        {
-            foreach($request->extraPersonas as $extraPersona)
-            {
-                if(isset($extraPersona))
-                {
+        if (isset($request->extraPersonas)) {
+            foreach ($request->extraPersonas as $extraPersona) {
+                if (isset($extraPersona)) {
                     $extra = new Personas;
-                    $extra->primer_nombre=$extraPersona[0];
-                    $extra->primer_apellido=$extraPersona[1];
-                    $extra->is_valid=1;
+                    $extra->primer_nombre = $extraPersona[0];
+                    $extra->primer_apellido = $extraPersona[1];
+                    $extra->is_valid = 1;
                     $extra->save();
 
                     $autor = new Persona_Articulo;
-                    $autor->id_Persona=$extra->id;
-                    $autor->id_Articulo=$articulo->id;
-                    $autor->is_valid=1;
+                    $autor->id_Persona = $extra->id;
+                    $autor->id_Articulo = $articulo->id;
+                    $autor->is_valid = 1;
                     $autor->save();
+                }
+            }
+        }
 
+        ProyectosArticulos::where('id_articulo', '=', $articulo->id)
+            ->where('is_valid', '=', 1)
+            ->update(['is_valid' => 0]);
+
+        $listaProyectos = [];
+
+        if (isset($request->proyectos)) {
+            foreach ($request->proyectos as $proyecto) {
+                if (isset($proyecto) && !in_array($proyecto, $listaProyectos)) {
+                    $elProyecto = new ProyectosArticulos;
+                    $elProyecto->id_proyecto = $proyecto;
+                    $elProyecto->id_articulo = $articulo->id;
+                    $elProyecto->is_valid = 1;
+                    $elProyecto->save();
+
+                    $listaRepeticiones[] = $proyecto;
                 }
             }
         }

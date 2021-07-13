@@ -118,6 +118,7 @@ class Proyectos extends Model
     {
 
         return $query->where('titulo', 'like', '%' . $val . '%')
+            ->orWhere('codigo_proyecto','like','%' . $val . '%')
             ->orWhere('comienzo', 'like', '%' . $val . '%')
             ->orWhere('termino', 'like', '%' . $val . '%')
             ->orWhereHas('responsable', function ($query) use ($val) {

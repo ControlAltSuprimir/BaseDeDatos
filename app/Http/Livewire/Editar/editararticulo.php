@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Editar;
+
 use App\Models\Personas;
 use App\Models\Revistas;
 use App\Models\Articulos;
@@ -26,32 +27,29 @@ class editararticulo extends Component
     public $perfil;
     public $edit;
 
+    public $proyectosInvolucrados = [];
 
     public function mount($edit)
     {
-        $this->allTesis = Tesis::where('is_valid','=',1)->get();
-        $this->allProyectos = Proyectos::where('is_valid','=',1)->get();
-        $this->allPersonas = Personas::where('is_valid','=',1)->get();
-        $this->allRevistas = Revistas::where('is_valid','=',1)->get();
+        $this->allTesis = Tesis::where('is_valid', '=', 1)->get();
+        $this->allProyectos = Proyectos::where('is_valid', '=', 1)->orderBy('titulo')->get();
+        $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->get();
+        $this->allRevistas = Revistas::where('is_valid', '=', 1)->orderBy('nombre')->get();
 
-        $id=$edit;
+        $id = $edit;
         $articulo = Articulos::find($id);
         $detalles = $articulo->autores()->get();
-        //$tablaDeIndexaciones = [];
-        foreach($detalles as $detalle)
-        {
-            $array = array(
-                'id' => $detalle->id,
-                'id_Persona' => $detalle->id,
-                'autor' => $detalle->full_name(),
-                );
-            $this->orderProducts[] =$array;
-            $this->indexacionesAEditar[] =$array;
+        $losProyectos = $articulo->proyectos()->get();
+
+        foreach ($detalles as $detalle) {
+            $this->orderProducts[] = $detalle->id;
+        }
+
+        foreach($losProyectos as $elProyecto){
+            $this->proyectosInvolucrados[]=$elProyecto->id;
 
         }
-        $this->perfil=$articulo;
-        
-        
+        $this->perfil = $articulo;
     }
 
     public function addExtraPersona()
@@ -59,15 +57,24 @@ class editararticulo extends Component
         $this->extraPersonas[] = ['primer_nombre' => '', 'primer_apellido' => ''];
     }
 
-    public function addProduct()
+    public function addProduct($type)
     {
-        $this->orderProducts[] = ['product_id' => '', 'quantity' => 1];
+        if ($type == 'autor') {
+            $this->orderProducts[] = "";
+        } elseif ($type == 'proyecto') {
+            $this->proyectosInvolucrados[] = "";
+        }
     }
 
-    public function removeProduct($index)
+    public function removeProduct($type, $index)
     {
-        unset($this->orderProducts[$index]);
-        $this->orderProducts = array_values($this->orderProducts);
+        if ($type == 'autor') {
+            unset($this->orderProducts[$index]);
+            $this->orderProducts = array_values($this->orderProducts);
+        } elseif ($type == 'proyecto') {
+            unset($this->proyectosInvolucrados[$index]);
+            $this->proyectosInvolucrados = array_values($this->proyectosInvolucrados);
+        }
     }
 
     public function removeExtraPersona($indexExtraPersona)

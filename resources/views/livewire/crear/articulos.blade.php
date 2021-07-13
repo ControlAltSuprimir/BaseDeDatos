@@ -46,6 +46,17 @@
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                     </div>
 
+                    <div class="col-span-4 sm:col-span-2">
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">Estado Publicación</label>
+                        <select name="estadoPublicacion"
+                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                    <option value="publicado">Publicado</option>
+                                    <option value="aceptado">Aceptado</option>
+                                    <option value="enRevision">En Revisión</option>
+                                    <option value="enPrensa">En Prensa</option>
+                            </select>
+                    </div>
+
 
                     <div class="col-span-4 sm:col-span-2">
                         <label for="first_name" class="block text-sm font-medium text-gray-700">Link del artículo en
@@ -108,7 +119,7 @@
                         <div class="col-span-4 sm:col-span-2">
                             {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
 
-                            <a href="#" wire:click.prevent="removeProduct({{ $index }})">
+                            <a href="#" wire:click.prevent="removeProduct('autor',{{ $index }})">
                                 <button type="submit"
                                     class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
                                     Borrar
@@ -122,7 +133,7 @@
                 @endforeach
                 <div class="mt-6 grid grid-cols-4 gap-6">
                     <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addProduct"
+                        <button wire:click.prevent="addProduct('autor')"
                             class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Añadir
                             Autor</button>
                     </div>
@@ -200,7 +211,72 @@
 
             </div>
         </div>
+<br><br>
 
+<div class="shadow sm:rounded-md sm:overflow-hidden">
+    <div class="bg-white py-6 px-4 sm:p-6">
+        <div>
+            <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Proyectos Involucrados
+            </h2>
+            <p class="mt-1 text-sm text-gray-500"></p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-4 gap-6">
+            {{-- <div class="col-span-4 sm:col-span-2">
+                <label for="country" class="block text-sm font-medium text-gray-700">Indexación</label>
+            </div>
+
+            <div class="col-span-4 sm:col-span-2">
+                <label for="postal_code" class="block text-sm font-medium text-gray-700"> Acción</label>
+            </div> --}}
+
+        </div>
+        @foreach ($proyectosInvolucrados as $index => $orderProduct)
+            <div class="mt-6 grid grid-cols-4 gap-6">
+                <div class="col-span-4 sm:col-span-2 center">
+                    {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
+                    <select name="proyectos[{{ $index }}]"
+                        wire:model="proyectosInvolucrados.{{ $index }}"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                        <option value="">-- Selecciona Proyecto -- </option>
+                    {{--<option value=""><input type=""placeholder="hola"></option>--}}
+                        @foreach ($allProyectos as $proyecto)
+                            <option value="{{ $proyecto->id }}">
+                                {{ $proyecto->titulo }}
+                                {{-- (${{ number_format($product->price, 2) }}) --}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+                <div class="col-span-4 sm:col-span-2">
+                    {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
+
+                    <a href="#" wire:click.prevent="removeProduct('proyecto',{{ $index }})">
+                        <button type="submit"
+                            class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                            Borrar
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+            &emsp;
+            <hr>
+        @endforeach
+        <div class="mt-6 grid grid-cols-4 gap-6">
+            <div class="col-span-4 sm:col-span-2">
+                <button wire:click.prevent="addProduct('proyecto')"
+                    class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Añadir
+                    Proyecto</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<hr><br><br>
         {{-- Revista --}}
 
         <div class="shadow sm:rounded-md sm:overflow-hidden">

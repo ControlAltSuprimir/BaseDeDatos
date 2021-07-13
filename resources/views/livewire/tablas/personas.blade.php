@@ -41,9 +41,7 @@
                                     class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Nombre
                                 </th>
-                                {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Title
-                </th> --}}
+                                
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Email
@@ -61,9 +59,7 @@
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {!! $persona->full_nameLink() !!}
                                     </td>
-                                    {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{$persona}}
-                </td> --}}
+                                   
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {!! $persona->email !!}
                                     </td>
@@ -73,10 +69,6 @@
                                 </tr>
                             @endforeach
 
-                            <!-- Even row -->
-
-
-                            <!-- More people... -->
                         </tbody>
                     </table>
                 </div>
