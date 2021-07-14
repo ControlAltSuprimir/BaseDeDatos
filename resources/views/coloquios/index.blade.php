@@ -62,7 +62,7 @@
                               {{$persona}}
                             </td> --}}
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {!! $coloquio->expositor->full_nameLink() !!} ({{ $coloquio->institucion->nombre }})
+                                        {!! $coloquio->expositor !!} ({{ $coloquio->institucion }})
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $coloquio->fecha }}

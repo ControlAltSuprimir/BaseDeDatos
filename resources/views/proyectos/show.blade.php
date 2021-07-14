@@ -249,8 +249,8 @@
 
         <!-- Description list -->
         <div class="mt-6 max-w-12xl mx-auto px-0 sm:px-6 lg:px-0">
-            
-                <table class="min-w-full divide-y divide-gray-200">
+
+                <table class="table-auto divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
@@ -283,11 +283,9 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {!! $articulo->autoresCompact() !!}
                                 </td>
-                                
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $articulo->revista->nombre }}
                                 </td>
-                                
                                 <td scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {{ $articulo->estado_publicacion}}
@@ -296,7 +294,8 @@
                             @endforeach
                     </tbody>
                 </table>
-
+                 
+            
             
         </div>
     @else
