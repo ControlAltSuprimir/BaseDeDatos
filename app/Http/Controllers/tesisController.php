@@ -144,12 +144,12 @@ class tesisController extends Controller
     public function show($id)
     {
         //
-        $tesis= Tesis::find($id);
-        $tesisInterna= TesisInterna::where('id_tesis','=',$id)->where('is_valid','=',1)->first();
-        
-        $data=compact('tesis','tesisInterna');
+        $tesis = Tesis::find($id);
+        $tesisInterna = TesisInterna::where('id_tesis', '=', $id)->where('is_valid', '=', 1)->first();
 
-        return view('tesis.show',['data' => $data]);
+        $data = compact('tesis', 'tesisInterna');
+
+        return view('tesis.show', ['data' => $data]);
     }
 
     /**
@@ -210,43 +210,46 @@ class tesisController extends Controller
             'tipo' => 'Tutor',
             'is_valid' => 1
         ]);
-
-        foreach ($request->cotutores as $cotutor) {
-            if (isset($cotutor)) {
-                DB::table('personas_tesis_tutores')->insert([
-                    'id_Persona' => $cotutor,
-                    'id_tesis' => $tesis->id,
-                    'tipo' => 'Cotutor(a)',
-                    'is_valid' => 1
-                ]);
+        if (isset($request->cotutores)) {
+            foreach ($request->cotutores as $cotutor) {
+                if (isset($cotutor)) {
+                    DB::table('personas_tesis_tutores')->insert([
+                        'id_Persona' => $cotutor,
+                        'id_tesis' => $tesis->id,
+                        'tipo' => 'Cotutor(a)',
+                        'is_valid' => 1
+                    ]);
+                }
             }
         }
 
         DB::table('personas_tesis_comision')
             ->where('id_tesis', '=', $tesis->id)
             ->update(['is_valid' => 0]);
-
-        foreach ($request->comision as $comision) {
-            if (isset($comision)) {
-                DB::table('personas_tesis_comision')->insert([
-                    'id_Persona' => $comision,
-                    'id_tesis' => $tesis->id,
-                    'is_valid' => 1
-                ]);
+        if (isset($request->comision)) {
+            foreach ($request->comision as $comision) {
+                if (isset($comision)) {
+                    DB::table('personas_tesis_comision')->insert([
+                        'id_Persona' => $comision,
+                        'id_tesis' => $tesis->id,
+                        'is_valid' => 1
+                    ]);
+                }
             }
         }
 
         DB::table('proyectos_tesistas')
             ->where('id_tesis', '=', $tesis->id)
             ->update(['is_valid' => 0]);
-
-        foreach ($request->proyectos as $proyecto) {
-            if (isset($proyecto)) {
-                DB::table('proyectos_tesistas')->insert([
-                    'id_proyecto' => $proyecto,
-                    'id_tesis' => $tesis->id,
-                    'is_valid' => 1
-                ]);
+        if (isset($request->proyectos)) {
+            foreach ($request->proyectos as $proyecto) {
+                if (isset($proyecto)) {
+                    DB::table('proyectos_tesistas')->insert([
+                        'id_proyecto' => $proyecto,
+                        'id_tesis' => $tesis->id,
+                        'is_valid' => 1
+                    ]);
+                }
             }
         }
 

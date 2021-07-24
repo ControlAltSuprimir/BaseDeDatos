@@ -66,7 +66,7 @@
                                 Autor
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900">
-                                {!! $data['tesis']->autor()->full_nameLink() !!}
+                                {!! $data['tesis']->leAutor()->full_nameLink() !!}
                             </dd>
                         </div>
                         <div class="sm:col-span-1">

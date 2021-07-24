@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use DB;
+
 class Tesis extends Model
 {
     use HasFactory;
@@ -26,6 +28,11 @@ class Tesis extends Model
     public function articulos()
     {
         return $this->belongsToMany(Articulos::class, 'articulos_tesis', 'id_tesis', 'id_articulo')->where('articulos_tesis.is_valid', '=', 1);
+    }
+
+    public function losTutores()
+    {
+        return $this->belongsToMany(Personas::class, 'personas_tesis_tutores', 'id_tesis', 'id_Persona')->where('personas_tesis_tutores.is_valid', '=', 1);
     }
 
     public function tutores()
@@ -65,8 +72,11 @@ class Tesis extends Model
         return $this->belongsTo(Instituciones::class,'id_Institucion')->where('instituciones.is_valid','=',1);
     }
 
-    public function autor()
+    public function elAutor()
     {
+        return $this->belongsTo(Personas::class,'autor')->where('personas.is_valid','=',1);
+    }
+    public function leAutor(){
         return $this->belongsTo(Personas::class,'autor')->where('personas.is_valid','=',1)->first();
     }
 
@@ -75,4 +85,21 @@ class Tesis extends Model
         //return ' ';
         return $this->full_nameLink() . '. Autor: ' . $this->autor()->primer_apellido . ' '. $this->autor()->segundo_apellido . ', '. $this->autor()->primer_nombre . ' ' . $this->autor()->segundo_nombre .'. ' . date('Y', strtotime($this->fechaDefensa)) . '.';
     }
+
+
+    public function scopeSearch($query, $val)
+    {
+
+        return  $query->where('titulo', 'like', '%' . $val . '%')
+        ->orWhereHas('losTutores', function ($query) use ($val) {
+            $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'LIKE', '%' . $val . '%');
+        })
+            ->orWhereHas('elAutor', function ($query) use ($val) {
+                $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'LIKE', '%' . $val . '%');
+            });
+            
+            
+        
+    }
+
 }

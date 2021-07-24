@@ -73,4 +73,7 @@ Route::resource('viajes',viajesController::class)->middleware('auth');
 Route::resource('visita',visitaController::class)->middleware('auth');
 
 
-Route::get('/graficos',[chartController::class,'show'])->middleware('auth');
+Route::get('/',[chartController::class,'show'])->middleware('auth');
+Route::get('/dashboard',[chartController::class,'show'])->middleware('auth');
+Route::get('/graficos/articulos',[chartController::class,'articulos'])->middleware('auth');
+Route::get('/graficos',[chartController::class,'articulos'])->middleware('auth');

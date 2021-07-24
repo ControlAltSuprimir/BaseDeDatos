@@ -32,7 +32,7 @@
                 <div class="col-span-4 sm:col-span-1" gap-6>
                     <select name="institucion" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
                         class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        <option value="">-- Selecciona la Persona --</option>
+                        <option value="">-- Selecciona la Institución --</option>
 
                         @foreach ($data['allInstituciones'] as $institucion)
                             @if ($data['programa']->id_Institucion == $institucion->id)

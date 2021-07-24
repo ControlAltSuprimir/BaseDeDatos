@@ -1,7 +1,7 @@
 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
     <button type="submit" wire:click.prevent="open"
         class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-900">
-        Borrar Persona
+        Borrar Tesis
     </button>
 
     <!-- This example requires Tailwind CSS v2.0+ -->
@@ -47,12 +47,12 @@
                     </div>
                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                            Borrar Persona
+                            Borrar Tesis
                         </h3>
                         <div class="mt-2">
                             <p class="text-sm text-gray-500">
-                                ¿Estás seguro(a) que quieres borrar a esta persona? Todos los datos serán relacionados a
-                                esta persona será permanentemente removida de la base de datos como también el registro
+                                ¿Estás seguro(a) que quieres borrar a esta tesis? Todos los datos serán relacionados a
+                                esta tesis serán permanentemente removida de la base de datos como también el registro
                                 de esta acción y el usuario que la ejecuta.
                             </p>
                         </div>

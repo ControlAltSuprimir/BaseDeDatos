@@ -18,48 +18,34 @@ class filtroarticulos extends Component
     public $filtro;
 
 
-    
+
 
     public function render()
     {
-        if($this->filtro['tipo']=='persona'){
+        $articulos = Articulos::where('is_valid', '=', 1);
+        //Especificamos la búsqueda
+        if ($this->filtro['tipo'] == 'persona') {
 
-        $items = Articulos::where('is_valid', '=', 1)
-            ->whereHas('autores', function ($query) {
-            return $query->where('personas.id', '=', $this->filtro['id']);
-        })
-            ->search($this->search)
-            ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate(25);
-
-
-        return view('livewire.tablas.articulos', [
-            'items' => $items
-        ]);}
-        elseif($this->filtro['tipo']=='revista')
-        {
-            $items = Articulos::where('is_valid', '=', 1)
-            ->where('id_Revista', '=', $this->filtro['id'])
-            ->search($this->search)
-            ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate(25);
-
-
-        return view('livewire.tablas.articulos', [
-            'items' => $items
-        ]); 
+            $subitems = $articulos->whereHas('autores', function ($query) {
+                return $query->where('personas.id', '=', $this->filtro['id']);
+            });
+        } elseif ($this->filtro['tipo'] == 'revista') {
+            $subitems = $articulos->where('id_Revista', '=', $this->filtro['id']);
+        } elseif ($this->filtro['tipo'] == 'noPublicados') {
+            $subitems = Articulos::where('is_valid', '=', 1)
+                ->where(function ($query) {
+                    $query->where('estado_publicacion', '!=', 'publicado')
+                        ->orWhereNull('estado_publicacion');
+                });
+        } else {
+            $subitems = $articulos;
         }
-        else
-        {
-            $items= Articulos::where('is_valid','=',1)
-        ->search($this->search)
-        ->orderBy($this->sortBy,$this->sortDirection)
-        ->paginate(25);
-        
-        return view('livewire.tablas.articulos',[
-            'items'=> $items
+        $items = $subitems->search($this->search)
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate(25);
+        return view('livewire.tablas.articulos', [
+            'items' => $items
         ]);
-        }
     }
 
     public function sortBy($field)

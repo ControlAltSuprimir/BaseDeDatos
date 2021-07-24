@@ -167,7 +167,7 @@
                 <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">
                     Programa Asociado
                 </h2>
-                <p class="mt-1 text-sm text-gray-500">Si el programa no está en la base de datos, agrégalo aquí.</p>
+                <p class="mt-1 text-sm text-gray-500">Si el programa no está en la base de datos, agrégalo <a class="text-red-800" href="/programas/create"> aquí </a>.</p>
             </div>
 
             <div class="mt-6 grid grid-cols-4 gap-6">

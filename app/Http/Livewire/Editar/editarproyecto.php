@@ -78,6 +78,9 @@ class editarproyecto extends Component
         }
 
         //Articulos
+        if($articulos->isEmpty()){
+            $this->investigaciones['articulos']=[];
+        }
         foreach ($articulos as $articulo) {
             $this->investigaciones['articulos'][] = array(
                 'id' => $articulo->id
@@ -85,6 +88,9 @@ class editarproyecto extends Component
         }
 
         //Tesis
+        if($tesises->isEmpty()){
+            $this->investigaciones['tesis']=[];
+        }
         $this->investigaciones['tesis']=[];
         foreach ($tesises as $tesis) {
             $this->investigaciones['tesis'][] = array(

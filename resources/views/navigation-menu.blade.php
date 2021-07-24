@@ -2,6 +2,7 @@
     #profile {
         display: none
     }
+
 </style>
 
 
@@ -134,27 +135,23 @@
                 <div>Personas</div>
 
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
-                {{--
-                <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                {{-- <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                </svg>
-                --}}
+                </svg> --}}
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             <div class="space-y-1" id="sub-menu-1">
                 <div id="personas" style="display: none;">
                     <a href="/academicos"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                            Académicos
+                        Académicos
                     </a>
 
-                    {{--
-                    <a href="#"
+                    {{-- <a href="#"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                         Alumnos
-                    </a>
-                    --}}
+                    </a> --}}
 
                     <a href="#"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
@@ -182,12 +179,10 @@
                 </svg>
                 Investigación
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
-                {{--
-                <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                {{-- <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                </svg>
-                --}}
+                </svg> --}}
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             <div class="space-y-1" id="sub-menu-2">
@@ -231,13 +226,11 @@
                 </svg>
                 Actividades
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
-                {{--
-                <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                {{-- <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                </svg>
-                --}}
-            
+                </svg> --}}
+
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             <div class="space-y-1" id="sub-menu-3">
@@ -281,12 +274,10 @@
                 </svg>
                 Administración
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
-                {{--
-                <svg id="spin" class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                {{-- <svg id="spin" class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                     viewBox="0 0 20 20" aria-hidden="true">
                     <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                </svg>
-                --}}
+                </svg> --}}
             </button>
             <!-- Expandable link section, show/hide based on state. -->
             <div class="space-y-1" id="sub-menu-4">
@@ -314,8 +305,8 @@
 
         <div class="space-y-1">
             <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-            <a href="/graficos">
-            <button type="button"
+
+            <button type="button" onclick="toggle_visibility('graficos');"
                 class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 aria-controls="sub-menu-5" aria-expanded="false">
                 <!-- Heroicon name: outline/chart-bar -->
@@ -327,19 +318,21 @@
                 Gráficos
                 <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
             </button>
-        </a>
+
             <!-- Expandable link section, show/hide based on state. -->
-            {{-- <div class="space-y-1" id="sub-menu-5">
-                <a href="#"
-                    class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                    Overview
-                </a>
+            <div class="space-y-1" id="sub-menu-5">
+                <div id="graficos" style="display: none;">
 
-                <a href="#"
-                    class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                    Members
-                </a>
+                    <a href="/graficos/articulos"
+                        class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                        Artículos
+                    </a>
 
+                    <a href="/graficos/proyectos"
+                        class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                        Proyectos
+                    </a>
+                {{-- 
                 <a href="#"
                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                     Calendar
@@ -348,8 +341,10 @@
                 <a href="#"
                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                     Settings
-                </a>
-            </div> --}}
+                </a> 
+                --}}
+                </div>
+            </div>
         </div>
 
         <div class="mt-8">
@@ -382,33 +377,30 @@
                     </span>
                 </a>
             </div>
-            {{--
-            <div class="flex-1 min-w-0">
+            {{-- <div class="flex-1 min-w-0">
 
                 <select class="js-example-basic-single" name="state">
                     <option value="AL">Alabama</option>
                     <option value="WY">Wyoming</option>
                 </select>
-            </div>
-            --}}
+            </div> --}}
         </div>
     </nav>
 </div>
 
 
 <script type="text/javascript">
-    var click =false;
+    var click = false;
+
     function toggle_visibility(id) {
         var spin1 = document.getElementById("spin");
-        {{--
-        if(!click){
+        {{-- if(!click){
             spin1.style.transform = "rotate(90deg)";
             click=true;
            }else{
             click=false;
             spin1.style.transform = "rotate(180deg)";
-           }
-           --}}
+           } --}}
         var e = document.getElementById(id);
         if (e.style.display == 'block')
             e.style.display = 'none';
@@ -418,14 +410,12 @@
 
 
     //
-
 </script>
 
 {{-- <div id="foo">This is foo</div> --}}
 
 
 <script>
-
     var dropdown = document.getElementsByClassName("dropdown-btn");
     var i;
 
@@ -440,8 +430,4 @@
             }
         });
     }
-
-    
-
 </script>
-

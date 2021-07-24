@@ -81,7 +81,10 @@
     <?php $filtro = [
     'tipo' => 'articulos',
     'id' => 0,
-    ]; ?>
+    ]; 
+    if(isset($_GET["noPublicados"])){
+      $filtro['tipo']="noPublicados";
+    }?>
 
     @livewire('tablas.filtroarticulos',['filtro'=>$filtro])
 
