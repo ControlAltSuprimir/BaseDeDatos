@@ -20,6 +20,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\viajesController;
 use App\Http\Controllers\visitaController;
 use App\Http\Controllers\chartController;
+use App\Http\Controllers\formulariosController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -73,7 +74,24 @@ Route::resource('viajes',viajesController::class)->middleware('auth');
 Route::resource('visita',visitaController::class)->middleware('auth');
 
 
+//gráficos
+
 Route::get('/',[chartController::class,'show'])->middleware('auth');
 Route::get('/dashboard',[chartController::class,'show'])->middleware('auth');
 Route::get('/graficos/articulos',[chartController::class,'articulos'])->middleware('auth');
 Route::get('/graficos',[chartController::class,'articulos'])->middleware('auth');
+
+
+//formularios
+
+Route::get('/formularios',[formulariosController::class,'index'])->middleware('auth');
+
+Route::get('/formularios/viaje',[formulariosController::class,'viaje']);
+Route::post('/formularioviaje', [formulariosController::class,'storeviaje']);
+
+
+//pendientes
+
+Route::get('/viajespendientes',[formulariosController::class,'viajespendientes'])->middleware('auth');
+Route::get('/viajespendientes/{id}',[formulariosController::class,'viajespendientesshow'])->middleware('auth');
+Route::get('/viajespendientes/{id}/process',[formulariosController::class,'viajeprocesado'])->middleware('auth');

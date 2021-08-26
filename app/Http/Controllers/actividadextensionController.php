@@ -94,9 +94,18 @@ class actividadextensionController extends Controller
      * @param  \App\Models\ActividadExtension  $actividadExtension
      * @return \Illuminate\Http\Response
      */
-    public function show(ActividadExtension $actividadExtension)
+    public function show($id)
     {
         //
+        $extension = ActividadExtension::find($id);
+        $participantes = $extension->participantes()->get();
+        $proyectos = $extension->proyectos()->get();
+
+        
+
+        $data = compact('extension','participantes','proyectos');
+
+        return view('actividad_extension.show',['data' => $data]);
     }
 
     /**

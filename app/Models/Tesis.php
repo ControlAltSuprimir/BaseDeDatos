@@ -27,7 +27,7 @@ class Tesis extends Model
 
     public function articulos()
     {
-        return $this->belongsToMany(Articulos::class, 'articulos_tesis', 'id_tesis', 'id_articulo')->where('articulos_tesis.is_valid', '=', 1);
+        return $this->belongsToMany(Articulos::class, 'articulo_tesis', 'id_tesis', 'id_articulo');
     }
 
     public function losTutores()
@@ -83,7 +83,12 @@ class Tesis extends Model
     public function descripcion()
     {
         //return ' ';
-        return $this->full_nameLink() . '. Autor: ' . $this->autor()->primer_apellido . ' '. $this->autor()->segundo_apellido . ', '. $this->autor()->primer_nombre . ' ' . $this->autor()->segundo_nombre .'. ' . date('Y', strtotime($this->fechaDefensa)) . '.';
+        return $this->full_nameLink() . '. Autor: ' . $this->leAutor()->primer_apellido . ' '. $this->leAutor()->segundo_apellido . ', '. $this->leAutor()->primer_nombre . ' ' . $this->leAutor()->segundo_nombre .'. ' . date('Y', strtotime($this->fechaDefensa)) . '.';
+    }
+
+    public function otrosProyectos()
+    {
+        return $this->hasMany(ProyectosTesistas::class, 'id_tesis')->where('is_valid','=',1);
     }
 
 

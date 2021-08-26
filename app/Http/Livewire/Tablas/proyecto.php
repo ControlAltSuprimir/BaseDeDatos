@@ -24,12 +24,7 @@ class Proyecto extends Component
         ->search($this->search)
         ->orderBy($this->sortBy,$this->sortDirection)
         ->paginate($this->perPage);
-        /*
-        $items = Articulos::query()
-        ->search($this->search)
-        ->orderBy($this->sortBy, $this->sortDirection)
-        ->paginate($this->perPage);
-        */
+        
 
         return view('livewire.tablas.proyectos',[
             'items'=> $items

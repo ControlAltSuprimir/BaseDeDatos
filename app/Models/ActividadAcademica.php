@@ -20,7 +20,7 @@ class ActividadAcademica extends Model
 
     public function participantes()
     {
-        return $this->belongsToMany(Personas::class, 'personas_academica', 'id_academica', 'id_persona')->where('personas_academica.is_valid', '=', 1);
+        return $this->belongsToMany(Personas::class, 'personas_academica', 'id_academica', 'id_persona')->where('personas_academica.is_valid', '=', 1)->withPivot('descripcion','descripcion');
     }
 
     

@@ -94,9 +94,18 @@ class actividadacademicaController extends Controller
      * @param  \App\Models\ActividadAcademica  $actividadAcademica
      * @return \Illuminate\Http\Response
      */
-    public function show(ActividadAcademica $actividadAcademica)
+    public function show($id)
     {
         //
+        $academica = ActividadAcademica::find($id);
+        $participantes = $academica->participantes()->get();
+        $proyectos = $academica->proyectos()->get();
+
+        
+
+        $data = compact('academica','participantes','proyectos');
+
+        return view('actividad_academica.show',['data' => $data]);
     }
 
     /**

@@ -21,7 +21,7 @@
     </div>
 
 
-
+   
 
 
     <div>
@@ -33,7 +33,7 @@
 
                         <a href="#"
                             class="tablinks border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
-                            aria-current="page" onclick="openCity(event, 'London')">
+                            aria-current="page" >
                             Datos de la Tesis
                         </a>
 
@@ -58,7 +58,7 @@
 
         <div>
             <!-- Datos Personales -->
-            <div id="London" class="tabcontent active" style="display: block">
+            <div id="London" class="active" style="display: block">
                 <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
                     <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                         <div class="sm:col-span-1">
@@ -131,8 +131,54 @@
                 </div>
             </div>
 
+            <br>
+            <hr>
+            <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                        Investigación
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="mt-6 sm:mt-2 2xl:mt-5">
+                <div class="border-b border-gray-200">
+                    <div class="max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                            <!-- Current: "border-pink-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+                            <a href="#" onclick="openCity(event, 'NewYork')"
+                                class="tablinks border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                                aria-current="page">
+                                Proyectos asociados
+                            </a>
+                            <a href="#" onclick="openCity(event, 'NewJersey')"
+                class="tablinks border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Artículos
+            </a>
+{{--                <a href="#" onclick="openState(event, 'Texas')"
+                    class="tablinks3 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    Coloquios
+                </a> --}}
+
+                            {{-- <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+            Formación
+          </a> --}}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <?php $filtro = [
+                'tipo' => 'tesis',
+                'id' => $data['tesis']->id,
+            ]; ?>
+            <div id="NewYork" class="tabcontent active" style="display: block">
+                @livewire('tablas.filtroproyectos',['filtro'=>$filtro])
+            </div>
 
 
+            <div id="NewJersey" class="tabcontent " >
+                @livewire('tablas.filtroarticulos',['filtro'=>$filtro])
+            </div>
 
             {{-- TABS DEL PERFIL --}}
 
@@ -156,7 +202,6 @@
                         " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm";
 
                 }
-
             </script>
 
             <style>
@@ -169,7 +214,7 @@
 
             </style>
 
-
+            
 
 
 

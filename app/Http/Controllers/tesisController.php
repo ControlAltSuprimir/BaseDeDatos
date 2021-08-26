@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tesis;
 use App\Models\TesisInterna;
 use App\Models\Personas;
+use App\Models\ArticulosTesis;
+use App\Models\Articulos;
 use App\Models\Programas;
 use Illuminate\Http\Request;
 
@@ -147,7 +149,11 @@ class tesisController extends Controller
         $tesis = Tesis::find($id);
         $tesisInterna = TesisInterna::where('id_tesis', '=', $id)->where('is_valid', '=', 1)->first();
 
+        
+        //$articulos = $tesis->susArticulos()->get();
         $data = compact('tesis', 'tesisInterna');
+
+        //return $data;
 
         return view('tesis.show', ['data' => $data]);
     }

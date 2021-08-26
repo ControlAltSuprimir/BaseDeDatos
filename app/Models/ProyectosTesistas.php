@@ -14,5 +14,14 @@ class ProyectosTesistas extends Model
     const UPDATED_AT = 'updated_at';
 
 
+    public function elProyecto()
+    {
+        return $this->belongsTo(Proyectos::class, 'id_proyecto');
+    }
+
+    public function laTesis()
+    {
+        return $this->belongsTo(Tesis::class, 'id_tesis');
+    }
     
 }

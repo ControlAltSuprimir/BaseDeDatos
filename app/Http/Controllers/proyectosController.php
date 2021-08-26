@@ -10,6 +10,7 @@ use App\Models\ProyectosPersonasColaboradores;
 use App\Models\ProyectosArticulos;
 use App\Models\ProyectosActividadesExtension;
 use App\Models\ProyectosTesistas;
+use App\Models\Tesis;
 use App\Models\PersonaProyecto;
 
 use Illuminate\Http\Request;
@@ -207,7 +208,7 @@ class proyectosController extends Controller
         $listaCoinvestigadores = $proyecto->coinvestigadores()->get();
         $listaColaboradores = $proyecto->colaboradores()->get();
         $listaArticulos = $proyecto->articulos()->get();
-        $listaTesis = $proyecto->tesistas()->get();
+        $tesis = $proyecto->tesistas()->get();
         $listaExtensiones = $proyecto->extensiones()->get();
 
         //
@@ -217,11 +218,11 @@ class proyectosController extends Controller
             $articulos[] = $articulo->descripcion();
         }*/
 
-
+/*
         $tesis = [];
         foreach ($listaTesis as $tesista) {
             $tesis[] = $tesista->descripcion();
-        }
+        }*/
 
 
         $data = compact('proyecto', 'listaParticipantes', 'listaColaboradores', 'articulos', 'tesis', 'listaExtensiones');

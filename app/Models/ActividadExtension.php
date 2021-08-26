@@ -23,7 +23,7 @@ class ActividadExtension extends Model
 
     public function participantes()
     {
-        return $this->belongsToMany(Personas::class, 'personas_extension', 'id_actividad', 'id_persona')->where('personas_extension.is_valid', '=', 1);
+        return $this->belongsToMany(Personas::class, 'personas_extension', 'id_actividad', 'id_persona')->where('personas_extension.is_valid', '=', 1)->withPivot('cargo','cargo');
     }
 
     public function personas_extension()
@@ -38,7 +38,7 @@ class ActividadExtension extends Model
 
     public function nombre_Link()
     {
-        return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/actividadacademica/$this->id\" > {$this->nombre} </a>";
+        return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/actividadextension/$this->id\" > {$this->nombre} </a>";
     }
 
     public function intervalo()

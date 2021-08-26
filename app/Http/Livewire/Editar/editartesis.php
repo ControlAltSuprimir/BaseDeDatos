@@ -40,10 +40,10 @@ class editartesis extends Component
 
     public function mount($edit)
     {
-        $this->allPersonas = Personas::where('is_valid', '=', 1)->get();
+        $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->get();
         $this->allProgramas = Programas::where('is_valid', '=', 1)->get();
-        $this->allProyectos = Proyectos::where('is_valid', '=', 1)->get();
-        $this->allArticulos = Articulos::where('is_valid', '=', 1)->get();
+        $this->allProyectos = Proyectos::where('is_valid', '=', 1)->orderBy('titulo')->get();
+        $this->allArticulos = Articulos::where('is_valid', '=', 1)->orderBy('titulo')->get();
 
 
         //Construyendo el Perfil completo

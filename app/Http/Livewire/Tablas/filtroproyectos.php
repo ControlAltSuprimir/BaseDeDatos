@@ -10,6 +10,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Articulos;
 use App\Models\Proyectos;
 use App\Models\PersonaProyecto;
+use App\Models\ProyectosTesistas;
+use App\Models\Tesis;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -74,18 +76,22 @@ class filtroproyectos extends Component
 
             $data = $this->paginate($myArray);
             return view('livewire.tablas.filtroproyectos', compact('data'));
+        } elseif ($this->filtro['tipo'] == 'tesis') {
+            $losProyectos = Tesis::find($this->filtro['id'])
+                ->otrosProyectos()
+                ->get();
 
-        } elseif ($this->filtro['tipo'] == 'revista') {
-            $items = Articulos::where('is_valid', '=', 1)
-                ->where('id_Revista', '=', $this->filtro['id'])
-                ->search($this->search)
-                ->orderBy($this->sortBy, $this->sortDirection)
-                ->paginate(25);
-
-
-            return view('livewire.tablas.articulos', [
-                'items' => $items
-            ]);
+            foreach ($losProyectos as $proyecto){
+                $row = array(
+                    'proyecto' => $proyecto->elProyecto->tituloLink(),
+                    'rol' => $proyecto->elProyecto->responsable->full_nameLink(),
+                    'codigo' => $proyecto->elProyecto->codigo_proyecto,
+                    'fecha' => $proyecto->elProyecto->intervalo(),
+                );
+                $myArray[] = $row;
+                }
+                $data = $this->paginate($myArray);
+                return view('livewire.tablas.filtroproyectos', compact('data'));
         } else {
             $items = Articulos::where('is_valid', '=', 1)
                 ->search($this->search)

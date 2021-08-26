@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Tablas;
 
 use App\Models\Articulos;
+use App\Models\Tesis;
 use Livewire\Component;
 use Livewire\WithPagination;
+use DB;
 
 class filtroarticulos extends Component
 {
@@ -28,21 +30,35 @@ class filtroarticulos extends Component
 
             $subitems = $articulos->whereHas('autores', function ($query) {
                 return $query->where('personas.id', '=', $this->filtro['id']);
-            });
+            })->search($this->search)
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate(25);
         } elseif ($this->filtro['tipo'] == 'revista') {
-            $subitems = $articulos->where('id_Revista', '=', $this->filtro['id']);
+            $subitems = $articulos->where('id_Revista', '=', $this->filtro['id'])->search($this->search)
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate(25);
         } elseif ($this->filtro['tipo'] == 'noPublicados') {
             $subitems = Articulos::where('is_valid', '=', 1)
                 ->where(function ($query) {
                     $query->where('estado_publicacion', '!=', 'publicado')
                         ->orWhereNull('estado_publicacion');
-                });
+                })->search($this->search)
+                ->orderBy($this->sortBy, $this->sortDirection)
+                ->paginate(25);
+        } elseif ($this->filtro['tipo'] == 'tesis') {
+            $laTesis = Tesis::find($this->filtro['id']);
+            $subitems= $laTesis->articulos()->get();
         } else {
-            $subitems = $articulos;
+            $subitems = $articulos->search($this->search)
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate(25);
         }
+        $items=$subitems;
+        /*
         $items = $subitems->search($this->search)
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(25);
+            */
         return view('livewire.tablas.articulos', [
             'items' => $items
         ]);
