@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Personas;
+use App\Models\Viajes;
 use App\Models\Academicos;
 use Illuminate\Http\Request;
 
@@ -74,16 +75,20 @@ class personasController extends Controller
     public function show($id)
     {
         //
-        $persona = Personas::findOrFail($id);
+        $persona = Personas::find($id);
+        //return $persona;
 
         $academico = Academicos::where('id_Persona', '=', $id)->where('is_valid', '=', 1)->first();
+        //return $academico;
         //$articulos = $persona->articulos;
-        if (is_null($academico)) {
-            $data = compact('persona');
-            return view('personas.show', ['data' => $data]);
-        } else {
+        if (isset($academico->id)) {
             $data = compact('academico');
-            return  view('academicos.show', ['data' => $data]);
+            return redirect('/academicos/'.$academico->id);
+            //return  view('academicos.show', ['data' => $data]);
+        } else {
+            $viajes = Viajes::where('id_persona','=',$id)->where('is_valid','=',1)->get();
+            $data = compact('persona','viajes');
+            return view('personas.show', ['data' => $data]);
         }
     }
 

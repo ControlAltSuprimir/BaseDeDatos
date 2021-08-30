@@ -53,7 +53,7 @@ class filtroactividades extends Component
                     'link' => '/actividadacademica/'.$laAcademica->id,
                     'tipo' => 'Académica',
                     'fecha' => $laAcademica->fecha_comienzo . ' / ' . $laAcademica->fecha_termino,
-                    'viaje' => $elViaje->full_name(),
+                    'viaje' => (isset($elViaje)) ? $elViaje->full_name() : '',
                     'id_viaje' => $academica->id_viaje
                 );
                 $myArray[] = $row;

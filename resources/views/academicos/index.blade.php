@@ -57,7 +57,7 @@
                             @foreach ($data['academicos'] as $academico)
                                 <tr class="bg-white">
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {!! $academico->persona->full_nameLink() !!}
+                                        {!! $academico->full_nameLink() !!}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $academico->persona->email }}

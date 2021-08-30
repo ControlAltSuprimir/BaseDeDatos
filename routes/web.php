@@ -84,8 +84,7 @@ Route::get('/graficos',[chartController::class,'articulos'])->middleware('auth')
 
 //formularios
 
-Route::get('/formularios',[formulariosController::class,'index'])->middleware('auth');
-
+Route::get('/formularios',[formulariosController::class,'index']);
 Route::get('/formularios/viaje',[formulariosController::class,'viaje']);
 Route::post('/formularioviaje', [formulariosController::class,'storeviaje']);
 

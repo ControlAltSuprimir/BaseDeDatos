@@ -22,6 +22,11 @@ class Academicos extends Model
     {
         return $this->belongsTo(Personas::class,'id_Persona')->where('personas.is_valid','=',1)->orderBy('primer_apellido');
     }
+
+    public function full_nameLink()
+    {
+        return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/academicos/$this->id\" >{$this->persona->full_name()}</a>";
+    }
     /*
     public function row()
     {//class="font-medium text-indigo-600 hover:text-indigo-500"
