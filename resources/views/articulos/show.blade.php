@@ -252,7 +252,7 @@
                         <a href="#"
                             class="border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
                             aria-current="page">
-                            Proyectos Relacionados
+                            Tesis Relacionadas
                         </a>
                     </nav>
                 </div>
@@ -261,21 +261,68 @@
 
         <!-- Description list -->
         <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
+                            class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Título
+                            {{-- include('partials._sort-icon',['field'=>'titulo'])--}}
+                        </th>
+                        {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+  Title
+</th> --}}
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Autor
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Tutor
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Fecha Defensa
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Odd row -->
+                    @foreach ($data['tesis'] as $tesis)
+                        <tr class="bg-white">
+                            <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {!! $tesis->full_nameLink() !!}
+                            </td>
+                            {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+  {{$persona}}
+</td> --}}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {!!$tesis->elAutor->full_nameLink()!!}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {!! $tesis->tutor_de_la_tesis->full_nameLink() !!}
+                            </td>
+                            <td scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{-- <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a> --}}
+                                @if (isset($tesis->fechaDefensa))
+                                {{ $tesis->fechaDefensa }}
+                                @else
+                                    En Curso                                    
+                                @endif
+
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    <!-- Even row -->
+
+
+                    <!-- More people... -->
+                </tbody>
+            </table>
             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                @foreach ($data['tesis'] as $tesis)
-                    <div class="sm:col-span-2">
-                        <dt class="text-sm font-medium text-gray-500">
-                            {{-- About --}}
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            {!! $tesis->full_nameLink() !!}. Autor: {!!$tesis->autor->full_nameLink()!!}. Tutor: {!! $tesis->tutor_de_la_tesis->full_nameLink() !!}.
-                            @if (true)
-                                Cotutores: {!!$tesis->cotutores_de_la_tesis()!!}
-                            @endif
-                            {{-- Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu. --}}
-                        </dd>
-                    </div>
-                @endforeach
+                
 
 
 

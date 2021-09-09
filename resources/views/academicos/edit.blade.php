@@ -2,7 +2,7 @@
     <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div class="flex-1 min-w-0">
           <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-            Editar Académico
+            Editar Académico/a
           </h1>
         </div>
         <div class="mt-4 flex sm:mt-0 sm:ml-4">
@@ -163,5 +163,5 @@
     </form>
 
     <?php $edit=$data['academico']->id;?>
-        @livewire('borrar.borrar_academico',['edit' =>$edit])
+        {{--@livewire('borrar.borrar_academico',['edit' =>$edit])--}}
     </x-app-layout>

@@ -71,7 +71,7 @@ class editartesis extends Component
             $this->proyectos[] = $proyecto->id_proyecto;
         }
         foreach ($articulosPerfil as $articulo) {
-            $this->articulos[] = $articulo;
+            $this->articulos[] = $articulo->id_articulo;
         }
     }
 

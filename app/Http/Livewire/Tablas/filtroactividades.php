@@ -67,7 +67,7 @@ class filtroactividades extends Component
                     'link' => '/actividadextension/'.$laExtension->id,
                     'tipo' => 'Extensión',
                     'fecha' => $laExtension->fecha_comienzo . ' / ' . $laExtension->fecha_termino,
-                    'viaje' => $elViaje->full_name(),
+                    'viaje' =>(isset($elViaje)) ? $elViaje->full_name() : '',
                     'id_viaje' => $extension->id_viaje
                 );
                 $myArray[] = $row;

@@ -37,15 +37,7 @@ class filtrorevistas extends Component
         {
             $clasificaciones=["R","B","MB","R/B/MB*","MB/B*"];
             $items = $items->orderBy(DB::raw('FIELD(clasificacion_Fondecyt,"R","B","MB","R/B/MB*","MB/B*","")'),$this->sortDirection);
-            /*
-            $ids=['MB','B','R','No Clasificada'];
-            $items = $items->whereIn('revistas.clasificacion_Fondecyt', $ids)
-            ->orderByRaw('FIELD (revistas.clasificacion_Fondecyt, ' . implode(', ', $ids) . ') ASC');
-            /*
-            $clasificaciones=['MB','B','R/B/MB*','R','No Clasificada',1];
-            $items = $items->orderBy(function($model) use ($clasificaciones){
-                return array_search($model->fondecyt(), $clasificaciones);});
-            */
+           
             
         }
         else

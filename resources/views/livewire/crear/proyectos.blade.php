@@ -110,7 +110,7 @@
                     <select name="investigador_responsable" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
                         class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                         
-                        <option value="">-- Selecciona al Investigador Responsable --</option>
+                        <option value="">-- Selecciona Investigador/a Responsable --</option>
 
                         @foreach ($allPersonas as $persona)
                             <option value="{{ $persona->id }}">
@@ -167,7 +167,7 @@
                                 wire:model="participantes.coinvestigadores.{{ $index }}.1"
                                  name="participantes[{{ $index }}][1]" autocomplete="cc-family-name"
                                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    placeholder="Coinvestigador, Colaborador, Patrocinador...">
+                                    placeholder="Coinvestigador/a, Colaborador/a, Patrocinador/a...">
                             </div>
 
                             <div class="col-span-4 sm:col-span-2 center">

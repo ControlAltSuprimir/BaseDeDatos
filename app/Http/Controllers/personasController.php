@@ -7,6 +7,8 @@ use App\Models\Viajes;
 use App\Models\Academicos;
 use Illuminate\Http\Request;
 
+use App\Mail\Notificacion;
+
 class personasController extends Controller
 {
     /**
@@ -75,6 +77,10 @@ class personasController extends Controller
     public function show($id)
     {
         //
+        /*
+        $correo = new Notificacion;
+        return $correo->nuevoUsuario();
+        */
         $persona = Personas::find($id);
         //return $persona;
 

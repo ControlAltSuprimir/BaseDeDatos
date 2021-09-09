@@ -62,19 +62,13 @@ class tesisController extends Controller
         $tesis->fechaDefensa = $request->fechaDefensa;
         $tesis->autor = $request->autor;
         $tesis->id_programa = $request->programa;
+        $tesis->observaciones = $request->observaciones;
+        $tesis->resumen = $request->resumen;
         $tesis->is_valid = 1;
+        $tesis->fechaProyecto = $request->fechaProyecto;
+        $tesis->estado = $request->estado;
 
         $tesis->save();
-
-        if (in_array($request->programa, [1, 2, 3, 4])) {
-            $tesisInterna = new TesisInterna;
-            $tesisInterna->fechaProyecto = $request->fechaProyecto;
-            $tesisInterna->id_tesis = $tesis->id;
-            $tesisInterna->estado = $request->estado;
-            //$tesisInterna->tesista = $request->autor;
-            $tesisInterna->is_valid = 1;
-            $tesisInterna->save();
-        }
 
         DB::table('personas_tesis_tutores')->insert([
             'id_Persona' => $request->tutor,
@@ -183,27 +177,20 @@ class tesisController extends Controller
     {
         //
 
-        //return $request;
+        //return $request->articulos;
 
         $tesis = Tesis::find($id);
         $tesis->titulo = $request->titulo;
         $tesis->fechaDefensa = $request->fechaDefensa;
         $tesis->autor = $request->autor;
         $tesis->id_programa = $request->programa;
+        $tesis->observaciones = $request->observaciones;
+        $tesis->resumen = $request->resumen;
         $tesis->is_valid = 1;
+        $tesis->fechaProyecto = $request->fechaProyecto;
+        $tesis->estado = $request->estado;
 
         $tesis->save();
-
-
-        if (in_array($request->programa, [1, 2, 3, 4])) {
-            $tesisInterna = TesisInterna::where('is_valid', '=', 1)->where('id_tesis', '=', $tesis->id)->first();
-            $tesisInterna->fechaProyecto = $request->fechaProyecto;
-            //$tesisInterna->id_tesis = $tesis->id;
-            $tesisInterna->estado = $request->estado;
-            //$tesisInterna->tesista = $request->autor;
-            $tesisInterna->is_valid = 1;
-            $tesisInterna->save();
-        }
 
 
         DB::table('personas_tesis_tutores')

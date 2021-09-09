@@ -1,11 +1,15 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
+            <img class="h-24 w-auto" src="/img/logoBaner.png"
+                        alt="Workflow">
+            {{--
             <x-jet-authentication-card-logo />
+            --}}
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('¿Olvidaste tu contraseña? No hay problema. Escribe tu correo y te enviaremos un correo para que puedas crear una nueva.') }}
         </div>
 
         @if (session('status'))

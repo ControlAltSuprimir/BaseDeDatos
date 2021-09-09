@@ -38,7 +38,7 @@
                             <select name="academico" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 required>
-                                <option value="">-- Selecciona al Académico --</option>
+                                <option value="">-- Selecciona Académico/a --</option>
     
                                 @foreach ($data['allAcademicos'] as $academico)
                                     <option value="{{ $academico->persona->id }}">
@@ -91,7 +91,7 @@
                                 <select name="proyecto" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                                 >
-                                <option value="">-- Selecciona el Proyecto --</option>
+                                <option value="">-- Selecciona Proyecto --</option>
     
                                 @foreach ($data['allProyectos'] as $proyecto)
                                     <option value="{{ $proyecto->id }}">

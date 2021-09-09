@@ -55,11 +55,15 @@
         <div class="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
-                    <img class="h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    {{--<img class="h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                        alt="Workflow">--}}
+                        <img class="h-24 w-auto" src="/img/logoBaner.png"
                         alt="Workflow">
+                    {{--
                     <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
                         Conéctate a tu cuenta
                     </h2>
+                    --}}
                     <p class="mt-2 text-sm text-gray-600">
                         
                     </p>
@@ -112,6 +116,24 @@
                                         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                 </div>
                             </div>
+
+
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    {{--
+                                  <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                  <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                                    Remember me
+                                  </label>
+                                  --}}
+                                </div>
+                  
+                                <div class="text-sm">
+                                  <a href="/forgot-password" class="font-medium text-indigo-600 hover:text-indigo-500">
+                                    ¿Olvidaste tu Contraseña?
+                                  </a>
+                                </div>
+                              </div>
 
 
 

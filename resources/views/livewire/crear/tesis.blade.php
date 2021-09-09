@@ -21,12 +21,46 @@
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                 </div>
 
+
+
                 <div class="col-span-4 sm:col-span-2">
-                    <label for="last_name" class="block text-sm font-medium text-gray-700"> </label>
-                    {{-- <input type="number" name="fecha_publicacion" id="fecha" autocomplete="cc-family-name"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"> --}}
+                    <label for="first_name" class="block text-sm font-medium text-gray-700">
+                        Fecha de Proyecto
+                    </label>
+                    <input type="date" name="fechaProyecto" id="fechaProyecto" autocomplete="cc-given-name"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                 </div>
 
+                <div class="col-span-4 sm:col-span-2">
+                    <label for="last_name" class="block text-sm font-medium text-gray-700">
+                        Estado
+                    </label>
+                    <input type="text" name="estado" id="estado" autocomplete="cc-family-name"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                        placeholder="En proceso, Final ...">
+                </div>
+
+                <div class="col-span-4 sm:col-span-2">
+                </div>
+
+                <div class="col-span-4 sm:col-span-2">
+                    <label for="about" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                        Resumen de la Tesis
+                    </label>
+                    <textarea id="resumen" name="resumen" value="resumen" rows="3"
+                        class=" shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
+                    {{-- <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p> --}}
+
+                </div>
+                <div class="col-span-4 sm:col-span-2">
+                    <label for="about" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                        Observaciones
+                    </label>
+                    <textarea id="observaciones" name="observaciones" value="observaciones" rows="3"
+                        class="shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
+                    {{-- <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p> --}}
+
+                </div>
 
 
             </div>
@@ -167,7 +201,8 @@
                 <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">
                     Programa Asociado
                 </h2>
-                <p class="mt-1 text-sm text-gray-500">Si el programa no está en la base de datos, agrégalo <a class="text-red-800" href="/programas/create"> aquí </a>.</p>
+                <p class="mt-1 text-sm text-gray-500">Si el programa no está en la base de datos, agrégalo <a
+                        class="text-red-800" href="/programas/create"> aquí </a>.</p>
             </div>
 
             <div class="mt-6 grid grid-cols-4 gap-6">
@@ -181,7 +216,7 @@
 
                     @foreach ($allProgramas as $programa)
                         <option value="{{ $programa->id }}">
-                            {{ $programa->nombre }}.  {{$programa->institucion->nombre}}
+                            {{ $programa->nombre }}. {{ $programa->institucion->nombre }}
                         </option>
                     @endforeach
                 </select>
@@ -190,46 +225,6 @@
         </div>
     </div>
 
-    <?php
-    //echo $programaSeleccionado;
-    $arrayProgramas = [1, 2, 3, 4];
-    ?>
-
-    @if (in_array($programaSeleccionado, $arrayProgramas))
-        <div class="shadow sm:rounded-md sm:overflow-hidden">
-            <div class="bg-white py-6 px-4 sm:p-6">
-                
-
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <label for="first_name" class="block text-sm font-medium text-gray-700">
-                            Fecha de Proyecto
-                        </label>
-                        <input type="date" name="fechaProyecto" id="fechaProyecto" autocomplete="cc-given-name"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                    </div>
-
-                    <div class="col-span-4 sm:col-span-2">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700"> 
-                            Estado
-                        </label>
-                        <input type="text" name="estado" id="estado" autocomplete="cc-family-name"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                        placeholder="En proceso, "> 
-                    </div>
-
-
-
-                </div>
-
-
-
-            </div>
-        </div>
-    @else
-         
-
-    @endif
 
     {{-- Comisión --}}
 
@@ -316,7 +311,7 @@
 
                             @foreach ($allArticulos as $articulo)
                                 <option value="{{ $articulo->id }}">
-                                    {{ $articulo->titulo }}. Autores: {{$articulo->autoresNoLink()}}.
+                                    {{ $articulo->titulo }}. Autores: {{ $articulo->autoresNoLink() }}.
                                 </option>
                             @endforeach
                         </select>

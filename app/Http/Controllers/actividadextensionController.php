@@ -49,7 +49,7 @@ class actividadextensionController extends Controller
         $extension->nombre = $request->nombre;
         $extension->publicoObjetivo = $request->publicoObjetivo;
         $extension->numeroParticipantes = $request->numeroParticipantes;
-        $extension->financiamento = $request->financiamiento;
+        $extension->financiamiento = $request->financiamiento;
         $extension->comentarios = $request->comentarios;
         $extension->fecha_comienzo = $request->fecha_comienzo;
         $extension->fecha_termino = $request->fecha_termino;
@@ -98,6 +98,8 @@ class actividadextensionController extends Controller
     {
         //
         $extension = ActividadExtension::find($id);
+
+        //return $extension;
         $participantes = $extension->participantes()->get();
         $proyectos = $extension->proyectos()->get();
 
@@ -141,7 +143,7 @@ class actividadextensionController extends Controller
         $extension->nombre = $request->nombre;
         $extension->publicoObjetivo = $request->publicoObjetivo;
         $extension->numeroParticipantes = $request->numeroParticipantes;
-        $extension->financiamento = $request->financiamiento;
+        $extension->financiamiento = $request->financiamiento;
         $extension->comentarios = $request->comentarios;
         $extension->fecha_comienzo = $request->fecha_comienzo;
         $extension->fecha_termino = $request->fecha_termino;

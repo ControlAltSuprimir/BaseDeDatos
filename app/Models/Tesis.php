@@ -27,7 +27,7 @@ class Tesis extends Model
 
     public function articulos()
     {
-        return $this->belongsToMany(Articulos::class, 'articulo_tesis', 'id_tesis', 'id_articulo');
+        return $this->belongsToMany(Articulos::class, 'articulos_tesis', 'id_tesis', 'id_articulo')->where('articulos_tesis.is_valid','=',1);
     }
 
     public function losTutores()

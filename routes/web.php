@@ -22,6 +22,9 @@ use App\Http\Controllers\visitaController;
 use App\Http\Controllers\chartController;
 use App\Http\Controllers\formulariosController;
 
+//Correos
+use App\Mail\Notificacion;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -94,3 +97,8 @@ Route::post('/formularioviaje', [formulariosController::class,'storeviaje']);
 Route::get('/viajespendientes',[formulariosController::class,'viajespendientes'])->middleware('auth');
 Route::get('/viajespendientes/{id}',[formulariosController::class,'viajespendientesshow'])->middleware('auth');
 Route::get('/viajespendientes/{id}/process',[formulariosController::class,'viajeprocesado'])->middleware('auth');
+
+
+//mails
+
+Route::get('/correo',[Notificacion::class,'nuevoUsuario']);

@@ -19,9 +19,13 @@ class academicosController extends Controller
      */
     public function index()
     {
-        //
-        $academicos = Academicos::where('is_valid', '=', 1)
+        
+        $academicos = Academicos::select('academicos.*')
+            ->where('academicos.is_valid','=',1)
+            ->join('personas', 'personas.id', '=', 'academicos.id_Persona')
+            ->orderBy('personas.primer_apellido')
             ->paginate(25);
+        
         $data = compact('academicos');
         return view('academicos.index', ['data' => $data]);
     }
@@ -34,9 +38,9 @@ class academicosController extends Controller
     public function create()
     {
         //
-        $allPersonas= Personas::where('is_valid','=',1)
-                                ->sortBy('primer_apellido')
-                                ->get();
+        $allPersonas = Personas::where('is_valid', '=', 1)
+            ->orderBy('primer_apellido')
+            ->get();
         $data = compact('allPersonas');
         return view('academicos.create', ['data' => $data]);
     }
@@ -64,8 +68,7 @@ class academicosController extends Controller
 
         $academico->save();
 
-        return redirect('/academicos/'.$academico->id);
-
+        return redirect('/academicos/' . $academico->id);
     }
 
     /**
@@ -77,9 +80,9 @@ class academicosController extends Controller
     public function show($id)
     {
         //
-        $academico = Academicos::where('is_valid','=',1)->find($id);
-        $viajes = Viajes::where('id_persona','=',$academico->persona->id)->where('is_valid','=',1)->get();
-        $data = compact('academico','viajes');
+        $academico = Academicos::where('is_valid', '=', 1)->find($id);
+        $viajes = Viajes::where('id_persona', '=', $academico->persona->id)->where('is_valid', '=', 1)->get();
+        $data = compact('academico', 'viajes');
         return  view('academicos.show', ['data' => $data]);
     }
 
@@ -92,11 +95,11 @@ class academicosController extends Controller
     public function edit($id)
     {
         //
-        $academico=Academicos::find($id);
-        $persona=Personas::find($academico->id_Persona);
+        $academico = Academicos::find($id);
+        $persona = Personas::find($academico->id_Persona);
 
-        $data=compact('academico','persona');
-        
+        $data = compact('academico', 'persona');
+
         return view('academicos.edit', ['data' => $data]);
     }
 
@@ -113,7 +116,7 @@ class academicosController extends Controller
         //return $request;
         $persona = Personas::find($academico->id_Persona);
         //$persona = new Personas;
-        
+
         $persona->primer_nombre = $request->primer_nombre;
         $persona->segundo_nombre = $request->segundo_nombre;
         $persona->primer_apellido = $request->primer_apellido;
@@ -124,11 +127,11 @@ class academicosController extends Controller
         $persona->fecha_nacimiento = $request->fecha_nacimiento;
         $persona->telefono =  $request->telefono;
         $persona->is_valid = 1;
-        
+
 
         $persona->save();
 
-        
+
         //$academico->id_Persona = $request->persona;
         $academico->comienzo = $request->comienzo;
         $academico->termino = $request->termino;
@@ -141,11 +144,10 @@ class academicosController extends Controller
 
         $academico->save();
 
-        return redirect('/academicos/'.$academico->id);
-
+        return redirect('/academicos/' . $academico->id);
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      *

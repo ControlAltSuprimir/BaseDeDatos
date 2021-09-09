@@ -46,7 +46,7 @@
                                 <tr>
                                     <th wire:click="sortBy('primer_apellido')" style="cursor: pointer;" scope="col"
                                         class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Académico
+                                        Académico/a
                                     </th>
 
                                     <th scope="col"

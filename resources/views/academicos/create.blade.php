@@ -31,7 +31,7 @@
             </div>
 
             <div class="col-span-4 sm:col-span-1" gap-6>
-                <select name="persona" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
+                <select name="persona" 
                     class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                     required>
                     <option value="">-- Selecciona la Persona --</option>
@@ -39,7 +39,6 @@
                     @foreach ($data['allPersonas'] as $persona)
                         <option value="{{ $persona->id }}">
                             {{ $persona->full_name() }}
-                            {{-- (${{ number_format($product->price, 2) }}) --}}
                         </option>
                     @endforeach
                 </select>

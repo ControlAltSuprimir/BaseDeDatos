@@ -12,8 +12,7 @@ class ArticulosTesis extends Model
     protected $table = 'articulos_tesis';
     protected $primaryKey = 'id';
     const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at'; 
-    
+    const UPDATED_AT = 'updated_at';     
 
     
     

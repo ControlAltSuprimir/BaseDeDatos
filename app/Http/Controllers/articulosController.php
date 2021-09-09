@@ -133,7 +133,7 @@ class articulosController extends Controller
         $tesis = $articulo->tesistasArray();
 
         $data = compact('articulo', 'revista', 'proyectos', 'autores', 'tesis');
-        //return $articulo;
+        //return $tesis;
         return view('articulos.show', ['data' => $data]);
     }
 

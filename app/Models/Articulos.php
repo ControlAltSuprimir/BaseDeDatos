@@ -32,7 +32,7 @@ class Articulos extends Model
     }
 
     public function tesistas(){
-        return $this->belongsToMany(Tesis::class, 'articulo_tesis', 'id_articulo', 'id_tesis')->where('articulo_tesis.is_valid', '=', 1);
+        return $this->belongsToMany(Tesis::class, 'articulos_tesis', 'id_articulo', 'id_tesis')->where('articulos_tesis.is_valid', '=', 1);
     }
 
     public function tesistasArray()

@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Base de Datos{{-- {{ config('app.name', 'Laravel') }} --}}</title>
+    {{-- favicon --}}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('/img/favicon.png') }}">
+    <link rel="shortcut icon" sizes="192x192" href="{{ asset('/img/favicon.png') }}">
+
+    <title>Intranet{{-- {{ config('app.name', 'Laravel') }} --}}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">

@@ -125,6 +125,7 @@
                         </div>
                     </a>
 
+                    {{--
                     <a href="#"
                     class="relative block rounded-lg border border-gray-300 bg-white shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus:outline-none">
                     
@@ -155,6 +156,7 @@
                             </div>
                         </div>
                     </a>
+                    --}}
             
 
 

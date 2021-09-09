@@ -99,7 +99,7 @@
                     <div class="bg-white py-6 px-4 sm:p-6">
                         <div>
                             <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Nombre
-                                del Expositor
+                                del/a Expositor/a
                             </h2>
                             <p class="mt-1 text-sm text-gray-500"></p>
                         </div>
@@ -135,7 +135,7 @@
                     <div class="bg-white py-6 px-4 sm:p-6">
                         <div>
                             <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">
-                                Institución del Expositor
+                                Institución del/la Expositor/a
                             </h2>
                             <p class="mt-1 text-sm text-gray-500">Si la institución no se encuentra en la base de datos,
                                 debes agregarla primero <a href="">aquí</a>. </p>

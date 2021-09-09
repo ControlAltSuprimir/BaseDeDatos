@@ -106,27 +106,60 @@
                         </div>
 
 
-                        @if (isset($data['tesisInterna']))
-
-
-                            <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-500">
-                                    Fecha de Proyecto de Tesis
-                                </dt>
-                                <dd class="mt-1 text-sm text-gray-900">
-                                    {{ $data['tesisInterna']->fechaProyecto }}
-                                </dd>
-                            </div>
+                        
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Fecha de Proyecto de Tesis
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                        @if (isset($data['tesis']->fechaProyecto))                            
+                                {{ $data['tesis']->fechaProyecto }}
+                        @else
+                        &emsp;
+                                @endif
+                            </dd>
+                        </div>
 
                             <div class="sm:col-span-1">
                                 <dt class="text-sm font-medium text-gray-500">
                                     Estado de la Tesis
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900">
-                                    {{ $data['tesisInterna']->estado }}
+                                    @if (isset($data['tesis']->estado))
+                                    {{ $data['tesis']->estado }}    
+                                    @else
+                                    &emsp;
+                                    @endif
+                                    
                                 </dd>
                             </div>
-                        @endif
+                        <br>
+                        <div class="sm:col-span-2">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Resumen
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                @if (isset($data['tesis']->resumen))
+                                {{ $data['tesis']->resumen }}    
+                                @endif
+                                
+                            </dd>
+                        </div>
+<br>
+                        <div class="sm:col-span-2">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Observaciones
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                @if (isset($data['tesis']->observaciones))
+                                {{ $data['tesis']->observaciones }}    
+                                @else
+                                &emsp;
+                                @endif
+                                
+                            </dd>
+                        </div>
+                        
 
                 </div>
             </div>
