@@ -21,7 +21,7 @@ class Viaje extends Component
 
     public function render()
     {
-        $items= Viajes::where('is_valid','=',1)
+        $items= Viajes::with('persona')->where('is_valid','=',1)
         ->search($this->search)
         ->orderBy($this->sortBy,$this->sortDirection)
         ->paginate(5);

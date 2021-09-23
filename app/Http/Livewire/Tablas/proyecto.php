@@ -20,7 +20,7 @@ class Proyecto extends Component
 
     public function render()
     {
-        $items= Proyectos::where('is_valid','=',1)
+        $items= Proyectos::with('responsable')->where('is_valid','=',1)
         ->search($this->search)
         ->orderBy($this->sortBy,$this->sortDirection)
         ->paginate($this->perPage);

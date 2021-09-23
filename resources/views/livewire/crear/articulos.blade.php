@@ -47,14 +47,15 @@
                     </div>
 
                     <div class="col-span-4 sm:col-span-2">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">Estado Publicación</label>
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">Estado
+                            Publicación</label>
                         <select name="estadoPublicacion"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                    <option value="publicado">Publicado</option>
-                                    <option value="aceptado">Aceptado</option>
-                                    <option value="enRevision">En Revisión</option>
-                                    <option value="enPrensa">En Prensa</option>
-                            </select>
+                            class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                            <option value="publicado">Publicado</option>
+                            <option value="aceptado">Aceptado</option>
+                            <option value="enRevision">En Revisión</option>
+                            <option value="enPrensa">En Prensa</option>
+                        </select>
                     </div>
 
 
@@ -88,56 +89,24 @@
                 </div>
 
                 <div class="mt-6 grid grid-cols-4 gap-6">
-                    {{-- <div class="col-span-4 sm:col-span-2">
-                        <label for="country" class="block text-sm font-medium text-gray-700">Indexación</label>
-                    </div>
 
-                    <div class="col-span-4 sm:col-span-2">
-                        <label for="postal_code" class="block text-sm font-medium text-gray-700"> Acción</label>
-                    </div> --}}
 
                 </div>
-                @foreach ($orderProducts as $index => $orderProduct)
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2 center">
-                            {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
-                            <select name="personas[{{ $index }}]"
-                                wire:model="orderProducts.{{ $index }}.product_id"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Autor/a -- </option>
-                            {{--<option value=""><input type=""placeholder="hola"></option>--}}
-                                @foreach ($allPersonas as $persona)
-                                    <option value="{{ $persona->id }}">
-                                        {{ $persona->full_name() }}
-                                        {{-- (${{ number_format($product->price, 2) }}) --}}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
 
 
-                        <div class="col-span-4 sm:col-span-2">
-                            {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
-
-                            <a href="#" wire:click.prevent="removeProduct('autor',{{ $index }})">
-                                <button type="submit"
-                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                    Borrar
-                                </button>
-                            </a>
-                        </div>
-
-                    </div>
-                    &emsp;
-                    <hr>
-                @endforeach
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addProduct('autor')"
-                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Añadir
-                            Autor</button>
-                    </div>
+                <div wire:ignore>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        autor(a)</label>
+                    <select id="location" name="personas[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allPersonas as $persona)
+                            <option value="{{ $persona->id }}">
+                                {{ $persona->full_name() }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
 
 
             </div>
@@ -151,16 +120,7 @@
 
                 </div>
 
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    {{-- <div class="col-span-4 sm:col-span-2">
-                        <label for="country" class="block text-sm font-medium text-gray-700">Indexación</label>
-                    </div>
-
-                    <div class="col-span-4 sm:col-span-2">
-                        <label for="postal_code" class="block text-sm font-medium text-gray-700"> Acción</label>
-                    </div> --}}
-
-                </div>
+               
                 @foreach ($extraPersonas as $index => $orderProduct)
                     <div class="mt-6 grid grid-cols-4 gap-6">
 
@@ -211,72 +171,73 @@
 
             </div>
         </div>
-<br><br>
+        <br><br>
 
-<div class="shadow sm:rounded-md sm:overflow-hidden">
-    <div class="bg-white py-6 px-4 sm:p-6">
-        <div>
-            <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Proyectos Involucrados
-            </h2>
-            <p class="mt-1 text-sm text-gray-500"></p>
-        </div>
+        <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="bg-white py-6 px-4 sm:p-6">
+                <div>
+                    <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Proyectos
+                        Involucrados
+                    </h2>
+                    <p class="mt-1 text-sm text-gray-500"></p>
+                </div>
 
-        <div class="mt-6 grid grid-cols-4 gap-6">
-            {{-- <div class="col-span-4 sm:col-span-2">
-                <label for="country" class="block text-sm font-medium text-gray-700">Indexación</label>
-            </div>
-
-            <div class="col-span-4 sm:col-span-2">
-                <label for="postal_code" class="block text-sm font-medium text-gray-700"> Acción</label>
-            </div> --}}
-
-        </div>
-        @foreach ($proyectosInvolucrados as $index => $orderProduct)
-            <div class="mt-6 grid grid-cols-4 gap-6">
-                <div class="col-span-4 sm:col-span-2 center">
-                    {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
-                    <select name="proyectos[{{ $index }}]"
-                        wire:model="proyectosInvolucrados.{{ $index }}"
-                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        <option value="">-- Selecciona Proyecto -- </option>
-                    {{--<option value=""><input type=""placeholder="hola"></option>--}}
+                <div wire:ignore>
+                    <label for="proyectos" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Proyecto (Código o Nombre)</label>
+                    <select id="project" name="proyectos[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         @foreach ($allProyectos as $proyecto)
                             <option value="{{ $proyecto->id }}">
-                                {{ $proyecto->titulo }}
-                                {{-- (${{ number_format($product->price, 2) }}) --}}
+                                {{$proyecto->codigo_proyecto}}: {{ $proyecto->titulo }}
                             </option>
                         @endforeach
                     </select>
                 </div>
+{{--
+                @foreach ($proyectosInvolucrados as $index => $orderProduct)
+                    <div class="mt-6 grid grid-cols-4 gap-6">
+                        <div class="col-span-4 sm:col-span-2 center">
+                            <select name="proyectos[{{ $index }}]"
+                                wire:model="proyectosInvolucrados.{{ $index }}"
+                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                <option value="">-- Selecciona Proyecto -- </option>
+                                @foreach ($allProyectos as $proyecto)
+                                    <option value="{{ $proyecto->id }}">
+                                        {{ $proyecto->titulo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
 
-                <div class="col-span-4 sm:col-span-2">
-                    {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
+                        <div class="col-span-4 sm:col-span-2">
 
-                    <a href="#" wire:click.prevent="removeProduct('proyecto',{{ $index }})">
-                        <button type="submit"
-                            class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Borrar
-                        </button>
-                    </a>
+                            <a href="#" wire:click.prevent="removeProduct('proyecto',{{ $index }})">
+                                <button type="submit"
+                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                                    Borrar
+                                </button>
+                            </a>
+                        </div>
+
+                    </div>
+                    &emsp;
+                    <hr>
+                @endforeach
+                <div class="mt-6 grid grid-cols-4 gap-6">
+                    <div class="col-span-4 sm:col-span-2">
+                        <button wire:click.prevent="addProduct('proyecto')"
+                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Añadir
+                            Proyecto</button>
+                    </div>
                 </div>
+                --}}
 
-            </div>
-            &emsp;
-            <hr>
-        @endforeach
-        <div class="mt-6 grid grid-cols-4 gap-6">
-            <div class="col-span-4 sm:col-span-2">
-                <button wire:click.prevent="addProduct('proyecto')"
-                    class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Añadir
-                    Proyecto</button>
+
             </div>
         </div>
-
-
-    </div>
-</div>
-<hr><br><br>
+        <hr><br><br>
         {{-- Revista --}}
 
         <div class="shadow sm:rounded-md sm:overflow-hidden">
@@ -291,9 +252,11 @@
                 </div>
                 <div wire:ignore>
                     <div class="col-span-4 sm:col-span-1" gap-6>
-                        <select name="revista" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
+                        <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                            Revista</label>
+                        <select name="revista"
                             class="select2 mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                            <option value="" selected>-- Selecciona la Revista --</option>
+                            <option value="" selected>-- Ninguna --</option>
 
                             @foreach ($allRevistas as $revista)
                                 <option value="{{ $revista->id }}">
@@ -344,7 +307,17 @@
         $(function() {
             //Initialize Select2 Elements
             $('.select2').select2()
-        })
+        });
+        $(function() {
+            //Initialize Select2 Elements
+            $('#selectAutor0').select2()
+        });
+        $(document).ready(function() {
+            $('#project').select2();
+        });
+        $(document).ready(function() {
+            $('#location').select2();
+        });
     </script>
 
 </div>

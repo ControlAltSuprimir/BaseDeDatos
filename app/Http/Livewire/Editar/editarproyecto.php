@@ -41,8 +41,8 @@ class editarproyecto extends Component
         $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->get();
         $this->allArticulos = Articulos::where('is_valid', '=', 1)->orderBy('titulo')->get();
         $this->allTesis = Tesis::where('is_valid', '=', 1)->orderBy('titulo')->get();
-        $this->allAcademicas = ActividadAcademica::where('is_valid', '=', 1)->get();
-        $this->allExtensiones = ActividadExtension::where('is_valid', '=', 1)->get();
+        $this->allAcademicas = ActividadAcademica::where('is_valid', '=', 1)->orderBy('nombre')->get();
+        $this->allExtensiones = ActividadExtension::where('is_valid', '=', 1)->orderBy('nombre')->get();
 
         $this->participantes = array('participantes'=>[],'extraparticipantes'=>[]);
         $this->actividades = array('extension' => [], 'academica' => []);

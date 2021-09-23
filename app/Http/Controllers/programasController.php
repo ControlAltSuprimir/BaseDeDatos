@@ -16,7 +16,7 @@ class programasController extends Controller
     public function index()
     {
         //
-        $programas = Programas::where('is_valid','=',1)
+        $programas = Programas::with('institucion')->where('is_valid','=',1)
                                 ->get();
 
         $data=compact('programas');

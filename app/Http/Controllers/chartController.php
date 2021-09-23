@@ -19,7 +19,7 @@ class chartController extends Controller
 
 
         // Publicaciones
-        $articulos = Articulos::where('is_valid', '=', 1)->where('estado_publicacion', '=', 'publicado')->get();
+        $articulos = Articulos::with('revista')->where('is_valid', '=', 1)->where('estado_publicacion', '=', 'publicado')->get();
 
         //Artículos Pendientes
         $pendientes = Articulos::where('is_valid', '=', 1)
@@ -173,7 +173,7 @@ class chartController extends Controller
 
 
 
-    public function articulos()
+    public function losArticulos()
     {
 
         $baseArray = array(

@@ -121,23 +121,7 @@
             </div>
         </div>
         <!-- Sidebar Search -->
-        {{-- <div class="px-3 mt-5">
-        <label for="search" class="sr-only">Search</label>
-        <div class="mt-1 relative rounded-md shadow-sm">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" aria-hidden="true">
-                <!-- Heroicon name: solid/search -->
-                <svg class="mr-3 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                    fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd" />
-                </svg>
-            </div>
-            <input type="text" name="search" id="search"
-                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-9 sm:text-sm border-gray-300 rounded-md"
-                placeholder="Search">
-        </div>
-    </div> --}}
+        
 
 
         <!-- Navigation -->
@@ -186,11 +170,12 @@
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                             Equipo
                         </a>
-
-                        {{-- <a href="#"
+{{--
+                        <a href="/alumnos"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                         Alumnos
-                    </a> --}}
+                    </a>
+                    --}}
                         {{-- <a href="#"
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                             Ex - Alumnos
@@ -203,6 +188,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <div class="space-y-1">
                 <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
@@ -250,6 +236,47 @@
                     </div>
                 </div>
             </div>
+
+            <div class="space-y-1">
+                <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                <button type="button" onclick="toggle_visibility('docencia');"
+                    class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    aria-controls="sub-menu-6" aria-expanded="false">
+                    <!-- Heroicon name: outline/folder -->
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        {{--<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />--}}
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                    Docencia
+                    <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                    {{-- <svg class="text-gray-300 ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                    viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                </svg> --}}
+                </button>
+                <!-- Expandable link section, show/hide based on state. -->
+                <div class="space-y-1" id="sub-menu-6">
+                    <div id="docencia" style="display: none;">
+                        <a href="/cursos"
+                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                            Cursos
+                        </a>
+
+                        <a href="/docencia/estudiantes"
+                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                            Estudiantes
+                        </a>
+
+                        <a href="/docencia/exestudiantes"
+                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                            Ex Estudiantes
+                        </a>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="space-y-1">
                 <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
@@ -329,10 +356,10 @@
                             Programas
                         </a>
 
-                        {{-- <a href="#"
+                        <a href="/cursos"
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                            Comisiones
-                        </a> --}}
+                            Cursos
+                        </a>
                         {{-- <a href="#"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                         Settings

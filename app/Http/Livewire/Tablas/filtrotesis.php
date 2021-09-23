@@ -20,7 +20,7 @@ class filtrotesis extends Component
 
     public function render()
     {
-        $items= Tesis::where('is_valid','=',1)
+        $items= Tesis::with('tutores','tesista')->where('is_valid','=',1)
         ->search($this->search)
         ->orderBy($this->sortBy,$this->sortDirection)
         ->paginate(25);

@@ -29,4 +29,12 @@ class Programas extends Model
         return "$this->nombre. " . $this->institucion->nombre . ".";
     }
 
+    public function estudiantes()
+    {
+        return $this->belongsToMany(Personas::class, 'personas_programas', 'id_Programa', 'id_Persona')
+                    ->withPivot('fecha_comienzo','fecha_termino','estado')
+                    ->where('personas_programas.is_valid', '=', 1);
+    }
+    
+
 }

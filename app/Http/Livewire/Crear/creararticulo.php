@@ -63,6 +63,7 @@ class creararticulo extends Component
         $this->extraPersonas = array_values($this->extraPersonas);
     }
 
+    
     public function render()
     {
         info($this->extraPersonas);

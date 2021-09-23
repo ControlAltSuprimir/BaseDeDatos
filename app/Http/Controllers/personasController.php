@@ -8,6 +8,7 @@ use App\Models\Academicos;
 use Illuminate\Http\Request;
 
 use App\Mail\Notificacion;
+use App\Models\Curso;
 
 class personasController extends Controller
 {
@@ -76,24 +77,22 @@ class personasController extends Controller
      */
     public function show($id)
     {
-        //
-        /*
-        $correo = new Notificacion;
-        return $correo->nuevoUsuario();
-        */
         $persona = Personas::find($id);
-        //return $persona;
 
         $academico = Academicos::where('id_Persona', '=', $id)->where('is_valid', '=', 1)->first();
-        //return $academico;
-        //$articulos = $persona->articulos;
+        $estudiante = 0;
+        if($persona->cursos()->first())
+        {
+            $estudiante = 1;
+        }
+        
         if (isset($academico->id)) {
             $data = compact('academico');
             return redirect('/academicos/'.$academico->id);
-            //return  view('academicos.show', ['data' => $data]);
+        
         } else {
             $viajes = Viajes::where('id_persona','=',$id)->where('is_valid','=',1)->get();
-            $data = compact('persona','viajes');
+            $data = compact('persona','viajes','estudiante');
             return view('personas.show', ['data' => $data]);
         }
     }

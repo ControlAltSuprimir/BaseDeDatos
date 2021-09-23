@@ -80,6 +80,11 @@ class Tesis extends Model
         return $this->belongsTo(Personas::class,'autor')->where('personas.is_valid','=',1)->first();
     }
 
+    public function tesista()
+    {
+        return $this->belongsTo(Personas::class,'autor')->where('personas.is_valid','=',1);
+    }
+
     public function descripcion()
     {
         //return ' ';

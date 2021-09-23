@@ -48,6 +48,7 @@ class actividadacademicaController extends Controller
         $academica = new ActividadAcademica;
         $academica->tipo = $request->tipo;
         $academica->nombre = $request->nombre;
+        $academica->financiamiento = $request->financiamiento;
         $academica->participacion = $request->participacion;
         $academica->fecha_comienzo = $request->fecha_comienzo;
         $academica->fecha_termino = $request->fecha_termino;
@@ -139,6 +140,7 @@ class actividadacademicaController extends Controller
         $academica =ActividadAcademica::find($id);
         $academica->tipo = $request->tipo;
         $academica->nombre = $request->nombre;
+        $academica->financiamiento = $request->financiamiento;
         $academica->participacion = $request->participacion;
         $academica->fecha_comienzo = $request->fecha_comienzo;
         $academica->fecha_termino = $request->fecha_termino;
@@ -151,6 +153,7 @@ class actividadacademicaController extends Controller
             ->where('is_valid', '=', 1)
             ->update(['is_valid' => 0]);
 
+        if(isset($request->personas)){
         foreach($request->personas as $persona)
         {
             if(isset($persona["'id'"]))
@@ -164,12 +167,13 @@ class actividadacademicaController extends Controller
 
             $participante->save();}
             //return $participante;
-        }
+        }}
 
         ProyectosActividadesAcademicas::where('id_academica', '=', $academica->id)
             ->where('is_valid', '=', 1)
             ->update(['is_valid' => 0]);
 
+        if(isset($request->proyectos)){
         foreach($request->proyectos as $proyecto)
         {
             if(isset($proyecto["'id'"]))
@@ -180,7 +184,7 @@ class actividadacademicaController extends Controller
             $academicaProyecto->is_valid = 1;
             $academicaProyecto->save();
             }
-        }
+        }}
 
         return redirect('/actividadacademica/'.$academica->id);
     }

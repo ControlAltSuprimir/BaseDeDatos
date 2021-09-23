@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use DB;
+
 class ActividadExtension extends Model
 {
     use HasFactory;
@@ -54,7 +56,10 @@ class ActividadExtension extends Model
             ->orWhere('tipo', 'like', '%' . $val . '%')
             ->orWhere('numeroParticipantes', 'like', '%' . $val . '%')
             ->orWhere('fecha_comienzo', 'like', '%' . $val . '%')
-            ->orWhere('fecha_termino', 'like', '%' . $val . '%');
+            ->orWhere('fecha_termino', 'like', '%' . $val . '%')
+            ->orWhereHas('participantes', function ($query) use ($val) {
+                $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'LIKE', '%' . $val . '%');
+            });
             
     }
 

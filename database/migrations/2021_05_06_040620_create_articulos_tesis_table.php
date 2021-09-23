@@ -14,7 +14,7 @@ class CreateArticulosTesisTable extends Migration
     public function up()
     {
         //Schema::dropIfExists('articulos_tesis');
-
+        if (!Schema::hasTable('articulos_tesis')) {
         Schema::create('articulos_tesis', function (Blueprint $table) {
             $table->id();
             $table->integer('id_articulo');
@@ -24,7 +24,7 @@ class CreateArticulosTesisTable extends Migration
             $table->boolean('is_valid')->default(1);
             $table->timestamps();
             //->nullable($value = true)
-        });
+        });}
     }
 
     /**

@@ -92,41 +92,75 @@
             </legend>
             <div class="space-y-4">
                 <!-- Active: "ring-1 ring-offset-2 ring-indigo-500" -->
-                
+
 
                 <a href="/formularios/viaje"
                     class="relative block rounded-lg border border-gray-300 bg-white shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus:outline-none">
-                    
-                        <div>
 
-                            <input type="radio" name="server-size" value="Hobby" class="sr-only"
-                                aria-labelledby="server-size-0-label"
-                                aria-describedby="server-size-0-description-0 server-size-0-description-1">
-                            <div class="flex items-center">
-                                <div class="text-sm">
-                                    <p id="server-size-0-label" class="font-medium text-gray-900">
-                                        Viajes
-                                    </p>
-                                    <div id="server-size-0-description-0" class="text-gray-500">
-                                        <p class="sm:inline">Sólo para Académicos</p>
-                                        <span class="hidden sm:inline sm:mx-1" aria-hidden="true">&middot;</span>
-                                        <p class="sm:inline"> </p>
-                                    </div>
+                    <div>
+
+                        <input type="radio" name="server-size" value="Hobby" class="sr-only"
+                            aria-labelledby="server-size-0-label"
+                            aria-describedby="server-size-0-description-0 server-size-0-description-1">
+                        <div class="flex items-center">
+                            <div class="text-sm">
+                                <p id="server-size-0-label" class="font-medium text-gray-900">
+                                    Viajes
+                                </p>
+                                <div id="server-size-0-description-0" class="text-gray-500">
+                                    <p class="sm:inline">Sólo para Académicos</p>
+                                    <span class="hidden sm:inline sm:mx-1" aria-hidden="true">&middot;</span>
+                                    <p class="sm:inline"> </p>
                                 </div>
                             </div>
-                            <div id="server-size-0-description-1"
-                                class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right">
-                                <div class="font-medium text-gray-900"> </div>
-                                <div class="ml-1 text-gray-500 sm:ml-0"> </div>
-                            </div>
-                            <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
-                            <div class="absolute -inset-px rounded-lg border-2 pointer-events-none" aria-hidden="true">
+                        </div>
+                        <div id="server-size-0-description-1"
+                            class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right">
+                            <div class="font-medium text-gray-900"> </div>
+                            <div class="ml-1 text-gray-500 sm:ml-0"> </div>
+                        </div>
+                        <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
+                        <div class="absolute -inset-px rounded-lg border-2 pointer-events-none" aria-hidden="true">
+                        </div>
+                    </div>
+                </a>
+
+
+                <a href="https://drive.google.com/drive/folders/1RvKIqbn56lrAtMJMwr4PI3R8a80pCKgg?usp=sharing"
+                    class="relative block rounded-lg border border-gray-300 bg-white shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus:outline-none">
+
+                    <div>
+
+                        <input type="radio" name="server-size" value="Hobby" class="sr-only"
+                            aria-labelledby="server-size-0-label"
+                            aria-describedby="server-size-0-description-0 server-size-0-description-1">
+                        <div class="flex items-center">
+                            <div class="text-sm">
+                                <p id="server-size-0-label" class="font-medium text-gray-900">
+                                    Programas
+                                </p>
+                                <div id="server-size-0-description-0" class="text-gray-500">
+                                    <p class="sm:inline">Sólo para Académicos</p>
+                                    <span class="hidden sm:inline sm:mx-1" aria-hidden="true">&middot;</span>
+                                    <p class="sm:inline"> </p>
+                                </div>
                             </div>
                         </div>
-                    </a>
+                        <div id="server-size-0-description-1"
+                            class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right">
+                            <div class="font-medium text-gray-900"> </div>
+                            <div class="ml-1 text-gray-500 sm:ml-0"> </div>
+                        </div>
+                        <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
+                        <div class="absolute -inset-px rounded-lg border-2 pointer-events-none" aria-hidden="true">
+                        </div>
+                    </div>
+                </a>
 
-                    {{--
-                    <a href="#"
+                <br>
+
+
+                {{-- <a href="#"
                     class="relative block rounded-lg border border-gray-300 bg-white shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus:outline-none">
                     
                         <div>
@@ -155,9 +189,8 @@
                             <div class="absolute -inset-px rounded-lg border-2 pointer-events-none" aria-hidden="true">
                             </div>
                         </div>
-                    </a>
-                    --}}
-            
+                    </a> --}}
+
 
 
                 {{-- <!-- Active: "ring-1 ring-offset-2 ring-indigo-500" -->

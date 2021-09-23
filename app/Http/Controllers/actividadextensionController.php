@@ -157,7 +157,7 @@ class actividadextensionController extends Controller
             ->update(['is_valid' => 0]);
             
         //return $request->personas;
-
+        if(isset($request->personas)){
         foreach($request->personas as $persona)
         {
             if(isset($persona["'id'"]))
@@ -170,13 +170,13 @@ class actividadextensionController extends Controller
             $participante->is_valid = 1;
 
             $participante->save();}
-            //return $participante;
-        }
+        }}
 
         ProyectosActividadesExtension::where('id_actividad', '=', $extension->id)
             ->where('is_valid', '=', 1)
             ->update(['is_valid' => 0]);
 
+        if(isset($request->proyectos)){
         foreach($request->proyectos as $proyecto)
         {
             if(isset($proyecto["'id'"]))
@@ -188,6 +188,7 @@ class actividadextensionController extends Controller
             $academicaProyecto->save();
             }
         }
+    }
 
         return redirect('/actividadextension/'.$extension->id);
     }

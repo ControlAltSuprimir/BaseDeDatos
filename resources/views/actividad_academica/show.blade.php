@@ -58,12 +58,31 @@
           <div class="sm:col-span-1">
             
             <dt class="text-sm font-medium text-gray-500">
+           Financiamiento
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              {{$data['academica']->financiamiento}}
+            </dd>
+            
+          </div>
+
+          <div class="sm:col-span-1">
+            
+            <dt class="text-sm font-medium text-gray-500">
               Participación
             </dt>
             <dd class="mt-1 text-sm text-gray-900">
               {{$data['academica']->participacion}}
             </dd>
             
+          </div>
+          <div class="sm:col-span-2">
+            <dt class="text-sm font-medium text-gray-500">
+              &emsp;
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900">
+              
+            </dd>
           </div>
 
           <div class="sm:col-span-1">
@@ -84,7 +103,7 @@
             </dd>
           </div>
 
-          <div class="sm:col-span-1">
+          <div class="sm:col-span-2">
             <dt class="text-sm font-medium text-gray-500">
               Comentarios
             </dt>

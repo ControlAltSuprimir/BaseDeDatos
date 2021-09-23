@@ -53,15 +53,17 @@
                     </div>
 
                     <div class="col-span-4 sm:col-span-2">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">Estado Publicación</label>
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">Estado
+                            Publicación</label>
                         <select name="estadoPublicacion"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="{{ $perfil->estado_publicacion }}">{{ $perfil->estado_publicacion }}</option>    
-                                <option value="publicado">Publicado</option>
-                                    <option value="aceptado">Aceptado</option>
-                                    <option value="enRevision">En Revisión</option>
-                                    <option value="enPrensa">En Prensa</option>
-                            </select>
+                            class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                            <option value="{{ $perfil->estado_publicacion }}">{{ $perfil->estado_publicacion }}
+                            </option>
+                            <option value="publicado">Publicado</option>
+                            <option value="aceptado">Aceptado</option>
+                            <option value="enRevision">En Revisión</option>
+                            <option value="enPrensa">En Prensa</option>
+                        </select>
                     </div>
 
 
@@ -104,19 +106,39 @@
                     </div> --}}
 
                 </div>
-                @foreach ($orderProducts as $index => $orderProduct)
+
+
+                <div wire:ignore>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Selecciona autor(a)</label>
+                    <select id="location" name="personas[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allPersonas as $persona)
+                            @if (in_array($persona->id, $orderProducts))
+                                <option value="{{ $persona->id }}" selected>
+                                    {{ $persona->full_name() }}
+                                </option>
+                            @else
+                                <option value="{{ $persona->id }}">
+                                    {{ $persona->full_name() }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- @foreach ($orderProducts as $index => $orderProduct)
                     <div class="mt-6 grid grid-cols-4 gap-6">
                         <div class="col-span-4 sm:col-span-2 center">
-                            {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
+                            
                             <select name="personas[{{ $index }}]"
                                 wire:model="orderProducts.{{ $index }}"
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                                 <option value="">-- Selecciona Autor -- </option>
-                            {{--<option value=""><input type=""placeholder="hola"></option>--}}
+                            
                                 @foreach ($allPersonas as $persona)
                                     <option value="{{ $persona->id }}">
                                         {{ $persona->full_name() }}
-                                        {{-- (${{ number_format($product->price, 2) }}) --}}
+                            
                                     </option>
                                 @endforeach
                             </select>
@@ -124,7 +146,7 @@
 
 
                         <div class="col-span-4 sm:col-span-2">
-                            {{-- <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label> --}}
+                            
 
                             <a href="#" wire:click.prevent="removeProduct('autor',{{ $index }})">
                                 <button type="submit"
@@ -144,7 +166,7 @@
                             class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Añadir
                             Autor</button>
                     </div>
-                </div>
+                </div> --}}
 
 
             </div>
@@ -218,12 +240,12 @@
 
             </div>
         </div>
-        
 
-        {{-- PROYECTOS--}}
+
+        {{-- PROYECTOS --}}
 
         <br><br>
-        
+
 
         <div class="shadow sm:rounded-md sm:overflow-hidden">
             <div class="bg-white py-6 px-4 sm:p-6">
@@ -234,11 +256,28 @@
                     <p class="mt-1 text-sm text-gray-500"></p>
                 </div>
 
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    
 
+                
+                <div wire:ignore>
+                    <label for="proyectos" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Proyecto (Código o Nombre)</label>
+                    <select id="project" name="proyectos[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allProyectos as $proyecto)
+                            @if (in_array($proyecto->id, $proyectosInvolucrados))
+                                <option value="{{ $proyecto->id }}" selected>
+                                    {{ $proyecto->codigo_proyecto }}: {{ $proyecto->titulo }}
+                                </option>
+                            @else
+                                <option value="{{ $proyecto->id }}">
+                                    {{ $proyecto->codigo_proyecto }}: {{ $proyecto->titulo }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
-                @foreach ($proyectosInvolucrados as $index => $orderProduct)
+
+                {{-- @foreach ($proyectosInvolucrados as $index => $orderProduct)
                     <div class="mt-6 grid grid-cols-4 gap-6">
                         <div class="col-span-4 sm:col-span-2 center">
                             <select name="proyectos[{{ $index }}]"
@@ -272,13 +311,13 @@
                             class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Añadir
                             Proyecto</button>
                     </div>
-                </div>
+                </div> --}}
 
 
             </div>
         </div>
         <hr><br><br>
-        
+
 
         {{-- Revista --}}
 
@@ -290,38 +329,43 @@
                     <p class="mt-1 text-sm text-gray-500"></p>
                 </div>
 
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                </div>
+
 
                 <div class="col-span-4 sm:col-span-1" gap-6>
-                    <select name="revista" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
-                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        @if (isset($perfil->id_Revista))
+                    <div wire:ignore>
 
-                            <option value="{{ $perfil->id_Revista }}" selected>{{ $perfil->revista->nombre }}
-                            </option>
 
-                            @foreach ($allRevistas as $revista)
-                                @if ($revista->id == $perfil->id_Revista)
-
-                                @else
-                                    <option value="{{ $revista->id }}">
-                                        {{ $revista->nombre }}
-                                        {{-- (${{ number_format($product->price, 2) }}) --}}
+                        <div class="col-span-4 sm:col-span-1" gap-6>
+                            <select name="revista"
+                                class="select2 mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                @if (isset($perfil->id_Revista))
+                                    <option value="{{ $perfil->id_Revista }}" selected>
+                                        {{ $perfil->revista->nombre }}
                                     </option>
-                                @endif
-                            @endforeach
-                        @else
-                            <option value="">-- Selecciona la Revista --</option>
 
-                            @foreach ($allRevistas as $revista)
-                                <option value="{{ $revista->id }}">
-                                    {{ $revista->nombre }}
-                                    {{-- (${{ number_format($product->price, 2) }}) --}}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
+                                    @foreach ($allRevistas as $revista)
+                                        @if ($revista->id == $perfil->id_Revista)
+
+                                        @else
+                                            <option value="{{ $revista->id }}">
+                                                {{ $revista->nombre }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <option value="" selected>-- Selecciona la Revista --</option>
+
+                                    @foreach ($allRevistas as $revista)
+                                        <option value="{{ $revista->id }}">
+                                            {{ $revista->nombre }}
+                                            {{-- (${{ number_format($product->price, 2) }}) --}}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -362,3 +406,17 @@
 </form>
 
 </div>
+
+
+<script>
+    $(function() {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+    });
+    $(document).ready(function() {
+        $('#project').select2();
+    });
+    $(document).ready(function() {
+        $('#location').select2();
+    });
+</script>

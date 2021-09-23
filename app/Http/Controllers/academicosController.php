@@ -20,7 +20,7 @@ class academicosController extends Controller
     public function index()
     {
         
-        $academicos = Academicos::select('academicos.*')
+        $academicos = Academicos::with('persona')->select('academicos.*')
             ->where('academicos.is_valid','=',1)
             ->join('personas', 'personas.id', '=', 'academicos.id_Persona')
             ->orderBy('personas.primer_apellido')

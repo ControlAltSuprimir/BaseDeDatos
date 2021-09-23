@@ -40,7 +40,7 @@ class Formacion extends Component
 
     public function mount($edit)
     {
-        $this->allProgramas = Programas::where('is_Valid','=',1)->get();
+        $this->allProgramas = Programas::with('institucion')->where('is_Valid','=',1)->get();
         $this->items = $edit;
         //$this->product->id_Persona= $this->items;
 

@@ -26,10 +26,12 @@ class proyectosController extends Controller
     {
         //
 
+        /*
         $proyectos = Proyectos::where('is_valid', '=', 1)
             ->get();
+            */
 
-        $data = compact('proyectos');
+        //$data = compact('proyectos');
         //return $data;
         return view('proyectos.index');
     }

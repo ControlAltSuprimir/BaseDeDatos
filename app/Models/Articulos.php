@@ -86,7 +86,12 @@ class Articulos extends Model
         foreach ($this->autores as $autor) {
             $autoresArticulo[] = $autor->full_nameLinkInformal();
         }
-        $compact = implode(", ", $autoresArticulo).".";
+        $compact = implode(", ", $autoresArticulo);
+        if($compact==''){}
+        else{
+            $compact=$compact.'.';
+        }
+
 
         return $compact;
     }

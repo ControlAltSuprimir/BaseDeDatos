@@ -13,6 +13,7 @@ class CreateUsersPersonasTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('users_personas')) {
         Schema::dropIfExists('users_personas');
         Schema::create('users_personas', function (Blueprint $table) {
             $table->id();
@@ -22,7 +23,7 @@ class CreateUsersPersonasTable extends Migration
             $table->foreign('id_user')->references('id')->on('users');
             $table->boolean('is_valid')->default(1);
             $table->timestamps();
-        });
+        });}
     }
 
     /**

@@ -31,20 +31,6 @@ class filtroproyectos extends Component
 
     public function render()
     {
-        /*
-        $myArray = [
-            ['id' => 1, 'title' => 'Laravel CRUD'],
-            ['id' => 2, 'title' => 'Laravel Ajax CRUD'],
-            ['id' => 3, 'title' => 'Laravel CORS Middleware'],
-            ['id' => 4, 'title' => 'Laravel Autocomplete'],
-            ['id' => 5, 'title' => 'Laravel Image Upload'],
-            ['id' => 6, 'title' => 'Laravel Ajax Request'],
-            ['id' => 7, 'title' => 'Laravel Multiple Image Upload'],
-            ['id' => 8, 'title' => 'Laravel Ckeditor'],
-            ['id' => 9, 'title' => 'Laravel Rest API'],
-            ['id' => 10, 'title' => 'Laravel Pagination'],
-        ];
-*/
         $myArray = [];
         if ($this->filtro['tipo'] == 'persona') {
             $proyectosResponsables = Proyectos::where('is_valid', '=', 1)

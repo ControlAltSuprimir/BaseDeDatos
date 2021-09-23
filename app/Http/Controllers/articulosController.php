@@ -18,11 +18,14 @@ class articulosController extends Controller
     public function index()
     {
         //
-        $articulos = Articulos::where('is_valid', '=', 1)
+        return view('articulos.index');
+        /*
+        $articulos = Articulos::with('revista','autores')->where('is_valid', '=', 1)
             ->orderBy('titulo', 'asc')
             ->paginate(25);
         $data = compact('articulos');
         return view('articulos.index', ['data' => $data]);
+        */        
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Mail\CustomResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -66,5 +67,16 @@ class User extends Authenticatable
     public function rol()
     {
         return $this->belongsToMany(Roles::class, 'users_roles', 'id_user', 'id_rol');
+    }
+
+     /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomResetPasswordNotification($token));
     }
 }

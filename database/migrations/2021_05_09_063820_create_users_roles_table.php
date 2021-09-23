@@ -13,6 +13,7 @@ class CreateUsersRolesTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('users_roles')) {
         Schema::create('users_roles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_rol');
@@ -22,6 +23,7 @@ class CreateUsersRolesTable extends Migration
             $table->boolean('is_valid')->default(1);
             $table->timestamps();
         });
+    }
     }
 
     /**

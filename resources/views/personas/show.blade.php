@@ -1,21 +1,27 @@
 <x-app-layout>
+
     <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div class="flex-1 min-w-0">
             <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
                 {{ $data['persona']->full_name() }}
             </h1>
         </div>
-        <div class="mt-4 flex sm:mt-0 sm:ml-4">
-            {{-- <button type="button" class="order-1 ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-0 sm:ml-0">
-            Share
-          </button> --}}
+        <div class="mt-3 flex sm:mt-0 sm:ml-4">
+            @if ($data['estudiante'] == 1)
+                <a href="/estudiantes/{{ $data['persona']->id }}">
+                    <button type="button"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Perfil Estudiantil
+                    </button>
+                </a>
+            @endif
+
             <a href="/personas/{{ $data['persona']->id }}/edit">
                 <button type="button"
-                    class="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3">
-                    Editar Perfil de Persona
+                    class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Editar Perfil
                 </button>
             </a>
-
         </div>
     </div>
 
@@ -165,7 +171,6 @@
                 " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm";
 
         }
-
     </script>
 
     <style>
@@ -187,199 +192,194 @@
 
 
 
-    
-<div>
+
+    <div>
+        <div class="mt-6 sm:mt-2 2xl:mt-5">
+            <div class="border-b border-gray-200">
+                <div class="max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <!-- Current: "border-pink-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+                        <a href="#" onclick="openCountry(event, 'Japan')"
+                            class="tablinks2 border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                            aria-current="page">
+                            Publicaciones Realizadas
+                        </a>
+                        <a href="#" onclick="openCountry(event, 'Chile')"
+                            class="tablinks2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Proyectos
+                        </a>
+                        {{-- <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Formación
+              </a> --}}
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <?php $filtro = [
+            'tipo' => 'persona',
+            'id' => $data['persona']->id,
+        ]; ?>
+        <div>
+            <div id="Japan" class="tabcontent2 active" style="display: block">
+                @livewire('tablas.filtroarticulos',['filtro'=>$filtro])
+            </div>
+            <div id="Chile" class="tabcontent2 ">
+                @livewire('tablas.filtroproyectos',['filtro'=>$filtro])
+            </div>
+        </div>
+    </div>
+
+
+    <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div class="flex-1 min-w-0">
+            <h2 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                Actividades
+            </h2>
+        </div>
+    </div>
+
+
     <div class="mt-6 sm:mt-2 2xl:mt-5">
         <div class="border-b border-gray-200">
             <div class="max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
                 <nav class="-mb-px flex space-x-8" aria-label="Tabs">
                     <!-- Current: "border-pink-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-                    <a href="#" 
-                    onclick="openCountry(event, 'Japan')"
-                        class="tablinks2 border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
-                        Publicaciones Realizadas
+                    <a href="#" onclick="openState(event, 'NewYork')"
+                        class="tablinks3 border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                        aria-current="page">
+                        Académicas/Extensión
                     </a>
-                    <a href="#" 
-                    onclick="openCountry(event, 'Chile')"
-                        class="tablinks2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                        Proyectos
+                    <a href="#" onclick="openState(event, 'NewJersey')"
+                        class="tablinks3 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                        Viajes
                     </a>
+                    {{-- <a href="#" onclick="openState(event, 'Texas')"
+                    class="tablinks3 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    Coloquios
+                </a> --}}
+
                     {{-- <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Formación
-              </a> --}}
+            Formación
+          </a> --}}
                 </nav>
             </div>
         </div>
     </div>
-    <?php $filtro = [
-                'tipo' => 'persona',
-                'id' => $data['persona']->id,
-            ]; ?>
-    <div>
-        <div id="Japan" class="tabcontent2 active" style="display: block">
-            @livewire('tablas.filtroarticulos',['filtro'=>$filtro])
-        </div>
-        <div id="Chile" class="tabcontent2 ">
-            @livewire('tablas.filtroproyectos',['filtro'=>$filtro])
-        </div>
+    <?php $filtroActividades = [
+        'tipo' => 'persona',
+        'id' => $data['persona']->id,
+    ]; ?>
+    <div id="NewYork" class="tabcontent3 active" style="display: block">
+        @livewire('tablas.filtroactividades',['filtroActividades'=>$filtroActividades])
     </div>
-</div>
 
-
-<div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-    <div class="flex-1 min-w-0">
-        <h2 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-            Actividades
-        </h2>
-    </div>
-</div>
-
-
-<div class="mt-6 sm:mt-2 2xl:mt-5">
-    <div class="border-b border-gray-200">
-        <div class="max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                <!-- Current: "border-pink-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-                <a href="#" onclick="openState(event, 'NewYork')"
-                    class="tablinks3 border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
-                    aria-current="page">
-                    Académicas/Extensión
-                </a>
-                <a href="#" onclick="openState(event, 'NewJersey')"
-                class="tablinks3 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Viajes
-            </a>
-            {{--
-                <a href="#" onclick="openState(event, 'Texas')"
-                    class="tablinks3 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                    Coloquios
-                </a>
-                --}}
-
-                {{-- <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-            Formación
-          </a> --}}
-            </nav>
-        </div>
-    </div>
-</div>
-<?php $filtroActividades = [
-    'tipo' => 'persona',
-    'id' => $data['persona']->id,
-]; ?>
-<div id="NewYork" class="tabcontent3 active" style="display: block">
-    @livewire('tablas.filtroactividades',['filtroActividades'=>$filtroActividades])
-</div>
-
-{{--
-<div id="Texas" class="tabcontent3 ">
+    {{-- <div id="Texas" class="tabcontent3 ">
     
-</div>
---}}
+</div> --}}
 
-<div id="NewJersey" class="tabcontent3 ">
+    <div id="NewJersey" class="tabcontent3 ">
 
-    @if (isset($data['viajes']))
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th scope="col"
-                        class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Destino
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Financiamiento
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Fecha
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        @if (isset($data['viajes']))
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col"
+                            class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Destino
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Financiamiento
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Fecha
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Odd row -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Odd row -->
 
-                @foreach ($data['viajes'] as $viaje)
+                    @foreach ($data['viajes'] as $viaje)
+                        <tr class="bg-white">
+                            <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {{ $viaje->ciudadDestino }}, {{ $viaje->paisDestino }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $viaje->financiamiento }}
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $viaje->fecha }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+
+                            </td>
+                        </tr>
+                    @endforeach
+
+
+                    <!-- Even row -->
+
+
+                    <!-- More people... -->
+                </tbody>
+            </table>
+        @else
+            <table class="min-w-full divide-y divide-gray-200">
+                <tbody>
                     <tr class="bg-white">
                         <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {{ $viaje->ciudadDestino }}, {{ $viaje->paisDestino }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ $viaje->financiamiento }}
-                        </td>
-
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ $viaje->fecha }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-
+                            No se encontraron Viajes Realizados
                         </td>
                     </tr>
-                @endforeach
+                </tbody>
+            </table>
+        @endif
 
-
-                <!-- Even row -->
-
-
-                <!-- More people... -->
-            </tbody>
-        </table>
-    @else
-        <table class="min-w-full divide-y divide-gray-200">
-            <tbody>
-                <tr class="bg-white">
-                    <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        No se encontraron Viajes Realizados
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    @endif
-
-</div>
+    </div>
 
 
 
 
 
 
-<script>
-    function openState(evt, cityName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent3");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+    <script>
+        function openState(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent3");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks3");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+                tablinks[i].className = tablinks[i].className.replace(
+                    " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm",
+                    " border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                );
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className +=
+                " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm";
+
         }
-        tablinks = document.getElementsByClassName("tablinks3");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-            tablinks[i].className = tablinks[i].className.replace(
-                " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm",
-                " border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
-            );
+    </script>
+
+
+    <style>
+        .tabcontent3 {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
         }
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className +=
-            " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm";
 
-    }
-</script>
-
-
-<style>
-    .tabcontent3 {
-        display: none;
-        padding: 6px 12px;
-        border: 1px solid #ccc;
-        border-top: none;
-    }
-
-</style>
+    </style>
 
 
 
@@ -416,6 +416,6 @@
 
     </style>
 
-    
+
 
 </x-app-layout>

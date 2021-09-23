@@ -13,6 +13,7 @@ class CreatePersonasComisionTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('personas_comision')) {
         Schema::create('personas_comision', function (Blueprint $table) {
             $table->id();
             $table->integer('id_persona');
@@ -25,7 +26,7 @@ class CreatePersonasComisionTable extends Migration
             $table->boolean('is_valid')->default(1);
             $table->timestamps();
             //->nullable($value = true)
-        });
+        });}
     }
 
     /**

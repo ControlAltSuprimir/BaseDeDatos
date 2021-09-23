@@ -7,6 +7,7 @@ use App\Http\Controllers\articulosController;
 use App\Http\Controllers\cargosController;
 use App\Http\Controllers\coloquiosController;
 use App\Http\Controllers\comisionesController;
+use App\Http\Controllers\cursoController;
 use App\Http\Controllers\indexacionesController;
 use App\Http\Controllers\institucionesController;
 use App\Http\Controllers\personasController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\viajesController;
 use App\Http\Controllers\visitaController;
 use App\Http\Controllers\chartController;
 use App\Http\Controllers\formulariosController;
+use App\Http\Controllers\alumnosController;
+use App\Http\Controllers\estudiantesController;
 
 //Correos
 use App\Mail\Notificacion;
@@ -39,64 +42,79 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware(['auth'])->group(function(){
+
+
+
 Route::get('/', function () {
     return redirect('/dashboard');
-})->middleware('auth');
-/*
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');*/
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard')->middleware('auth');
+})->name('dashboard');
 
 
-/*Route::get('/hola', function () {
-    return view('dashboard');
-})->name('dashboard')->middleware('auth');*/
 
-Route::resource('academicos',academicosController::class)->middleware('auth');
-Route::resource('actividadacademica',actividadacademicaController::class)->middleware('auth');
-Route::resource('actividadextension',actividadextensionController::class)->middleware('auth');
-Route::resource('articulos',articulosController::class)->middleware('auth');
-Route::resource('cargos',cargosController::class)->middleware('auth');
-Route::resource('coloquios',coloquiosController::class)->middleware('auth');
-Route::resource('comisiones',comisionesController::class)->middleware('auth');
-Route::resource('indexaciones',indexacionesController::class)->middleware('auth');
-Route::resource('instituciones',institucionesController::class)->middleware('auth');
-Route::resource('personas',personasController::class)->middleware('auth');
-Route::resource('personasprogramas',personasprogramasController::class)->middleware('auth');
-Route::resource('programas',programasController::class)->middleware('auth');
-Route::resource('proyectos',proyectosController::class)->middleware('auth');
-Route::resource('revistas',revistasController::class)->middleware('auth');
-Route::resource('tesis',tesisController::class)->middleware('auth');
-Route::resource('tesisintera',tesisinternaController::class)->middleware('auth');
-Route::resource('user',userController::class)->middleware('auth');
-Route::resource('viajes',viajesController::class)->middleware('auth');
-Route::resource('visita',visitaController::class)->middleware('auth');
+
+Route::resource('academicos',academicosController::class);
+Route::resource('actividadacademica',actividadacademicaController::class);
+Route::resource('actividadextension',actividadextensionController::class);
+Route::resource('articulos',articulosController::class);
+Route::resource('cargos',cargosController::class);
+Route::resource('coloquios',coloquiosController::class);
+Route::resource('cursos',cursoController::class);
+Route::resource('comisiones',comisionesController::class);
+Route::resource('indexaciones',indexacionesController::class);
+Route::resource('instituciones',institucionesController::class);
+Route::resource('personas',personasController::class);
+Route::resource('personasprogramas',personasprogramasController::class);
+Route::resource('programas',programasController::class);
+Route::resource('proyectos',proyectosController::class);
+Route::resource('revistas',revistasController::class);
+Route::resource('tesis',tesisController::class);
+Route::resource('tesisintera',tesisinternaController::class);
+Route::resource('user',userController::class);
+Route::resource('viajes',viajesController::class);
+Route::resource('visita',visitaController::class);
+
+
+//estudiantes
+Route::resource('estudiantes', estudiantesController::class)->except([
+    'index'
+]);
+
+Route::get('/docencia/{estudiantes}',[estudiantesController::class,'index']);
+Route::get('/docencia/{estudiantes}/{programa}',[estudiantesController::class,'indexPrograma']);
 
 
 //gráficos
+Route::get('/graficos/articulos',[chartController::class,'losArticulos']);
+Route::get('/graficos',[chartController::class,'losArticulos']);
+Route::get('/',[chartController::class,'show']);
+Route::get('/dashboard',[chartController::class,'show']);
 
-Route::get('/',[chartController::class,'show'])->middleware('auth');
-Route::get('/dashboard',[chartController::class,'show'])->middleware('auth');
-Route::get('/graficos/articulos',[chartController::class,'articulos'])->middleware('auth');
-Route::get('/graficos',[chartController::class,'articulos'])->middleware('auth');
 
 
-//formularios
+//pendientes
+
+
+
+Route::get('/viajespendientes',[formulariosController::class,'viajespendientes']);
+Route::get('/viajespendientes/{id}',[formulariosController::class,'viajespendientesshow']);
+Route::get('/viajespendientes/{id}/process',[formulariosController::class,'viajeprocesado']);
+
+
+}); //Se termina la agrupación de autentificación
+
+
+
+//formularios (no es necesario estar registrado)
 
 Route::get('/formularios',[formulariosController::class,'index']);
 Route::get('/formularios/viaje',[formulariosController::class,'viaje']);
 Route::post('/formularioviaje', [formulariosController::class,'storeviaje']);
 
-
-//pendientes
-
-Route::get('/viajespendientes',[formulariosController::class,'viajespendientes'])->middleware('auth');
-Route::get('/viajespendientes/{id}',[formulariosController::class,'viajespendientesshow'])->middleware('auth');
-Route::get('/viajespendientes/{id}/process',[formulariosController::class,'viajeprocesado'])->middleware('auth');
 
 
 //mails

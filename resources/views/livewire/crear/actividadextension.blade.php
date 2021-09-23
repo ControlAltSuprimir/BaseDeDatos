@@ -127,7 +127,7 @@
                             <select name="personas[{{ $index }}]['viaje']" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
                                 wire:model="participantes.{{ $index }}.viaje"
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Participante -- </option>
+                                <option value="">-- Selecciona Viaje -- </option>
 
                                 @foreach ($allViajes as $viaje)
                                     <option value="{{ $viaje->id }}">

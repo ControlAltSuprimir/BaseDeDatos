@@ -22,9 +22,10 @@ class filtroarticulos extends Component
 
 
 
+
     public function render()
     {
-        $articulos = Articulos::where('is_valid', '=', 1);
+        $articulos = Articulos::with('revista','autores')->where('is_valid', '=', 1);
         //Especificamos la búsqueda
         if ($this->filtro['tipo'] == 'persona') {
 
@@ -49,7 +50,7 @@ class filtroarticulos extends Component
             $laTesis = Tesis::find($this->filtro['id']);
             $subitems= $laTesis->articulos()->get();
         } else {
-            $subitems = $articulos->search($this->search)
+            $subitems = $articulos->with('autores','revista')->search($this->search)
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(25);
         }

@@ -25,7 +25,7 @@ class filtrorevistas extends Component
     public function render()
     {
         
-        $items= Revistas::where('is_valid','=',1)
+        $items= Revistas::with('articulos')->where('is_valid','=',1)
                 ->search($this->search);
 
         if($this->sortBy=='publicaciones')

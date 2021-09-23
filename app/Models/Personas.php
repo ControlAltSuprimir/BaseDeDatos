@@ -41,6 +41,11 @@ class Personas extends Model
         return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/personas/$this->id\" >{$this->full_name()}</a>";
     }
 
+    public function full_nameEstudianteLink()
+    {
+        return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/estudiantes/$this->id\" >{$this->full_name()}</a>";
+    }
+
     public function articulos()
     {
         return $this->belongsToMany(Articulo::class, 'persona_articulo', 'id_Persona', 'id_Articulo');
@@ -71,22 +76,25 @@ class Personas extends Model
         return $this->hasMany(PersonasProgramas::class, 'id_Persona');
     }
 
+    public function losProgramas()
+    {
+        return $this->belongsToMany(Programas::class, 'personas_programas', 'id_Persona', 'id_Programa')->withPivot('fecha_comienzo','fecha_termino')->where('personas_programas.is_valid', '=', 1);
+    }
+
+    //cursos
+
+    public function cursos()
+    {
+        return $this->belongsToMany(Curso::class, 'cursos_alumnos', 'id_persona', 'id_curso')->where('cursos_alumnos.is_valid','=',1);
+    }
+
 
 
     public function scopeSearch($query, $val)
     {
-
+        $val = preg_replace('/[^A-Za-z0-9\. -\!\?\(\)\<\>\@]/', "", $val);
+        $val=str_replace("DELETE","",$val);
         return $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'like', '%' . $val . '%');
-        /*
-        $query->where('titulo', 'like', '%' . $val . '%')
-        ->orWhere('fecha_publicacion', 'like', '%' . $val . '%')
-            ->orWhereHas('revista', function ($query) use ($val) {
-                $query->where('nombre', 'LIKE', '%' . $val . '%');
-            })
-            ->orWhereHas('autores', function ($query) use ($val) {
-                $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'LIKE', '%' . $val . '%');
-            });
-        */
         
     }
 }
