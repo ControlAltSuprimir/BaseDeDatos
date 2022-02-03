@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Crear;
 
 
 use App\Models\Personas;
+use App\Models\Tesis;
 use App\Models\Revistas;
 use App\Models\Proyectos;
 use Livewire\Component;
@@ -15,6 +16,7 @@ class creararticulo extends Component
     public $extraPersonas = [];
     public $allRevistas = [];
     public $allProyectos = [];
+    public $allTesis = [];
 
     public $proyectosInvolucrados = [];
     
@@ -22,12 +24,10 @@ class creararticulo extends Component
 
     public function mount()
     {
-        $this->allPersonas = Personas::where('is_valid','=',1)->orderBy('primer_apellido')->get();
+        $this->allPersonas = Personas::where('is_valid','=',1)->orderBy('primer_apellido')->orderBy('segundo_apellido')->get();
         $this->allRevistas = Revistas::where('is_valid','=',1)->orderBy('nombre')->get();
         $this->allProyectos = Proyectos::where('is_valid','=',1)->orderBy('titulo')->get();
-        $this->orderProducts = [
-            ['product_id' => '', 'quantity' => 1]
-        ];
+        $this->allTesis = Tesis::where('is_valid','=',1)->orderBy('titulo')->get();
     }
 
     public function addExtraPersona()
@@ -35,33 +35,15 @@ class creararticulo extends Component
         $this->extraPersonas[] = ['primer_nombre' => '', 'primer_apellido' => ''];
     }
 
-    public function addProduct($type)
-    {
-        if($type=='autor'){
-        $this->orderProducts[] = ['product_id' => '', 'quantity' => 1];
-        }
-        elseif($type=='proyecto'){
-            $this->proyectosInvolucrados[]=[];
-        }
-    }
-
-    public function removeProduct($type,$index)
-    {
-        if($type=='autor'){
-        unset($this->orderProducts[$index]);
-        $this->orderProducts = array_values($this->orderProducts);
-        }
-        elseif($type=='proyecto'){
-            unset($this->proyectosInvolucrados[$index]);
-        $this->proyectosInvolucrados = array_values($this->proyectosInvolucrados);
-        }
-    }
 
     public function removeExtraPersona($indexExtraPersona)
     {
         unset($this->extraPersonas[$indexExtraPersona]);
         $this->extraPersonas = array_values($this->extraPersonas);
     }
+
+    
+
 
     
     public function render()

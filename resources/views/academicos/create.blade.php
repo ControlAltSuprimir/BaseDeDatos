@@ -57,6 +57,19 @@
                   <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Información de Académico</h2>
                   <p class="mt-1 text-sm text-gray-500"></p>
                 </div>
+                <div class="mt-6 grid grid-cols-4 gap-6">
+                <div class="col-span-4 sm:col-span-2">
+                  <label for="first_name" class="block text-sm font-medium text-gray-700">Área de Investigación</label>
+                  <input type="text" name="area" id="first_name" autocomplete="cc-given-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  placeholder="Geometría Algebraica">
+                </div>
+  
+                <div class="col-span-4 sm:col-span-2">
+                  <label for="last_name" class="block text-sm font-medium text-gray-700">Estudios (esto se mostrará en la página del Departamento)</label>
+                  <input type="text" name="estudios" id="last_name" autocomplete="cc-family-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  placeholder="Doctorado en ciancias, mención Matemáticas. Universidad de Chile">
+                </div>
+              </div>
     
                 <div class="mt-6 grid grid-cols-4 gap-6">
                   <div class="col-span-4 sm:col-span-2">
@@ -78,9 +91,18 @@
                     <input type="text" name="jerarquia" id="last_name" autocomplete="cc-family-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                   </div>
     
-                  <div class="col-span-4 sm:col-span-2">
+                  <div class="col-span-4 sm:col-span-1">
                     <label for="email_address" class="block text-sm font-medium text-gray-700">Oficina</label>
                     <input type="text" name="oficina" id="email_address" autocomplete="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                  </div>
+                  <div class="col-span-4 sm:col-span-1">
+                    <label for="email_address" class="block text-sm font-medium text-gray-700">Género</label>
+                    <select id="genero" name="genero" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      <option value="">Selecciona una opción</option>
+                      <option value="Femenino">Femenino</option>
+                      <option value="Masculino">Masculino</option>
+                      <option value="Otro">Otro</option>
+                    </select>
                   </div>
     
                   <div class="col-span-4 sm:col-span-1">

@@ -38,7 +38,8 @@ class Notificacion extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.notificacion');
+        return $this->from('example@example.com', 'Example')
+                    ->view('mail.notificacion');
     }
 
     public function nuevoUsuario()

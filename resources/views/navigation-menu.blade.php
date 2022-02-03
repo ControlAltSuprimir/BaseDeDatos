@@ -77,7 +77,6 @@
 
             <!--
                 Dropdown menu, show/hide based on menu state.
-
                 Entering: "transition ease-out duration-100"
                   From: "transform opacity-0 scale-95"
                   To: "transform opacity-100 scale-100"
@@ -104,7 +103,7 @@
                     {{-- <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                     id="options-menu-item-3">Get desktop app</a> --}}
 
-                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                    <a href="/soporte" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                         id="options-menu-item-4">Soporte</a>
                 </div>
                 <div class="py-1" role="none">
@@ -302,7 +301,7 @@
                     <div id="actividades" style="display: none;">
                         <a href="/coloquios"
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                            Coloquios Las Palmeras
+                            Coloquios Las Palmeras (Beta)
                         </a>
                         <a href="/actividadacademica"
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
@@ -356,9 +355,9 @@
                             Programas
                         </a>
 
-                        <a href="/cursos"
+                        <a href="/financiamiento"
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                            Cursos
+                            Financiamiento
                         </a>
                         {{-- <a href="#"
                         class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
@@ -392,11 +391,17 @@
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                             Artículos
                         </a>
+                        <a href="/graficos/financiamiento"
+                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                            Financiamiento
+                        </a>
 
+                        {{--
                         <a href="/graficos/proyectos"
                             class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                             Proyectos
                         </a>
+                        --}}
                         {{-- <a href="#"
                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                     Calendar
@@ -411,25 +416,70 @@
             </div>
 
             <div class="mt-8">
-                <?php
+                
+
+                <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider" id="teams-headline">
+                    Tareas Pendientes
+                </h3>
+                <div class="mt-1 space-y-1" role="group" aria-labelledby="teams-headline">
+
+
+                    @livewire('notificacion.notificacionviajes')
+
+
+                </div>
+            </div>
+            <?php
                 $rol = auth()
                     ->user()
                     ->rol->first();
                 ?>
                 @if ($rol->rol == 'Admin')
 
-                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider" id="teams-headline">
-                        Tareas Pendientes
-                    </h3>
-                    <div class="mt-1 space-y-1" role="group" aria-labelledby="teams-headline">
+                    
+
+            <div class="mt-8">
+
+                <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider" id="teams-headline">
+                    Opciones de Administrador
+                </h3>
+                <div class="mt-1 space-y-1" role="group" aria-labelledby="teams-headline">
 
 
-                        @livewire('notificacion.notificacionviajes')
+                    <a href="/user" class="text-gray-600 hover:text-gray-900 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+
+                        <span class="w-2.5 h-2.5 mr-4 bg-blue-500 rounded-full" aria-hidden="true"></span>
+                        <span class="flex-1">
+                          Usuarios
+                        </span>
+                        {{--
+                        <span class="bg-gray-100 group-hover:bg-gray-200 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full">
+                          
+                        </span>--}}
+                      </a>
 
 
-                    </div>
-                @endif
+                </div>
+
+                <div class="mt-1 space-y-1" role="group" aria-labelledby="teams-headline">
+
+
+                    <a href="/sincronizacion" class="text-gray-600 hover:text-gray-900 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+
+                        <span class="w-2.5 h-2.5 mr-4 bg-blue-500 rounded-full" aria-hidden="true"></span>
+                        <span class="flex-1">
+                      Sincronización de Datos
+                        </span>
+                        {{--
+                        <span class="bg-gray-100 group-hover:bg-gray-200 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full">
+                          
+                        </span>--}}
+                      </a>
+
+
+                </div>
             </div>
+            @endif
         </nav>
 
     @endauth

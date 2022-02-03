@@ -36,7 +36,7 @@ class Proyectos extends Model
     {
         return $this->belongsToMany(Articulos::class, 'proyectos_articulos', 'id_proyecto', 'id_articulo')->where('proyectos_articulos.is_valid', '=', 1);
     }
-
+/*
     public function coinvestigadores()
     {
         return $this->belongsToMany(Personas::class, 'proyectos_personas_coinvestigadores', 'id_proyecto', 'id_persona')->where('proyectos_personas_coinvestigadores.is_valid', '=', 1);
@@ -46,6 +46,7 @@ class Proyectos extends Model
     {
         return $this->belongsToMany(Personas::class, 'proyectos_personas_colaboradores', 'id_proyecto', 'id_persona')->where('proyectos_personas_colaboradores.is_valid', '=', 1);
     }
+    */
 
     public function tesistas()
     {
@@ -59,7 +60,7 @@ class Proyectos extends Model
 
     public function las_extensiones()
     {
-        return $this->hasMany(ProyectosActividadesExtension::class, 'id_proyecto');
+        return $this->hasMany(ProyectosActividadesExtension::class, 'id_proyecto')->where('proyecto_extension.is_valid', '=', 1);
     }
 
     public function academicas()
@@ -69,12 +70,17 @@ class Proyectos extends Model
 
     public function las_academicas()
     {
-        return $this->hasMany(ProyectosActividadesAcademicas::class, 'id_proyecto');
+        return $this->hasMany(ProyectosActividadesAcademicas::class, 'id_proyecto')->where('proyecto_academica.is_valid', '=', 1);
     }
 
     public function participantes()
     {
         return $this->hasMany(PersonaProyecto::class, 'id_proyecto')->where('is_valid','=',1);
+    }
+
+    public function losParticipantes()
+    {
+        return $this->belongsToMany(Personas::class, 'proyectos_personas', 'id_proyecto', 'id_persona')->where('proyectos_personas.is_valid', '=', 1);
     }
 
 
@@ -124,7 +130,7 @@ class Proyectos extends Model
             ->orWhereHas('responsable', function ($query) use ($val) {
                 $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'LIKE', '%' . $val . '%');
             })
-            ->orWhereHas('coinvestigadores', function ($query) use ($val) {
+            ->orWhereHas('losParticipantes', function ($query) use ($val) {
                 $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'LIKE', '%' . $val . '%');
             });
     }

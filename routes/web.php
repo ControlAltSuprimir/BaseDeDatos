@@ -8,6 +8,7 @@ use App\Http\Controllers\cargosController;
 use App\Http\Controllers\coloquiosController;
 use App\Http\Controllers\comisionesController;
 use App\Http\Controllers\cursoController;
+use App\Http\Controllers\financiamientoController;
 use App\Http\Controllers\indexacionesController;
 use App\Http\Controllers\institucionesController;
 use App\Http\Controllers\personasController;
@@ -25,6 +26,9 @@ use App\Http\Controllers\formulariosController;
 use App\Http\Controllers\alumnosController;
 use App\Http\Controllers\estudiantesController;
 
+// guardar datos
+use App\Http\Controllers\dataController;
+use App\Http\Controllers\sincronizacionController;
 //Correos
 use App\Mail\Notificacion;
 
@@ -54,6 +58,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+Route::get('/soporte', function () {
+    return view('website/soporte');
+})->name('dashboard');
 
 
 
@@ -93,16 +100,29 @@ Route::get('/graficos/articulos',[chartController::class,'losArticulos']);
 Route::get('/graficos',[chartController::class,'losArticulos']);
 Route::get('/',[chartController::class,'show']);
 Route::get('/dashboard',[chartController::class,'show']);
+Route::get('/graficos/financiamiento',[chartController::class,'losFinanciamientos']);
 
 
 
 //pendientes
 
-
-
 Route::get('/viajespendientes',[formulariosController::class,'viajespendientes']);
 Route::get('/viajespendientes/{id}',[formulariosController::class,'viajespendientesshow']);
 Route::get('/viajespendientes/{id}/process',[formulariosController::class,'viajeprocesado']);
+
+
+//sincronización
+Route::get('/sincronizacion',[sincronizacionController::class,'index']);
+Route::get('/sincronizacion/articulos', [sincronizacionController::class,'articulos']);
+Route::get('/sincronizacion/academicos', [sincronizacionController::class,'academicos']);
+
+
+//financiamiento
+
+Route::get('/financiamiento', function(){
+    return view('financiamiento.index');
+});
+Route::get('/financiamiento/actividades',[financiamientoController::class,'actividades']);
 
 
 }); //Se termina la agrupación de autentificación
@@ -118,5 +138,10 @@ Route::post('/formularioviaje', [formulariosController::class,'storeviaje']);
 
 
 //mails
-
+/*
 Route::get('/correo',[Notificacion::class,'nuevoUsuario']);
+
+//guardar datos
+Route::get('/guardararticulos',[dataController::class,'articulos']);
+Route::get('/mostraracademicos',[dataController::class,'academicos']);
+*/

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use DB;
+
 class ActividadAcademica extends Model
 {
     use HasFactory;
@@ -20,13 +22,17 @@ class ActividadAcademica extends Model
 
     public function participantes()
     {
-        return $this->belongsToMany(Personas::class, 'personas_academica', 'id_academica', 'id_persona')->where('personas_academica.is_valid', '=', 1)->withPivot('descripcion','descripcion');
+        return $this->belongsToMany(Personas::class, 'personas_academica', 'id_academica', 'id_persona')->where('personas_academica.is_valid', '=', 1);
     }
 
-    
     public function viajes()
     {
         return $this->belongsToMany(Viajes::class, 'personas_academica', 'id_academica', 'id_viaje')->where('personas_academica.is_valid', '=', 1);
+    }
+
+    public function institucion_financiadora()
+    {
+        return $this->belongsTo(Institucionfinanciadora::class,'id_financiamiento')->where('institucionfinanciadora.is_valid','=',1)->withDefault(['nombre' => '']);
     }
 
     public function enlaces()
@@ -52,7 +58,10 @@ class ActividadAcademica extends Model
             ->orWhere('tipo', 'like', '%' . $val . '%')
             ->orWhere('participacion', 'like', '%' . $val . '%')
             ->orWhere('fecha_comienzo', 'like', '%' . $val . '%')
-            ->orWhere('fecha_termino', 'like', '%' . $val . '%');
+            ->orWhere('fecha_termino', 'like', '%' . $val . '%')
+            ->orWhereHas('participantes', function ($query) use ($val) {
+                $query->where(DB::raw('CONCAT_WS(" ", primer_nombre, segundo_nombre, primer_apellido, segundo_apellido)'), 'LIKE', '%' . $val . '%');
+            });;
             
     }
 }

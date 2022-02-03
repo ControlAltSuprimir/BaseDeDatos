@@ -198,7 +198,7 @@ class cursoController extends Controller
             // Borrado    
             $borrar = [];
             $borrar = array_diff($losProfes, $request->docentes);
-            CursoDocente::whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoDocente::where('id_curso','=',$curso->id)->where('rol','=','Docente')->whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
             //Agregando
             $agregando =[];
             $agregando = array_diff($request->docentes, $losProfes);
@@ -215,7 +215,7 @@ class cursoController extends Controller
             }
         } else {
             //Si el request está vacío entonces borramos todo
-            CursoDocente::whereIn('id_persona', $losProfes)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoDocente::where('id_curso','=',$curso->id)->where('rol','=','Docente')->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
         //return $curso->profes()->select('personas.id')->get()->makeHidden('pivot');
@@ -230,7 +230,7 @@ class cursoController extends Controller
             // Borrado    
             $borrar = [];
             $borrar = array_diff($lesAyudantes, $request->ayudantes);
-            CursoDocente::whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoDocente::where('id_curso','=',$curso->id)->where('rol','=','Ayudante')->whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
             //Agregando
             $agregando =[];
             $agregando = array_diff($request->ayudantes, $lesAyudantes);
@@ -247,7 +247,7 @@ class cursoController extends Controller
             }
         } else {
             //Si el request está vacío entonces borramos todo
-            CursoDocente::whereIn('id_persona', $lesAyudantes)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoDocente::where('id_curso','=',$curso->id)->where('rol','=','Ayudante')->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
         //Invitades
@@ -259,7 +259,7 @@ class cursoController extends Controller
             // Borrado    
             $borrar = [];
             $borrar = array_diff($lesInvitades, $request->invitados);
-            CursoDocente::whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoDocente::where('id_curso','=',$curso->id)->where('rol','=','Invitado(a)')->whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
             //Agregando
             $agregando =[];
             $agregando = array_diff($request->invitados, $lesInvitades);
@@ -276,7 +276,7 @@ class cursoController extends Controller
             }
         } else {
             //Si el request está vacío entonces borramos todo
-            CursoDocente::whereIn('id_persona', $lesInvitades)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoDocente::where('id_curso','=',$curso->id)->where('rol','=','Invitado(a)')->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
         // Alumnos
@@ -288,7 +288,7 @@ class cursoController extends Controller
             // Borrado    
             $borrar = [];
             $borrar = array_diff($lesAlumnes, $request->estudiantes);
-            CursoAlumno::whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoAlumno::where('id_curso','=',$curso->id)->whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
             //Agregando
             $agregando =[];
             $agregando = array_diff($request->estudiantes, $lesAlumnes);
@@ -305,7 +305,7 @@ class cursoController extends Controller
             }
         } else {
             //Si el request está vacío entonces borramos todo
-            CursoAlumno::whereIn('id_persona', $lesAlumnes)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            CursoAlumno::where('id_curso','=',$curso->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
         //Guardando

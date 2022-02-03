@@ -32,7 +32,8 @@
                 <div class="mt-6 grid grid-cols-4 gap-6">
                   <div class="col-span-4 sm:col-span-2">
                     <label for="first_name" class="block text-sm font-medium text-gray-700">Primer Nombre</label>
-                    <input type="text" name="primer_nombre" id="first_name" autocomplete="cc-given-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" value="{{$data['persona']->primer_nombre}}">
+                    <input type="text" name="primer_nombre" id="first_name" autocomplete="cc-given-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" value="{{$data['persona']->primer_nombre}}"
+                    required>
                   </div>
     
                   <div class="col-span-4 sm:col-span-2">
@@ -41,7 +42,8 @@
                   </div>
                   <div class="col-span-4 sm:col-span-2">
                     <label for="first_name" class="block text-sm font-medium text-gray-700">Primer Apellido</label>
-                    <input type="text" name="primer_apellido" id="first_name" autocomplete="cc-given-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" value="{{$data['persona']->primer_apellido}}">
+                    <input type="text" name="primer_apellido" id="first_name" autocomplete="cc-given-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" value="{{$data['persona']->primer_apellido}}"
+                    required>
                   </div>
     
                   <div class="col-span-4 sm:col-span-2">

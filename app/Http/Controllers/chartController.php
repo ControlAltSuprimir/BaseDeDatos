@@ -298,4 +298,10 @@ class chartController extends Controller
         $data = compact('chart', 'chart2', 'clasificacionActual', 'anoActual', 'anosPublicados', 'chartPorAno', 'articulosPendientes');
         return view('reports.articulos', ['data' => $data]);
     }
+
+
+
+    public function losFinanciamientos(){
+        return view('reports.financiamientos');
+    }
 }

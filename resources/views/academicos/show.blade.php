@@ -153,6 +153,26 @@
 
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">
+                                Area de Investigación
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                {{ $data['academico']->area_investigacion }}
+                            </dd>
+                        </div>
+
+                        <div class="sm:col-span-1">
+
+                            <dt class="text-sm font-medium text-gray-500">
+                                Estudios
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                {{ $data['academico']->estudios }}
+                            </dd>
+
+                        </div>
+
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">
                                 Inicio Actividades
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900">

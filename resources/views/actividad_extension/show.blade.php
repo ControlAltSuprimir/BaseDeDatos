@@ -76,33 +76,34 @@
         </div>
 
         <div class="sm:col-span-1">
-          
           <dt class="text-sm font-medium text-gray-500">
-            Financiamiento
+            Inicio / Término
           </dt>
           <dd class="mt-1 text-sm text-gray-900">
-            {{$data['extension']->financiamiento}}
-          </dd>
-          
-        </div>
-
-
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">
-            Inicio
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{$data['extension']->fecha_comienzo}}
+            {{$data['extension']->fecha_comienzo}} / {{$data['extension']->fecha_termino}}
           </dd>
         </div>
 
         <div class="sm:col-span-1">
+          
           <dt class="text-sm font-medium text-gray-500">
-            Término
+            Institución que Financia la Actividad
           </dt>
           <dd class="mt-1 text-sm text-gray-900">
-            {{$data['extension']->fecha_termino}}
+            {{$data['extension']->institucion_financiadora->nombre}}
           </dd>
+          
+        </div>
+
+        <div class="sm:col-span-1">
+          
+          <dt class="text-sm font-medium text-gray-500">
+            Monto Financiado
+          </dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{$data['extension']->montofinanciado}}
+          </dd>
+          
         </div>
 
         <div class="sm:col-span-1">
@@ -186,88 +187,9 @@
       <div>
           <!-- Datos Personales -->
           <div id="London" class="tabcontent active" style="display: block">
-              
-            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                  <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                      <table class="min-w-full divide-y divide-gray-200">
-                          <thead class="bg-gray-50">
-                              <tr>
-                                  <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
-                                      class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Nombre
-                                      
-                                  </th>
-
-                                  <th scope="col"
-                                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Tipo
-                                  </th>
-                                  <th scope="col"
-                                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Correo
-                                  </th>
-                                  {{--
-                                  <th scope="col"
-                                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Fecha Comienzo-Término
-                                  </th>
-                                  --}}
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <!-- Odd row -->
-                              @foreach ($data['participantes'] as $participante)
-                                  <tr class="bg-white">
-                                      <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                          {!! $participante->full_nameLink() !!}
-                                      </td>
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                          {!! $participante->pivot->cargo !!}
-                                      </td>
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                          {!! $participante->email !!}
-                                      </td>
-                                      {{--
-                                      <td scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                          {{$academica->intervalo()}}
-                                      </td>
-                                      --}}
-                                  </tr>
-                              @endforeach
-  
-                              <!-- Even row -->
-  
-  
-                              <!-- More people... -->
-                          </tbody>
-                      </table>
-                  </div>
-                  <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
-  
-                    <div class="sm:col-span-1">
-        
-                     <dt class="text-sm font-medium text-gray-500">
-                    {{--      Mostrando {{ $items->firstItem() }} a {{ $items->lastItem() }} de un total de
-                          {{ $items->total() }}
-                          elementos--}}
-                      </dt> 
-                        <dd class="mt-1 text-sm text-gray-900">
-                            {{--{{ $items->links() }}--}}
-        
-                        </dd>
-        
-                    </div>
-        
-                </div>
-              </div>
-          </div>
-
-
-
-
-
-
+            <?php $edit = $data['extension']->id;
+                $type = 0; ?> {{-- 1=>academica, 0=>extension --}}
+                @livewire('modals.participantesactividad',['edit'=>$edit, 'type' =>$type])
           </div>
 
 
@@ -339,12 +261,9 @@
                     <div class="sm:col-span-1">
         
                      <dt class="text-sm font-medium text-gray-500">
-                    {{--      Mostrando {{ $items->firstItem() }} a {{ $items->lastItem() }} de un total de
-                          {{ $items->total() }}
-                          elementos--}}
                       </dt> 
                         <dd class="mt-1 text-sm text-gray-900">
-                            {{--{{ $items->links() }}--}}
+                           
         
                         </dd>
         

@@ -24,10 +24,17 @@ class Viajes extends Model
         return $this->belongsTo(Personas::class,'id_persona')->orderBy('primer_apellido');
     }
 
-    public function full_name()
+    public function name() //sin persona
     {
-        return $this->persona->full_name(). " [$this->paisOrigen, $this->ciudadOrigen -> $this->paisDestino, $this->ciudadDestino] ($this->fecha)";
+        return " [$this->paisOrigen, $this->ciudadOrigen -> $this->paisDestino, $this->ciudadDestino] ($this->fecha)";
     }
+
+    public function full_name() //agregamos el nombre de la persona
+    {
+        return $this->persona->full_name(). $this->name();
+    }
+
+
 
     public function scopeSearch($query, $val)
     {

@@ -73,10 +73,10 @@ class proyectosController extends Controller
         $proyecto->organizacion_financia = $request->organizacion_financia;
         $proyecto->descripcion = $request->observaciones;
         $proyecto->investigador_responsable = $request->investigador_responsable;
+        $proyecto->created_by = auth()->id();
+        $proyecto->updated_by = auth()->id();
         $proyecto->is_valid = 1;
 
-
-        $losParticipantes[] = [$request->investigador_responsable, 'Investigador Responsable', '', ''];
 
         $proyecto->save();
 
@@ -84,114 +84,75 @@ class proyectosController extends Controller
 
         if (isset($request->participantes)) {
             foreach ($request->participantes as $item) {
-                if (isset($item[0]) && !in_array($item, $losParticipantes)) {
+                if ($item != $request->investigador_responsable) {
 
                     $participante = new PersonaProyecto;
-                    $participante->id_persona = $item[0];
+                    $participante->id_persona = $item;
                     $participante->id_proyecto = $proyecto->id;
-                    $participante->participacion = $item[1];
-                    $participante->fecha = $item[2];
-                    $participante->descripcionParticipacion = $item[3];
+                    $participante->created_by = auth()->id();
+                    $participante->updated_by = auth()->id();
                     $participante->is_valid = 1;
                     $participante->save();
-
-
-                    $losParticipantes[] = $item;
                 }
             }
         }
-        //return $losParticipantes;
 
 
-        //guardando participantes no registrados
-        if (isset($request->extraParticipante)) {
-            foreach ($request->extraParticipante as $item) {
-                $persona = new Personas;
-                $persona->primer_nombre = $item["'primer_nombre'"];
-                $persona->primer_apellido = $item["'primer_apellido'"];
-                $persona->is_valid = 1;
-                $persona->save();
-
-                $participante = new PersonaProyecto;
-                $participante->id_persona = $persona->id;
-                $participante->id_proyecto = $proyecto->id;
-                $participante->participacion = $item[1];
-                $participante->fecha = $item[2];
-                $participante->descripcionParticipacion = $item[3];
-                $participante->is_valid = 1;
-                $participante->save();
-            }
-        }
-
-
-
-
-        $articulosRepetidos = [];
         //guardando articulos relacionados
         if (isset($request->articulos)) {
             foreach ($request->articulos as $item) {
-                if (isset($item) && !in_array($item, $articulosRepetidos)) {
-                    $articuloRelacionado = new ProyectosArticulos;
-                    $articuloRelacionado->id_articulo = $item;
-                    $articuloRelacionado->id_proyecto = $proyecto->id;
-                    $articuloRelacionado->is_valid = 1;
-                    $articuloRelacionado->save();
-                    $articulosRepetidos[] = $item;
-                }
+                $articuloRelacionado = new ProyectosArticulos;
+                $articuloRelacionado->id_articulo = $item;
+                $articuloRelacionado->id_proyecto = $proyecto->id;
+                $articuloRelacionado->created_by = auth()->id();
+                $articuloRelacionado->updated_by = auth()->id();
+                $articuloRelacionado->is_valid = 1;
+                $articuloRelacionado->save();
             }
         }
 
 
-        $tesisRepetidas = [];
         //guardando proyectos relacionados
         if (isset($request->tesis)) {
             foreach ($request->tesis as $item) {
-                if (isset($item) && !in_array($item, $tesisRepetidas)) {
-                    $tesisRelacionadas = new ProyectosTesistas;
-                    $tesisRelacionadas->id_tesis = $item;
-                    $tesisRelacionadas->id_proyecto = $proyecto->id;
-                    $tesisRelacionadas->is_valid = 1;
-                    $tesisRelacionadas->save();
-                    $tesisRepetidas[] = $item;
-                }
+                $tesisRelacionadas = new ProyectosTesistas;
+                $tesisRelacionadas->id_tesis = $item;
+                $tesisRelacionadas->id_proyecto = $proyecto->id;
+                $tesisRelacionadas->created_by = auth()->id();
+                $tesisRelacionadas->updated_by = auth()->id();
+                $tesisRelacionadas->is_valid = 1;
+                $tesisRelacionadas->save();
             }
         }
 
-        $academicaRepetidas = [];
-        //guardando proyectos relacionados
 
+        //guardando proyectos relacionados
         if (isset($request->academica)) {
             foreach ($request->academica as $item) {
-                if (isset($item["'id'"]) && !in_array($item["'id'"], $academicaRepetidas)) {
-                    $extensionRelacionada = new ProyectosActividadesAcademicas;
-                    $extensionRelacionada->id_academica = $item["'id'"];
-                    $extensionRelacionada->cargo = $item["'cargo'"];
-                    $extensionRelacionada->id_proyecto = $proyecto->id;
-                    $extensionRelacionada->is_valid = 1;
-                    $extensionRelacionada->save();
-                    $academicaRepetida[] = $item["'id'"];
-                }
+                $extensionRelacionada = new ProyectosActividadesAcademicas;
+                $extensionRelacionada->id_academica = $item;
+                $extensionRelacionada->id_proyecto = $proyecto->id;
+                $extensionRelacionada->created_by = auth()->id();
+                $extensionRelacionada->updated_by = auth()->id();
+                $extensionRelacionada->is_valid = 1;
+                $extensionRelacionada->save();
             }
         }
 
 
-        $extensionRepetidas = [];
-        //guardando proyectos relacionados
 
+        //guardando proyectos relacionados
         if (isset($request->extension)) {
             foreach ($request->extension as $item) {
-                if (isset($item["'id'"]) && !in_array($item["'id'"], $extensionRepetidas)) {
-                    $extensionRelacionada = new ProyectosActividadesExtension;
-                    $extensionRelacionada->id_actividad = $item["'id'"];
-                    $extensionRelacionada->cargo = $item["'cargo'"];
-                    $extensionRelacionada->id_proyecto = $proyecto->id;
-                    $extensionRelacionada->is_valid = 1;
-                    $extensionRelacionada->save();
-                    $extensionRepetida[] = $item["'id'"];
-                }
+                $extensionRelacionada = new ProyectosActividadesExtension;
+                $extensionRelacionada->id_actividad = $item;
+                $extensionRelacionada->id_proyecto = $proyecto->id;
+                $extensionRelacionada->created_by = auth()->id();
+                $extensionRelacionada->updated_by = auth()->id();
+                $extensionRelacionada->is_valid = 1;
+                $extensionRelacionada->save();
             }
         }
-
 
         return redirect('/proyectos/' . $proyecto->id);
     }
@@ -206,33 +167,17 @@ class proyectosController extends Controller
     {
         //
         $proyecto = Proyectos::find($id);
-        $listaParticipantes = $proyecto->participantes()->get();
-        $listaCoinvestigadores = $proyecto->coinvestigadores()->get();
-        $listaColaboradores = $proyecto->colaboradores()->get();
-        $listaArticulos = $proyecto->articulos()->get();
+        //$listaParticipantes = $proyecto->participantes()->get();
+        $articulos = $proyecto->articulos()->get();
         $tesis = $proyecto->tesistas()->get();
         $listaExtensiones = $proyecto->extensiones()->get();
 
-        //
-        $articulos=$listaArticulos;
-        /*$articulos = [];
-        foreach ($listaArticulos as $articulo) {
-            $articulos[] = $articulo->descripcion();
-        }*/
+        //$articulos = $listaArticulos;
 
-/*
-        $tesis = [];
-        foreach ($listaTesis as $tesista) {
-            $tesis[] = $tesista->descripcion();
-        }*/
-
-
-        $data = compact('proyecto', 'listaParticipantes', 'listaColaboradores', 'articulos', 'tesis', 'listaExtensiones');
-        //$data = compact('proyecto','listaCoinvestigadores','listaColaboradores','articulos','listaExtensiones');
-
-        //return $data;
+        $data = compact('proyecto', 'articulos', 'tesis');
         return view('proyectos.show', ['data' => $data]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -270,131 +215,156 @@ class proyectosController extends Controller
         $proyecto->organizacion_financia = $request->organizacion_financia;
         $proyecto->descripcion = $request->observaciones;
         $proyecto->investigador_responsable = $request->investigador_responsable;
-        $proyecto->is_valid = 1;
-        //$proyecto->is_valid = 1;
-
-
+        $proyecto->updated_by = auth()->id();
 
         $proyecto->save();
 
-
-        //guardando coinvestigadores registrados
-
-        PersonaProyecto::where('id_proyecto', '=', $proyecto->id)
-            ->where('is_valid', '=', 1)
-            ->update(['is_valid' => 0]);
-
-
-        $losParticipantes[] = [$request->investigador_responsable, 'Investigador Responsable', '', ''];
+        require(__DIR__ . '/../../Helpers/Collection/collectiontostring.php');
 
 
 
         //participantes
-
+        
+        $losParticipantes = $proyecto->losParticipantes()->select('personas.id')->get()->makeHidden('pivot');
+        $losParticipantes = collectionToArrayId($losParticipantes);
+        
+        //nuevos participantes
         if (isset($request->participantes)) {
-            foreach ($request->participantes as $item) {
-                if (isset($item[0]) && !in_array($item, $losParticipantes)) {
+            // Borrado    
+            $borrar = [];
+            $borrar = array_diff($losParticipantes, $request->participantes);
+            PersonaProyecto::where('id_proyecto','=',$proyecto->id)->whereIn('id_persona', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            //Agregando
+            $agregando =[];
+            $agregando = array_diff($request->participantes, $losParticipantes);
 
+            foreach ($agregando as $item) {
+                if ($item != $request->investigador_responsable) {
                     $participante = new PersonaProyecto;
-                    $participante->id_persona = $item[0];
+                    $participante->id_persona = $item;
                     $participante->id_proyecto = $proyecto->id;
-                    $participante->participacion = $item[1];
-                    $participante->fecha = $item[2];
-                    $participante->descripcionParticipacion = $item[3];
+                    $proyecto->updated_by = auth()->id();
+                    $proyecto->created_by = auth()->id();
                     $participante->is_valid = 1;
                     $participante->save();
 
-
-                    $losParticipantes[] = $item;
                 }
             }
+        } else {
+            //Si el request está vacío entonces borramos todo lo asociado al proyecto
+            PersonaProyecto::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
-        //return $losParticipantes;
+        //articulos relacionados
 
-
-        //guardando participantes no registrados
-        if (isset($request->extraParticipante)) {
-            foreach ($request->extraParticipante as $item) {
-                $persona = new Personas;
-                $persona->primer_nombre = $item["'primer_nombre'"];
-                $persona->primer_apellido = $item["'primer_apellido'"];
-                $persona->is_valid = 1;
-                $persona->save();
-
-                $participante = new PersonaProyecto;
-                $participante->id_persona = $persona->id;
-                $participante->id_proyecto = $proyecto->id;
-                $participante->participacion = $item[1];
-                $participante->fecha = $item[2];
-                $participante->descripcionParticipacion = $item[3];
-                $participante->is_valid = 1;
-                $participante->save();
-            }
-        }
-
-        
-
-        $articulosRepetidos = [];
-        //guardando articulos relacionados
-
-        ProyectosArticulos::where('id_proyecto', '=', $proyecto->id)
-            ->where('is_valid', '=', 1)
-            ->update(['is_valid' => 0]);
-
+        $losArticulos = $proyecto->articulos()->select('articulos.id')->get()->makeHidden('pivot');
+        $losArticulos = collectionToArrayId($losArticulos);
+        //return $losArticulos;
         if (isset($request->articulos)) {
-            foreach ($request->articulos as $item) {
-                if (isset($item) && !in_array($item, $articulosRepetidos)) {
+            $borrar = [];
+            $borrar = array_diff($losArticulos, $request->articulos);
+            ProyectosArticulos::where('id_proyecto','=',$proyecto->id)->whereIn('id_articulo', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            //Agregando
+            $agregando =[];
+            $agregando = array_diff($request->articulos, $losArticulos);
+            foreach ($agregando as $item) {
                     $articuloRelacionado = new ProyectosArticulos;
                     $articuloRelacionado->id_articulo = $item;
                     $articuloRelacionado->id_proyecto = $proyecto->id;
+                    $articuloRelacionado->updated_by = auth()->id();
+                    $articuloRelacionado->created_by = auth()->id();
                     $articuloRelacionado->is_valid = 1;
-                    $articuloRelacionado->save();
-                    $articulosRepetidos[] = $item;
-                }
+                    $articuloRelacionado->save();   
             }
+        } else {
+            //Si el request está vacío entonces borramos todo lo asociado al proyecto
+            ProyectosArticulos::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
 
-        $tesisRepetidas = [];
-        //guardando tesis relacionados
 
-        ProyectosTesistas::where('id_proyecto', '=', $proyecto->id)
-            ->where('is_valid', '=', 1)
-            ->update(['is_valid' => 0]);
+        //guardando tesis relacionados
+        $lasTesis = $proyecto->tesistas()->select('tesis.id')->get()->makeHidden('pivot');
+        $lasTesis = collectionToArrayId($lasTesis);
 
         if (isset($request->tesis)) {
-            foreach ($request->tesis as $item) {
-                if (isset($item) && !in_array($item, $tesisRepetidas)) {
+            $borrar = [];
+            $borrar = array_diff($lasTesis, $request->tesis);
+            ProyectosTesistas::where('id_proyecto','=',$proyecto->id)->whereIn('id_tesis', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            //Agregando
+            $agregando =[];
+            $agregando = array_diff($request->tesis, $lasTesis);
+            foreach ($agregando as $item) {
                     $tesisRelacionadas = new ProyectosTesistas;
                     $tesisRelacionadas->id_tesis = $item;
                     $tesisRelacionadas->id_proyecto = $proyecto->id;
+                    $tesisRelacionadas->updated_by = auth()->id();
+                    $tesisRelacionadas->created_by = auth()->id();
                     $tesisRelacionadas->is_valid = 1;
                     $tesisRelacionadas->save();
-                    $tesisRepetidas[] = $item;
-                }
+                    
             }
+        } else {
+            //Si el request está vacío entonces borramos todo lo asociado al proyecto
+            ProyectosTesistas::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
 
-        $extensionRepetidas = [];
-        //guardando proyectos relacionados
-
-        ProyectosActividadesExtension::where('id_proyecto', '=', $proyecto->id)
-            ->where('is_valid', '=', 1)
-            ->update(['is_valid' => 0]);
+        //guardando extensiones
+        $lasExtensiones = $proyecto->extensiones()->select('actividadextension.id')->get()->makeHidden('pivot');
+        $lasExtensiones = collectionToArrayId($lasExtensiones);
+        
 
         if (isset($request->extension)) {
-            foreach ($request->extension as $item) {
-                if (isset($item["'id'"]) && !in_array($item["'id'"], $extensionRepetidas)) {
+            $borrar = [];
+            $borrar = array_diff($lasExtensiones, $request->extension);
+            ProyectosActividadesExtension::where('id_proyecto','=',$proyecto->id)->whereIn('id_actividad', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            //Agregando
+            $agregando =[];
+            $agregando = array_diff($request->extension, $lasExtensiones);
+
+            foreach ($agregando as $item) {
                     $extensionRelacionada = new ProyectosActividadesExtension;
-                    $extensionRelacionada->id_actividad = $item["'id'"];
-                    $extensionRelacionada->cargo = $item["'cargo'"];
+                    $extensionRelacionada->id_actividad = $item;
                     $extensionRelacionada->id_proyecto = $proyecto->id;
+                    $extensionRelacionada->updated_by = auth()->id();
+                    $extensionRelacionada->created_by = auth()->id();
                     $extensionRelacionada->is_valid = 1;
                     $extensionRelacionada->save();
-                    $extensionRepetida[] = $item;
-                }
+
             }
+        } else {
+            //Si el request está vacío entonces borramos todo lo asociado al proyecto
+            ProyectosActividadesExtension::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+        }
+
+
+        //guardando academicas
+        $lasAcademicas = $proyecto->academicas()->select('actividadacademica.id')->get()->makeHidden('pivot');
+        $lasAcademicas = collectionToArrayId($lasAcademicas);
+        //return $request->academica;
+
+        if (isset($request->academica)) {
+            $borrar = [];
+            $borrar = array_diff($lasAcademicas, $request->academica);
+            
+            ProyectosActividadesAcademicas::where('id_proyecto','=',$proyecto->id)->whereIn('id_academica', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            //Agregando
+            $agregando =[];
+            $agregando = array_diff($request->academica, $lasAcademicas);
+
+            foreach ($agregando as $item) {
+                    $extensionRelacionada = new ProyectosActividadesAcademicas;
+                    $extensionRelacionada->id_academica = $item;
+                    $extensionRelacionada->id_proyecto = $proyecto->id;
+                    $extensionRelacionada->updated_by = auth()->id();
+                    $extensionRelacionada->created_by = auth()->id();
+                    $extensionRelacionada->is_valid = 1;
+                    $extensionRelacionada->save();
+
+            }
+        }  else {
+            //Si el request está vacío entonces borramos todo lo asociado al proyecto
+            ProyectosActividadesAcademicas::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
 

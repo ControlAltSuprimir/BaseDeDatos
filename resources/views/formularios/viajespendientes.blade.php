@@ -26,9 +26,10 @@
                         Procesadas
                     </a>
 
-                    {{-- <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                Formación
-              </a> --}}
+                    <a href="#" onclick="openState(event, 'Santiago')"
+                        class="tablinks3 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                        Rechazados
+                    </a>
                 </nav>
             </div>
         </div>
@@ -113,7 +114,7 @@
 
     </div>
 
-
+    {{--Procesados--}}
     <div id="NewJersey" class="tabcontent3 ">
 
         <br>
@@ -172,7 +173,94 @@
                                 </tbody>
                             </table>
                         @else
-                            No hay Formularios de viajes pendientes
+                            
+                        @endif
+
+                    </div>
+                    <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                        <div class="sm:col-span-1">
+
+                            <dt class="text-sm font-medium text-gray-500">
+
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                {{ $data['procesados']->links() }}
+
+                            </dd>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    {{--Rechazados--}}
+    <div id="Santiago" class="tabcontent3">
+
+        <br>
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+
+                        @if (count($data['rechazados']) != 0)
+
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th wire:click="sortBy('primer_apellido')" style="cursor: pointer;" scope="col"
+                                            class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Académico
+                                        </th>
+
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Email
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Ruta
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Odd row -->
+                                    @foreach ($data['rechazados'] as $pendiente)
+                                        <tr class="bg-white">
+                                            <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                {!! $pendiente->persona->full_name() !!}
+                                            </td>
+
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {!! $pendiente->persona->email !!}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {!! $pendiente->pais_origen !!}, {!! $pendiente->ciudad_origen !!} ->
+                                                {!! $pendiente->pais_destino !!}, {!! $pendiente->ciudad_destino !!}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <a href="/viajespendientes/{{ $pendiente->id }}">
+                                                    DETALLES
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        @else
+                            
                         @endif
 
                     </div>

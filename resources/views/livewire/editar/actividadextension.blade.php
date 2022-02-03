@@ -26,23 +26,42 @@
                     <div class="col-span-4 sm:col-span-2">
                         <label for="last_name" class="block text-sm font-medium text-gray-700">Número de
                             Participantes</label>
-                        <input type="text" name="numeroParticipantes" id="numeroParticipantes"
+                        <input type="number" name="numeroParticipantes" id="numeroParticipantes"
                             autocomplete="cc-family-name"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                            placeholder="50 personas" value="{{ $perfil->numeroParticipantes }}">
+                            placeholder="50" value="{{ $perfil->numeroParticipantes }}">
                     </div>
 
+                    
+                     
                     <div class="col-span-4 sm:col-span-2">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">Público Objetivo</label>
-                        <input type="text" name="publicoObjetivo" id="publicoObjetivo" autocomplete="cc-family-name"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                            placeholder="" value="{{ $perfil->publicoObjetivo }}">
+                        <label for="first_name" class="block text-sm font-medium text-gray-700">Institución que financia
+                            (si seleccionas Institución externa u Otra especificar en descripción de la
+                            actividad)</label>
+                        <select name="institucionFinanciadora" id="institucionFinanciadora"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            @foreach ($allFinanciadoras as $financiadora)
+                                @if ($perfil->id_financiamiento == $financiadora->id)
+                                    <option value="{{ $financiadora->id }}" selected>{{ $financiadora->nombre }}
+                                    </option>
+                                @else
+                                    <option value="{{ $financiadora->id }}">{{ $financiadora->nombre }}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="col-span-4 sm:col-span-2">
+                    {{-- <div class="col-span-4 sm:col-span-2">
                         <label for="last_name" class="block text-sm font-medium text-gray-700">Financiamiento</label>
                         <input type="text" name="financiamiento" id="financiamiento" autocomplete="cc-family-name"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                            placeholder="" value="{{ $perfil->financiamiento }}">
+                            placeholder="">
+                    </div> --}}
+                    <div class="col-span-4 sm:col-span-2">
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">Monto financiado (en
+                            pesos chilenos)</label>
+                        <input type="number" name="montofinanciado" id="montofinanciado" autocomplete="cc-family-name"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                            placeholder="" value="{{ $perfil->montofinanciado }}">
                     </div>
 
                     <div class="col-span-4 sm:col-span-2">
@@ -57,6 +76,13 @@
                         <input type="date" name="fecha_termino" id="fecha_termino" autocomplete="cc-family-name"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                             value="{{ $perfil->fecha_termino }}">
+                    </div>
+
+                    <div class="col-span-4 sm:col-span-2">
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">Público Objetivo</label>
+                        <input type="text" name="publicoObjetivo" id="publicoObjetivo" autocomplete="cc-family-name"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                            placeholder="" value="{{ $perfil->publicoObjetivo }}">
                     </div>
 
                     <div class="col-span-4 sm:col-span-2">
@@ -100,73 +126,29 @@
                     </div> --}}
 
                 </div>
-                @foreach ($participantes as $index => $participante)
-                    {{-- <?php echo print_r($participantes[$index]); ?> --}}
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2 center">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label>
-                            <select name="personas[{{ $index }}]['id']" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
-                                wire:model="participantes.{{ $index }}.select"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Participante -- </option>
-                                @foreach ($allPersonas as $persona)
+                <div wire:ignore>
+                    <label for="proyectos" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Nombre de Participante(s)</label>
+                    <select id="location" name="participantes[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allPersonas as $persona)
+                            @forelse ($participantes as $participante)
+                                @if ($participante->id == $persona->id)
+                                    <option value="{{ $persona->id }}" selected>
+                                        {{ $persona->full_name() }}
+                                    </option>
+                                @else
                                     <option value="{{ $persona->id }}">
                                         {{ $persona->full_name() }}
                                     </option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">Descripción de la
-                                Participación</label>
-                            <input type="text" name="personas[{{ $index }}]['cargo']"
-                                id="personas[{{ $index }}]['id']['cargo']" autocomplete="cc-family-name"
-                                wire:model="participantes.{{ $index }}.cargo"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        </div>
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">Viaje
-                                Asociado</label>
-                            <select name="personas[{{ $index }}]['viaje']" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
-                                wire:model="participantes.{{ $index }}.viaje"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Viaje -- </option>
-                                @foreach ($allViajes as $viaje)
-                                    <option value="{{ $viaje->id }}">
-                                        {{ $viaje->full_name() }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700"> &emsp; </label>
-                            <a href="#" wire:click.prevent="removeItem({{ $index }},'participantes')">
-                                <button type="submit"
-                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                    Borrar
-                                </button>
-                            </a>
-                        </div>
-
-                    </div>
-                    &emsp;
-                    <hr>
-                @endforeach
-
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addItem('participantes')"
-                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Añadir Participante</button>
-                    </div>
+                                @endif
+                            @empty
+                                <option value="{{ $persona->id }}">
+                                    {{ $persona->full_name() }}
+                                </option>
+                            @endforelse
+                        @endforeach
+                    </select>
                 </div>
 
 
@@ -191,46 +173,31 @@
 
 
                 </div>
-                @foreach ($proyectos as $index => $proyecto)
-
-                    <div class="col-span-4 sm:col-span-2 center">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label>
-                        <select name="proyectos[{{ $index }}]['id']" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
-                            wire:model="proyectos.{{ $index }}"
-                            class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                            <option value="">-- Selecciona Proyecto -- </option>
-
-                            @foreach ($allProyectos as $item)
-                                <option value="{{ $item->id }}">
-                                    {{ $item->full_name() }}
+                <div wire:ignore>
+                    <label for="proyectos" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Proyecto(s) (Código o Nombre)</label>
+                    <select id="project" name="proyectos[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allProyectos as $proyecto)
+                            @forelse ($proyectos as $proyectoAsociado)
+                                @if ($proyectoAsociado->id == $proyecto->id)
+                                    <option value="{{ $proyecto->id }}" selected>
+                                        {{ $proyecto->full_name() }}
+                                    </option>
+                                @else
+                                    <option value="{{ $proyecto->id }}">
+                                        {{ $proyecto->full_name() }}
+                                    </option>
+                                @endif
+                            @empty
+                                <option value="{{ $proyecto->id }}">
+                                    {{ $proyecto->full_name() }}
                                 </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2">
-
-                            <a href="#" wire:click.prevent="removeItem({{ $index }},'proyectos')">
-                                <button type="submit"
-                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                    Borrar
-                                </button>
-                            </a>
-                        </div>
-
-                    </div>
-                    &emsp;
-                    <hr>
-                @endforeach
-
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addItem('proyectos')"
-                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Añadir Proyecto</button>
-                    </div>
+                            @endforelse
+                        @endforeach
+                    </select>
                 </div>
+
 
 
 
@@ -239,6 +206,7 @@
         </div>
 
 
+        
 
 
 
@@ -250,7 +218,14 @@
                 Editar Actividad de Extensión
             </button>
         </div>
-</div>
-</form>
+
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#project').select2();
+            $('#location').select2();
+        });
+    </script>
 
 </div>

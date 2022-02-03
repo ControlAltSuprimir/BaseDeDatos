@@ -12,7 +12,10 @@ use App\Models\Formularioviajes;
 use App\Models\Viajes;
 use App\Models\ProyectosViajes;
 
+use App\Mail\FormularioViaje;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class formulariosController extends Controller
 {
@@ -29,22 +32,23 @@ class formulariosController extends Controller
 
         $rol = auth()->user()->rol->first();
         //return $rol->first();
-        if ($rol->rol == 'Admin') {
+        //if ($rol->rol == 'Admin') {
 
-            $pendientes = Formularioviajes::where('is_valid', '=', 1)->where('procesado','=',0)->paginate(25);
-            $procesados = Formularioviajes::where('is_valid', '=', 1)->where('procesado','=',1)->paginate(25);
-            $data = compact('pendientes','procesados');
-            return view('formularios.viajespendientes', ['data' => $data]);
-        }
+        $pendientes = Formularioviajes::where('is_valid', '=', 1)->where('procesado', '=', 0)->where('rechazado', '=', 0)->paginate(25);
+        $procesados = Formularioviajes::where('is_valid', '=', 1)->where('procesado', '=', 1)->where('rechazado', '=', 0)->paginate(25);
+        $rechazados = Formularioviajes::where('is_valid', '=', 1)->where('rechazado', '=', 1)->paginate(25);
+        $data = compact('pendientes', 'procesados', 'rechazados');
+        return view('formularios.viajespendientes', ['data' => $data]);
+        //}
 
-        return redirect('/dashboard')->with('success', 'Sólo administradores pueden entrar a la dirección que deseabas');
+        //return redirect('/dashboard')->with('success', 'Sólo administradores pueden entrar a la dirección que deseabas');
     }
 
     public function viajespendientesshow($id)
     {
         $pendiente = Formularioviajes::find($id);
         $data = compact('pendiente');
-        return view('formularios.viajespendientesshow',['data' => $data]);
+        return view('formularios.viajespendientesshow', ['data' => $data]);
     }
 
     public function viajeprocesado($id)
@@ -66,18 +70,18 @@ class formulariosController extends Controller
         $viaje->save();
 
         $pendiente->procesado = 1;
-        $pendiente->id_viaje=$viaje->id;
+        $pendiente->id_viaje = $viaje->id;
         $pendiente->save();
 
-        if(isset($pendiente->id_proyecto)){
-        $link = new ProyectosViajes;
-        $link->id_proyecto = $pendiente->id_proyecto;
-        $link->id_viaje = $viaje->id;
-        $link->is_valid = 1;
-        $link->save();}
+        if (isset($pendiente->id_proyecto)) {
+            $link = new ProyectosViajes;
+            $link->id_proyecto = $pendiente->id_proyecto;
+            $link->id_viaje = $viaje->id;
+            $link->is_valid = 1;
+            $link->save();
+        }
 
         return redirect('/viajes/' . $viaje->id);
-        
     }
 
 
@@ -96,11 +100,10 @@ class formulariosController extends Controller
         return view('formularios.viajes', ['data' => $data]);
     }
 
+    // Guardando el viaje y enviando el correo correspondiente
     public function storeviaje(Request $request)
     {
         // guardar el viaje pendiente
-
-        //return $request;
 
         $formulario = new Formularioviajes;
 
@@ -119,8 +122,21 @@ class formulariosController extends Controller
 
         $formulario->save();
 
+        //Enviando correo
+
+
+        Mail::to($request->user())->send(new FormularioViaje($formulario));
+
+        $mensaje = array(
+            'titulo' => 'Formulario de Viaje exitoso',
+            'contenido' => 'Se envió una notificación de correo a Alexia Cornejo'
+        );
+
+
+
+
         if (auth()->check()) {
-            return redirect('/dashboard')->with('success', 'Se envió la solicitud de viaje :D');
+            return redirect('/dashboard')->with('success', $mensaje);
         } else {
             return view('formularios.resultado');
         }

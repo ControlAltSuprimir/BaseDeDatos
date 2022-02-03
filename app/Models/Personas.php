@@ -48,7 +48,7 @@ class Personas extends Model
 
     public function articulos()
     {
-        return $this->belongsToMany(Articulo::class, 'persona_articulo', 'id_Persona', 'id_Articulo');
+        return $this->belongsToMany(Articulos::class, 'persona_articulo', 'id_Persona', 'id_Articulo')->where('persona_articulo.is_valid','=',1);
     }
 
     public function reponsableProyecto()

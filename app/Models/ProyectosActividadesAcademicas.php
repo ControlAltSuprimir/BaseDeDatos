@@ -19,5 +19,10 @@ class ProyectosActividadesAcademicas extends Model
         return $this->belongsTo(ActividadAcademica::class, 'id_academica');
     }
 
+    public function elProyecto()
+    {
+        return $this->belongsTo(Proyectos::class, 'id_proyecto');
+    }
+
 }
 

@@ -99,7 +99,7 @@
                         {{-- <button type="button" class="order-1 ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-0 sm:ml-0">
             Share
           </button> --}}
-                        <a href="/viajes/{{$data['pendiente']->id_viaje}}">
+                        <a href="/viajes/{{ $data['pendiente']->id_viaje }}">
                             <button type="button"
                                 class="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3">
                                 Ver Viaje registrado
@@ -110,29 +110,40 @@
 
                 </div>
             @else
-                <div
-                    class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+                <?php
+                $rol = auth()
+                    ->user()
+                    ->rol->first();
+                ?>
+                @if ($rol->rol == 'Admin')
+                    <div
+                        class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
 
-                    <div class="flex-1 min-w-0">
-                        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-                            &emsp;
-                        </h1>
+                        <div class="flex-1 min-w-0">
+                            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+                                &emsp;
+                            </h1>
+                        </div>
+
+                        <div class="mt-4 flex sm:mt-0 sm:ml-4">
+                            <?php $edit = $data['pendiente']->id; ?>
+                            
+
+                            
+
+
+                            <a href="/viajespendientes/{{ $data['pendiente']->id }}/process">
+                                <button type="button"
+                                    class="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3">
+                                    Procesar
+                                </button>
+                            </a>
+
+                        </div>
+
                     </div>
-
-                    <div class="mt-4 flex sm:mt-0 sm:ml-4">
-                        {{-- <button type="button" class="order-1 ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-0 sm:ml-0">
-                    Share
-                  </button> --}}
-                        <a href="/viajespendientes/{{ $data['pendiente']->id }}/process">
-                            <button type="button"
-                                class="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3">
-                                Procesar
-                            </button>
-                        </a>
-
-                    </div>
-
-                </div>
+                    @livewire('borrar.borrar_viajependiente',['edit' =>$edit])
+                @endif
 
             @endif
 

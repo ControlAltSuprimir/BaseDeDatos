@@ -165,68 +165,12 @@
             </div>
         </div>
     </div>
-    @if (count($data['listaParticipantes']) != 0)
+
+    <?php $edit = $data['proyecto']->id; ?>
 
 
+    @livewire('tablas.participantes',['edit' => $edit])
 
-        <!-- Description list -->
-        <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th wire:click="sortBy('primer_apellido')" style="cursor: pointer;" scope="col"
-                            class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Participante
-                        </th>
-
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Rol
-                        </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Fecha de Participación
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Odd row -->
-                    @foreach ($data['listaParticipantes'] as $participante)
-                        <tr class="bg-white">
-                            <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                {!! $participante->laPersona->full_nameLink() !!}
-                            </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {!! $participante->participacion !!}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {!! $participante->fecha !!}
-                            </td>
-                        </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-
-
-
-
-
-
-
-            </dl>
-        </div>
-    @else
-
-        <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
-            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                No hay participantes relacionados
-            </dl>
-        </div>
-
-    @endif
     <br><br>
     <hr>
     <br>

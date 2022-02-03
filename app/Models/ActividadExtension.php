@@ -28,6 +28,16 @@ class ActividadExtension extends Model
         return $this->belongsToMany(Personas::class, 'personas_extension', 'id_actividad', 'id_persona')->where('personas_extension.is_valid', '=', 1)->withPivot('cargo','cargo');
     }
 
+    public function viajes()
+    {
+        return $this->belongsToMany(Viajes::class, 'personas_extension', 'id_extension', 'id_viaje')->where('personas_extension.is_valid', '=', 1);
+    }
+
+    public function institucion_financiadora()
+    {
+        return $this->belongsTo(Institucionfinanciadora::class,'id_financiamiento')->where('institucionfinanciadora.is_valid','=',1)->withDefault(['nombre' => '']);
+    }
+
     public function personas_extension()
     {
         return $this->hasMany(PersonasExtension::class, 'id_actividad');

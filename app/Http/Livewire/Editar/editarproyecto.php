@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Indexaciones;
 use Livewire\Component;
 
+
 class editarproyecto extends Component
 {
     public $orderProducts = [];
@@ -20,13 +21,17 @@ class editarproyecto extends Component
     public $extraPersonas = [];
     public $allArticulos = [];
     public $allTesis = [];
-    public $allAcademicas = [];
-    public $allExtensiones = [];
+    public $allAcademica = [];
+    public $allExtension = [];
 
 
     public $participantes = [];
+    public $articulos = [];
+    public $tesis = [];
+    public $academicas = [];
+    public $extensiones =[];
+
     public $participantesaEditar = [];
-    public $investigaciones = [];
     public $investigacionesaEditar = [];
     public $actividades = [];
     public $actividadesaEditar = [];
@@ -41,123 +46,42 @@ class editarproyecto extends Component
         $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->get();
         $this->allArticulos = Articulos::where('is_valid', '=', 1)->orderBy('titulo')->get();
         $this->allTesis = Tesis::where('is_valid', '=', 1)->orderBy('titulo')->get();
-        $this->allAcademicas = ActividadAcademica::where('is_valid', '=', 1)->orderBy('nombre')->get();
-        $this->allExtensiones = ActividadExtension::where('is_valid', '=', 1)->orderBy('nombre')->get();
+        $this->allAcademica = ActividadAcademica::where('is_valid', '=', 1)->orderBy('nombre')->get();
+        $this->allExtension = ActividadExtension::where('is_valid', '=', 1)->orderBy('nombre')->get();
 
         $this->participantes = array('participantes'=>[],'extraparticipantes'=>[]);
         $this->actividades = array('extension' => [], 'academica' => []);
 
-        $this->indices = array(
-            'participantes' => ['participantes','extraparticipantes'],
-            'investigaciones' => ['articulos', 'tesis'],
-            'actividades' => ['extension', 'academica']
-        );
+       
 
         $id = $edit;
-        $proyecto = Proyectos::find($id);
+        $proyecto = Proyectos::with('responsable')->find($id);
         //$investigador_responsable = Personas::find($proyecto->investigador_responsable);
         // Participantes
         $participantes = $proyecto->participantes()->get();
         //Investigaciones
-        $articulos = $proyecto->articulos()->get();
+        $losarticulos = $proyecto->articulos()->get();
         $tesises = $proyecto->tesistas()->get();
         //Actividades
-        $academicas = $proyecto->las_academicas()->get();
+        $lasacademicas = $proyecto->las_academicas()->get();
         $extensiones = $proyecto->las_extensiones()->get();
 
         //$tablaDeIndexaciones = [];
         //Participantes
-        foreach ($participantes as $participante) {
-            $this->participantes['participantes'][] = array(
-                'id' => $participante->id_persona,
-                'rol' => $participante->participacion,
-                'fecha' => $participante->fecha,
-                'descripcion' => $participante->descripcionParticipacion
-            );
-            
-        }
-
-        //Articulos
-        if($articulos->isEmpty()){
-            $this->investigaciones['articulos']=[];
-        }
-        foreach ($articulos as $articulo) {
-            $this->investigaciones['articulos'][] = array(
-                'id' => $articulo->id
-            );
-        }
-
-        //Tesis
-        if($tesises->isEmpty()){
-            $this->investigaciones['tesis']=[];
-        }
-        $this->investigaciones['tesis']=[];
-        foreach ($tesises as $tesis) {
-            $this->investigaciones['tesis'][] = array(
-                'id' => $tesis->id
-            );
-        }
-
-        //Actividades Académicas
-        foreach ($academicas as $academica) {
-            $this->actividades['academica'][] = array(
-                'id' => $academica->id_academica,
-                'cargo' => $academica->cargo
-            );
-        }
-
-        //Actividades Extensión
-        foreach ($extensiones as $extension) {
-            $this->actividades['extension'][] = array(
-                'id' => $extension->id_actividad,
-                'cargo' => $extension->cargo,
-                'objeto' => $extension
-            );
-        }
-
-
+        foreach($participantes as $participante) { $this->participantes[] = $participante->id_persona; }
+        foreach($losarticulos as $articulo) { $this->articulos[] = $articulo->id; }
+        foreach($tesises as $tesis) { $this->tesis[] = $tesis->id; }
+        foreach($lasacademicas as $academica) { $this->academicas[] = $academica->id_academica; }
+        foreach($extensiones as $extension) { $this->extensiones[] = $extension->id_actividad; }
 
         $this->perfil = $proyecto;
     }
 
-    public function addRow($index)
-    {
-        if (in_array($index, $this->indices['participantes'])) {
-            $this->participantes[$index][] = '';
-            //$this->participantesaEditar[$index][] = '';
-        } elseif (in_array($index, $this->indices['investigaciones'])) {
-            $this->investigaciones[$index][] = '';
-            //$this->investigacionesaEditar[$index][] = '';
-        } elseif (in_array($index, $this->indices['actividades'])) {
-            $this->actividades[$index][] = '';
-            //$this->actividadesaEditar[$index][] = '';
-        } else {
-        }
-    }
 
-    public function removeRow($index, $tipo)
-    {
-        if (in_array($tipo, $this->indices['participantes'])) {
-            unset($this->participantes[$tipo][$index]);
-            $this->participantes[$tipo] = array_values($this->participantes[$tipo]);
-            /*
-            unset($this->participantesaEditar[$tipo][$index]);
-            $this->participantesaEditar[$tipo] = array_values($this->participantesaEditar[$tipo]);*/
-        } elseif (in_array($tipo, $this->indices['investigaciones'])) {
-            unset($this->investigaciones[$tipo][$index]);
-            $this->investigaciones[$tipo] = array_values($this->investigaciones[$tipo]);
-            /*
-            unset($this->investigaciones[$tipo][$index]);
-            $this->investigacionesaEditar[$tipo] = array_values($this->investigacionesaEditar[$tipo]);*/
-        } elseif (in_array($tipo, $this->indices['actividades'])) {
-            unset($this->actividades[$tipo][$index]);
-            $this->actividades[$tipo] = array_values($this->actividades[$tipo]);
-            /*
-            unset($this->actividadesaEditar[$tipo][$index]);
-            $this->actividadesaEditar[$tipo] = array_values($this->actividadesaEditar[$tipo]);*/
-        } else {
-        }
-    }
+
+
+
+    
 
 
     // Render
@@ -165,10 +89,11 @@ class editarproyecto extends Component
     public function render()
     {
         info($this->participantes);
-        info($this->investigaciones);
-        info($this->actividades);
-
-        //info($this->orderProducts);
+        info($this->articulos);
+        info($this->tesis);
+        info($this->academicas);
+        info($this->extensiones);
+        
         return view('livewire.editar.proyectos');
     }
 }

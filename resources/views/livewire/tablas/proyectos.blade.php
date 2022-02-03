@@ -59,6 +59,7 @@
                         </thead>
                         <tbody>
                             <!-- Odd row -->
+                            
                             @foreach ($items as $proyecto)
                                 <tr class="bg-white">
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -74,12 +75,6 @@
                                     
                                     <td scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{--<a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>--}}
-                                            <?php $year=strtotime($proyecto->comienzo);?>
-                                        {{--{{$proyecto->comienzo}}--}}
-                                        {{--<?php $date = DateTime::createFromFormat("Y-m-d", $proyecto->comienzo);
-                                        echo $date->format("Y");?>  --}}                                      
-                                        {{--<?php echo date('Y', strtotime($proyecto->comienzo));?>--}}
                                         {{$proyecto->intervalo()}}
                                     </td>
                                 </tr>
@@ -97,9 +92,7 @@
                   <div class="sm:col-span-1">
       
                    <dt class="text-sm font-medium text-gray-500">
-                  {{--      Mostrando {{ $items->firstItem() }} a {{ $items->lastItem() }} de un total de
-                        {{ $items->total() }}
-                        elementos--}}
+                  
                     </dt> 
                       <dd class="mt-1 text-sm text-gray-900">
                           {{ $items->links() }}

@@ -24,6 +24,7 @@ class filtroestudiantes extends Component
 
 
 
+
     public function render()
     {
         //$personas = Personas::where('is_valid','=',1);
@@ -37,9 +38,12 @@ class filtroestudiantes extends Component
         if ($this->filtro['programa'] == 'magister') { $elPrograma=3;}
         if ($this->filtro['programa'] == 'doctorado') { $elPrograma=4;}
 
+
+
         $items= Programas::find($elPrograma)
                             ->estudiantes()
                             ->where('personas_programas.estado','=',$elEstado)
+                            ->search($this->search)
                             ->paginate(25);
 
         return view('livewire.tablas.filtroestudiantes', [

@@ -37,7 +37,7 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
+                                <th wire:click="sortBy('nombre')" style="cursor: pointer;" scope="col"
                                     class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Nombre
                                     {{--@include('partials._sort-icon',['field'=>'titulo'])--}}

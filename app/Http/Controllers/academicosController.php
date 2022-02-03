@@ -57,10 +57,13 @@ class academicosController extends Controller
         //return $request;
         $academico = new Academicos;
         $academico->id_Persona = $request->persona;
+        $academico->area_investigacion = $request->area;
+        $academico->estudios = $request->estudios;
         $academico->comienzo = $request->comienzo;
         $academico->termino = $request->termino;
         $academico->carrera = $request->carrera;
         $academico->jerarquia = $request->jerarquia;
+        $academico->genero = $request->genero;
         $academico->oficina = $request->oficina;
         $academico->telefono = $request->telefono;
         $academico->horas_Semanales = $request->horas_Semanales;
@@ -133,10 +136,13 @@ class academicosController extends Controller
 
 
         //$academico->id_Persona = $request->persona;
+        $academico->area_investigacion = $request->area;
+        $academico->estudios = $request->estudios;
         $academico->comienzo = $request->comienzo;
         $academico->termino = $request->termino;
         $academico->carrera = $request->carrera;
         $academico->jerarquia = $request->jerarquia;
+        $academico->genero = $request->genero;
         $academico->oficina = $request->oficina;
         $academico->telefono = $request->telefono_oficina;
         $academico->horas_Semanales = $request->horas_Semanales;

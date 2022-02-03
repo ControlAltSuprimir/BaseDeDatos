@@ -76,7 +76,7 @@ class borrar_viaje extends Component
         $product = Viajes::find($productId);
         if ($product) {
             $product->is_valid=0;
-            ProyectosViajes::where('id_tesis','=',$product->id)->update(['is_valid' => 0]);
+            ProyectosViajes::where('id_viaje','=',$product->id)->update(['is_valid' => 0]);
 
             $product->save();
 

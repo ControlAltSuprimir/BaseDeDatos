@@ -18,6 +18,7 @@
                         placeholder="" required>
                 </div>
 
+
                 <div class="mt-6 grid grid-cols-4 gap-6">
                     <div class="col-span-4 sm:col-span-2">
                         <label for="first_name" class="block text-sm font-medium text-gray-700">Monto Adjudicado</label>
@@ -31,7 +32,6 @@
                         <input type="text" name="codigo_proyecto" id="fecha" autocomplete="cc-family-name"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                     </div>
-
                     <div class="col-span-4 sm:col-span-1">
                         <label for="last_name" class="block text-sm font-medium text-gray-700">Inicio del
                             Proyecto</label>
@@ -57,8 +57,10 @@
                     </div>
 
                     <div class="col-span-4 sm:col-span-2">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">Organización que financia</label>
-                        <input type="text" name="organizacion_financia" id="organizacion_financia" autocomplete="cc-family-name"
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">Organización que
+                            financia</label>
+                        <input type="text" name="organizacion_financia" id="organizacion_financia"
+                            autocomplete="cc-family-name"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                     </div>
 
@@ -106,20 +108,25 @@
                 <div class="mt-6 grid grid-cols-4 gap-6">
                 </div>
 
-                <div class="col-span-4 sm:col-span-1" gap-6>
-                    <select name="investigador_responsable" {{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
-                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        
-                        <option value="">-- Selecciona Investigador/a Responsable --</option>
 
-                        @foreach ($allPersonas as $persona)
-                            <option value="{{ $persona->id }}">
-                                {{ $persona->full_name() }}
-                                {{-- (${{ number_format($product->price, 2) }}) --}}
-                            </option>
-                        @endforeach
-                    </select>
+                <div wire:ignore>
+                    <div class="col-span-4 sm:col-span-1" gap-6>
+                        <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                            Investigador Responsable</label>
+                        <select name="investigador_responsable"
+                            class="select2 mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                            required>
+                            <option value="" selected>-- Ninguna --</option>
 
+                            @foreach ($allPersonas as $revista)
+                                <option value="{{ $revista->id }}">
+                                    {{ $revista->full_name() }}
+                                    {{-- (${{ number_format($product->price, 2) }}) --}}
+                                </option>
+                            @endforeach
+                        </select>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,170 +149,25 @@
 
 
                     </div>
-                    @foreach ($participantes['participantes'] as $index => $orderProduct)
-                        <div class="mt-6 grid grid-cols-4 gap-6">
-                            <div class="col-span-4 sm:col-span-2 center">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700"> &emsp;</label>
-
-                                <select name="participantes[{{ $index }}][0]"
-                                    wire:model="participantes.coinvestigadores.{{ $index }}.0"
-                                    class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                    <option value="">-- Selecciona Coinvestigadores -- </option>
-
-                                    @foreach ($allPersonas as $persona)
-                                        <option value="{{ $persona->id }}">
-                                            {{ $persona->full_name() }}
-
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-span-4 sm:col-span-2 center">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Rol en el Proyeto</label>
-                                <input type="text" 
-                                wire:model="participantes.coinvestigadores.{{ $index }}.1"
-                                 name="participantes[{{ $index }}][1]" autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    placeholder="Coinvestigador/a, Colaborador/a, Patrocinador/a...">
-                            </div>
-
-                            <div class="col-span-4 sm:col-span-2 center">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Fecha de la Participación</label>
-                                <input type="date" 
-                                wire:model="participantes.coinvestigadores.{{ $index }}.2"
-                                 name="participantes[{{ $index }}][2]" autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    >
-                            </div>
-
-                            <div class="col-span-4 sm:col-span-2 center">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Descripción de Participación</label>
-                                <input type="text" 
-                                wire:model="participantes.coinvestigadores.{{ $index }}.3"
-                                 name="participantes[{{ $index }}][3]" autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    >
-                            </div>
-                            
-
-                            <div class="col-span-4 sm:col-span-2">
-
-
-                                {{-- <a href="#" wire:click.prevent="removeProduct({{ $index }})"> --}}
-                                <a href="#" wire:click.prevent="removeRow({{ $index }},'participantes')">
-                                    <button type="submit"
-                                        class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                        Borrar
-                                    </button>
-                                </a>
-                            </div>
-
-                        </div>
-                        &emsp;
-                        <hr>
-                    @endforeach
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2">
-
-                            <button wire:click.prevent="addRow('participantes')"
-                                class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                Añadir Participante</button>
-                        </div>
+                    <div wire:ignore>
+                        <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                            autor(a)</label>
+                        <select id="location" name="participantes[]" multiple="multiple"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            @foreach ($allPersonas as $persona)
+                                <option value="{{ $persona->id }}">
+                                    {{ $persona->full_name() }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
 
                 </div>
             </div>
-            <hr>
-            <br>
             <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <div class="bg-white py-6 px-4 sm:p-6">
-                    <div>
-                        <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Si un
-                            participante no
-                            está en la lista, puedes agregarlo rápido aquí (más tarde puedes editar más detalles de
-                            ellos)
-                        </h2>
-
-                    </div>
-
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-
-
-                    </div>
-                    @foreach ($participantes['extraparticipantes'] as $index => $orderProduct)
-                        <div class="mt-6 grid grid-cols-4 gap-6">
-
-
-                            <div class="col-span-4 sm:col-span-1">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Primer
-                                    Nombre</label>
-                                <input type="text" name="extraParticipante[{{ $index }}]['primer_nombre']"
-                                    
-                                    autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    required>
-                            </div>
-                            <div class="col-span-4 sm:col-span-1">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Primer
-                                    Apellido</label>
-                                <input type="text" name="extraParticipante[{{ $index }}]['primer_apellido']"
-                                    
-                                    autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    required>
-                            </div>
-                            <div class="col-span-4 sm:col-span-2 center">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Rol en el Proyeto</label>
-                                <input type="text" 
-                                 name="extraParticipante[{{ $index }}][1]" autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    placeholder="Coinvestigador, Colaborador, Patrocinador...">
-                            </div>
-
-                            <div class="col-span-4 sm:col-span-2 center">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Fecha de la Participación</label>
-                                <input type="date" 
-                                 name="extraParticipante[{{ $index }}][2]" autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    >
-                            </div>
-
-                            <div class="col-span-4 sm:col-span-2 center">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">Descripción de Participación</label>
-                                <input type="text" 
-                                 name="extraParticipante[{{ $index }}][3]" autocomplete="cc-family-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                    >
-                            </div>
-
-
-
-
-                            <div class="col-span-4 sm:col-span-2">
-
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label>
-                                <a href="#"
-                                    wire:click.prevent="removeRow({{ $index }},'extraparticipantes')">
-                                    <button type="submit"
-                                        class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                        Borrar
-                                    </button>
-                                </a>
-                            </div>
-
-                        </div>
-                        &emsp;
-                        <hr>
-                    @endforeach
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2">
-                            <button wire:click.prevent="addRow('extraparticipantes')"
-                                class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                Añadir</button>
-                        </div>
-                    </div>
+                    
 
 
                 </div>
@@ -344,45 +206,19 @@
 
 
                 </div>
-                @foreach ($investigaciones['articulos'] as $index => $orderProduct)
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2 center">
-
-                            <select name="articulos[{{ $index }}]"
-                                wire:model="investigaciones.articulos.{{ $index }}.product_id"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Coinvestigadores -- </option>
-
-                                @foreach ($allArticulos as $articulo)
-                                    <option value="{{ $articulo->id }}">
-                                        {{ $articulo->titulo }}
-
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <a href="#" wire:click.prevent="removeRow({{ $index }},'articulos')">
-                                <button type="submit"
-                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                    Borrar
-                                </button>
-                            </a>
-                        </div>
-
-                    </div>
-                    &emsp;
-                    <hr>
-                @endforeach
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addRow('articulos')"
-                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Añadir Articulo</button>
-                    </div>
+                <div wire:ignore>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Artículo</label>
+                    <select id="articles" name="articulos[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allArticulos as $persona)
+                            <option value="{{ $persona->id }}">
+                                {{ $persona->titulo }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+                
 
 
             </div>
@@ -404,45 +240,19 @@
 
 
                 </div>
-                @foreach ($investigaciones['tesis'] as $index => $orderProduct)
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2 center">
-
-                            <select name="tesis[{{ $index }}]"
-                                wire:model="investigaciones.tesis.{{ $index }}.product_id"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Tesis -- </option>
-
-                                @foreach ($allTesis as $tesis)
-                                    <option value="{{ $tesis->id }}">
-                                        {{ $tesis->titulo }}
-
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <a href="#" wire:click.prevent="removeRow({{ $index }},'tesis')">
-                                <button type="submit"
-                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                    Borrar
-                                </button>
-                            </a>
-                        </div>
-
-                    </div>
-                    &emsp;
-                    <hr>
-                @endforeach
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addRow('tesis')"
-                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Añadir Tesis</button>
-                    </div>
+                <div wire:ignore>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Artículo</label>
+                    <select id="tesis" name="tesis[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allTesis as $persona)
+                            <option value="{{ $persona->id }}">
+                                {{ $persona->titulo }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+                
 
 
             </div>
@@ -479,55 +289,18 @@
 
 
                 </div>
-                @foreach ($actividades['academica'] as $index => $orderProduct)
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2 center">
-
-                            <select name="academica[{{ $index }}]['id']"
-                                wire:model="actividades.academica.{{ $index }}"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Actividad -- </option>
-
-                                @foreach ($allAcademica as $actividad)
-                                    <option value="{{ $actividad->id }}">
-                                        {{ $actividad->nombre }}
-
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">Cargo</label>
-                            <input type="text" name="academica[{{ $index }}]['cargo']" id="academica[{{ $index }}]['cargo']" autocomplete="cc-family-name"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        </div>
-
-                        <div class="col-span-4 sm:col-span-2">
-
-                        </div>
-
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <a href="#" wire:click.prevent="removeRow({{ $index }},'academica')">
-                                <button type="submit"
-                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                    Borrar
-                                </button>
-                            </a>
-                        </div>
-
-                    </div>
-                    &emsp;
-                    <hr>
-                @endforeach
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addRow('academica')"
-                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Añadir Actividad Académica</button>
-                    </div>
+                <div wire:ignore>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe Artículo</label>
+                    <select id="academicas" name="academicas[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allAcademica as $persona)
+                            <option value="{{ $persona->id }}">
+                                {{ $persona->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+                
 
 
             </div>
@@ -548,56 +321,18 @@
 
 
                 </div>
-                @foreach ($actividades['extension'] as $index => $orderProduct)
-                    <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2 center">
-
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">&emsp;</label>
-
-                            <select name="extension[{{ $index }}]['id']"
-                                wire:model="actividades.extension.{{ $index }}.product_id"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona Tesis -- </option>
-
-                                @foreach ($allExtension as $extension)
-                                    <option value="{{ $extension->id }}">
-                                        {{ $extension->nombre }}
-
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">Cargo</label>
-                            <input type="text" name="extension[{{ $index }}]['cargo']" id="extension[{{ $index }}]['cargo']" autocomplete="cc-family-name"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                        </div>
-
-                        <div class="col-span-4 sm:col-span-2">
-
-                        </div>
-
-
-                        <div class="col-span-4 sm:col-span-2">
-                            <a href="#" wire:click.prevent="removeRow({{ $index }},'extension')">
-                                <button type="submit"
-                                    class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                                    Borrar
-                                </button>
-                            </a>
-                        </div>
-
-                    </div>
-                    &emsp;
-                    <hr>
-                @endforeach
-                <div class="mt-6 grid grid-cols-4 gap-6">
-                    <div class="col-span-4 sm:col-span-2">
-                        <button wire:click.prevent="addRow('extension')"
-                            class="bg-green-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Añadir Actividad Extensión</button>
-                    </div>
+                <div wire:ignore>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe Artículo</label>
+                    <select id="extension" name="extension[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($allExtension as $persona)
+                            <option value="{{ $persona->id }}">
+                                {{ $persona->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+                
 
 
             </div>
@@ -605,7 +340,7 @@
 
 
 
-        
+
         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
             @csrf
             <button type="submit"
@@ -615,5 +350,19 @@
         </div>
 </div>
 </form>
+
+<script>
+    $(function() {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+    });
+    $(document).ready(function() {
+        $('#location').select2();
+        $('#articles').select2();
+        $('#tesis').select2();
+        $('#academicas').select2();
+        $('#extension').select2();
+    });
+</script>
 
 </div>

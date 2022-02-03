@@ -18,7 +18,9 @@ class PersonaProyecto extends Model
 
     public function laPersona()
     {
-        return $this->belongsTo(Personas::class, 'id_persona');
+        return $this->belongsTo(Personas::class, 'id_persona')->orderBy('personas.primer_apellido');
     }
+
+    protected $fillable = ['id_persona', 'id_proyecto' , 'participacion','fecha','descripcionParticipacion','created_by','updated_by'];
 
 }

@@ -40,6 +40,7 @@ class Persona extends Component
     }
 
     
+    
     public function sortBy($field)
     {
         if ($this->sortDirection == 'asc') {

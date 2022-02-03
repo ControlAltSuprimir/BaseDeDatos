@@ -108,12 +108,12 @@
                         </div>
 
                         <div class="col-span-4 sm:col-span-1" gap-6>
+                            {{--
                             <select name="expositor"
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                                 <option value="{{ $data['coloquio']->id_persona }}" selected>
                                     {{ $data['coloquio']->expositor->full_name() }}
                                 </option>
-                                {{-- <option value="">-- Selecciona al Expositor --</option> --}}
 
                                 @foreach ($data['expositores'] as $persona)
                                     @if ($persona->id != $data['coloquio']->id_persona)
@@ -124,6 +124,7 @@
 
                                 @endforeach
                             </select>
+                            --}}
 
                         </div>
                     </div>
@@ -138,7 +139,7 @@
                                 Institución del/la Expositor/a
                             </h2>
                             <p class="mt-1 text-sm text-gray-500">Si la institución no se encuentra en la base de datos,
-                                debes agregarla primero <a href="">aquí</a>. </p>
+                                debes agregarla primero <a href=""><b>aquí</b> </a>. </p>
                         </div>
 
                         <div class="mt-6 grid grid-cols-4 gap-6">
@@ -147,6 +148,7 @@
                         <div class="col-span-4 sm:col-span-1" gap-6>
                             <select name="institucion"
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                {{--
                                 <option value="{{ $data['coloquio']->id_institucion }}" selected>
                                     {{ $data['coloquio']->institucion->nombre }}
                                 </option>
@@ -159,6 +161,7 @@
 
                                     @endif
                                 @endforeach
+                                --}}
                             </select>
 
                         </div>

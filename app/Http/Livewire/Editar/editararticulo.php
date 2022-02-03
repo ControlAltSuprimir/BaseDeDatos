@@ -14,11 +14,9 @@ use Illuminate\Http\Request;
 use App\Models\Indexaciones;
 use Livewire\Component;
 
+
 class editararticulo extends Component
 {
-    public $orderProducts = [];
-    public $allProducts = [];
-    public $indexacionesAEditar = [];
     public $allPersonas = [];
     public $allProyectos = [];
     public $allTesis = [];
@@ -27,7 +25,9 @@ class editararticulo extends Component
     public $perfil;
     public $edit;
 
-    public $proyectosInvolucrados = [];
+    public $autores;
+    public $proyectos;
+    public $tesistas;
 
     public function mount($edit)
     {
@@ -37,19 +37,12 @@ class editararticulo extends Component
         $this->allRevistas = Revistas::where('is_valid', '=', 1)->orderBy('nombre')->get();
 
         $id = $edit;
-        $articulo = Articulos::find($id);
-        $detalles = $articulo->autores()->get();
-        $losProyectos = $articulo->proyectos()->get();
+        $this->perfil = Articulos::find($id);
 
-        foreach ($detalles as $detalle) {
-            $this->orderProducts[] = $detalle->id;
-        }
+        $this->autores = $this->perfil->autores()->get();
+        $this->proyectos = $this->perfil->proyectos()->get();
+        $this->tesistas = $this->perfil->tesistas()->get();
 
-        foreach($losProyectos as $elProyecto){
-            $this->proyectosInvolucrados[]=$elProyecto->id;
-
-        }
-        $this->perfil = $articulo;
     }
 
     public function addExtraPersona()
@@ -57,25 +50,6 @@ class editararticulo extends Component
         $this->extraPersonas[] = ['primer_nombre' => '', 'primer_apellido' => ''];
     }
 
-    public function addProduct($type)
-    {
-        if ($type == 'autor') {
-            $this->orderProducts[] = "";
-        } elseif ($type == 'proyecto') {
-            $this->proyectosInvolucrados[] = "";
-        }
-    }
-
-    public function removeProduct($type, $index)
-    {
-        if ($type == 'autor') {
-            unset($this->orderProducts[$index]);
-            $this->orderProducts = array_values($this->orderProducts);
-        } elseif ($type == 'proyecto') {
-            unset($this->proyectosInvolucrados[$index]);
-            $this->proyectosInvolucrados = array_values($this->proyectosInvolucrados);
-        }
-    }
 
     public function removeExtraPersona($indexExtraPersona)
     {
@@ -86,7 +60,6 @@ class editararticulo extends Component
     public function render()
     {
         info($this->extraPersonas);
-        info($this->orderProducts);
         return view('livewire.editar.articulos');
     }
 }
