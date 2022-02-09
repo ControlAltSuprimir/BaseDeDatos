@@ -13,7 +13,7 @@ use App\Models\Viajes;
 use App\Models\ProyectosViajes;
 
 use App\Mail\FormularioViaje;
-
+use App\Models\ViajeFinanciacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -63,8 +63,11 @@ class formulariosController extends Controller
         $viaje->paisOrigen = $pendiente->pais_origen;
         $viaje->ciudadOrigen = $pendiente->ciudad_origen;
 
-        $viaje->financiamiento = $pendiente->financiamiento;
+        $viaje->comentarios = $pendiente->comentarios;
         $viaje->fecha = $pendiente->fecha;
+
+        $viaje->created_by = auth()->id();
+        $viaje->updated_by = auth()->id();
         $viaje->is_valid = 1;
 
         $viaje->save();
@@ -74,13 +77,28 @@ class formulariosController extends Controller
         $pendiente->save();
 
         if (isset($pendiente->id_proyecto)) {
-            $link = new ProyectosViajes;
+            $link = new ViajeFinanciacion;
             $link->id_proyecto = $pendiente->id_proyecto;
             $link->id_viaje = $viaje->id;
+            $link->contribucionfinanciera = $pendiente->contribucionfinanciera;
+            $link->comentarios = $viaje->comentarios;
+            $link->created_by = auth()->id();
+            $link->updated_by = auth()->id();
             $link->is_valid = 1;
             $link->save();
         }
 
+        if (isset($pendiente->id_institucion)) {
+            $linkInstitucion = new ViajeFinanciacion;
+            $linkInstitucion->id_institucion = $pendiente->id_institucion;
+            $linkInstitucion->id_viaje = $viaje->id;
+            $linkInstitucion->contribucionfinanciera = $pendiente->contribucionfinancierainstitucion;
+            $linkInstitucion->comentarios = $viaje->comentarios;
+            $linkInstitucion->created_by = auth()->id();
+            $linkInstitucion->updated_by = auth()->id();
+            $linkInstitucion->is_valid = 1;
+            $linkInstitucion->save();
+        }
         return redirect('/viajes/' . $viaje->id);
     }
 
@@ -89,39 +107,39 @@ class formulariosController extends Controller
 
     public function viaje()
     {
-        //formulario de viaje
-        $allAcademicos = Academicos::with('persona')
-            ->select('academicos.*')
-            ->where('academicos.is_valid', '=', 1)
-            ->join('personas', 'personas.id', '=', 'academicos.id_Persona')
-            ->orderBy('personas.primer_apellido')
-            ->get();
-
-        $allProyectos = Proyectos::where('is_valid', '=', 1)->orderBy('titulo', 'asc')
-            ->get();
-
-        $data = compact('allAcademicos', 'allProyectos');
-        return view('formularios.viajes', ['data' => $data]);
+        //formulario de viaje se arma con Livewire
+        return view('formularios.viajes');
     }
 
     // Guardando el viaje y enviando el correo correspondiente
     public function storeviaje(Request $request)
     {
         // guardar el viaje pendiente
+        //return $request;
 
         $formulario = new Formularioviajes;
 
         $formulario->id_persona = $request->academico;
-        $formulario->id_proyecto = $request->proyecto;
 
         $formulario->pais_origen = $request->pais_origen;
         $formulario->ciudad_origen = $request->ciudad_origen;
         $formulario->pais_destino = $request->pais_destino;
         $formulario->ciudad_destino = $request->ciudad_destino;
-        $formulario->financiamiento = $request->financiamiento;
+
         $formulario->fecha = $request->fecha;
+        $formulario->retorno_aproximado = $request->fecha_regreso;
+
+        $formulario->id_proyecto = $request->proyecto;
+        $formulario->contribucionfinanciera = $request->contribucionfinanciera;
+
+        $formulario->id_institucion = $request->institucion;
+        $formulario->contribucionfinancierainstitucion = $request->contribucionfinancierainstitucion;
+        
+
+        $formulario->comentarios = $request->comentarios;
 
         $formulario->procesado = 0;
+        $formulario->rechazado = 0;
         $formulario->is_valid = 1;
 
         $formulario->save();

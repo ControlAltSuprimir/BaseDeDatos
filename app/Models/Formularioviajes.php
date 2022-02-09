@@ -26,6 +26,11 @@ class Formularioviajes extends Model
         return $this->belongsTo(Proyectos::class, 'id_proyecto');
     }
 
+    public function institucion()
+    {
+        return $this->belongsTo(Institucionfinanciadora::class, 'id_institucion');
+    }
+
     public function academica()
     {
         return $this->belongsTo(ActividadAcademica::class, 'id_academica');

@@ -181,6 +181,7 @@ class articulosController extends Controller
         $articulo->id_Revista = $request->revista;
         $articulo->descripcion = $request->descripcion;
         $articulo->is_valid = 1;
+        $articulo->updated_by = auth()->id();
 
         $articulo->save();
 

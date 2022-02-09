@@ -20,7 +20,7 @@
 
                 <div class="col-span-4 sm:col-span-1" gap-6>
                     <div wire:ignore>
-                        <select name="academico" id="academicos"{{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
+                        <select name="academico" id="academicos"
                             class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                             required>
                             <option value="">-- Selecciona Académico/a --</option>
@@ -28,7 +28,7 @@
                             @foreach ($allAcademicos as $academico)
                                 <option value="{{ $academico->persona->id }}">
                                     {{ $academico->persona->full_name() }}
-                                    {{-- (${{ number_format($product->price, 2) }}) --}}
+                                  
                                 </option>
                             @endforeach
                         </select>
@@ -86,24 +86,17 @@
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                     </div>
                 </div>
-                <br><hr>
-                    <br>
-                    <h2>Financiamiento</h2>
+                <br>
+                <hr>
+                <br>
+                <h2>Financiamiento</h2>
+                <p class="mt-1 text-sm text-gray-500">Sólo ingresar información si existe financiamiento</p>
                 <div class="mt-6 grid grid-cols-4 gap-6">
-                    
-
-                    <div class="col-span-4 sm:col-span-4">
-                        <label for="email_address" class="block text-sm font-medium text-gray-700">Información sobre
-                            Financiamiento</label>
-                        <input type="text" name="financiamiento" id="financiamiento" autocomplete="email"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                    </div>
-
                     <div class="col-span-4 sm:col-span-3">
                         <label for="email_address" class="block text-sm font-medium text-gray-700">Proyecto
                             Asociado</label>
                         <div wire:ignore>
-                            <select name="proyecto" id="proyectos"{{-- wire:model="orderProducts.{{ $index }}.product_id" --}}
+                            <select name="proyecto" id="proyecto" 
                                 class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
                                 <option value="">-- Selecciona Proyecto --</option>
 
@@ -115,9 +108,57 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-span-4 sm:col-span-1">
+                        <label for="security_code" class="flex items-center text-sm font-medium text-gray-700">
+                            <span>Monto financiado</span>
+                            <!-- Heroicon name: solid/question-mark-circle -->
 
-                    
+                        </label>
+                        <input type="number" name="contribucionfinanciera" id="fecha" autocomplete="cc-csc"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                            value="0">
+                    </div>
+                </div>
 
+                <div class="mt-6 grid grid-cols-4 gap-6">
+                    <div class="col-span-4 sm:col-span-3">
+                        <label for="email_address" class="block text-sm font-medium text-gray-700">Institución Asociada</label>
+                        <div wire:ignore>
+                            <select name="institucion" id="institucion"
+                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                <option value="">-- Selecciona Proyecto --</option>
+
+                                @foreach ($allInstituciones as $institucion)
+                                    <option value="{{ $institucion->id }}">
+                                        {{ $institucion->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-span-4 sm:col-span-1">
+                        <label for="security_code" class="flex items-center text-sm font-medium text-gray-700">
+                            <span>Monto financiado</span>
+                            <!-- Heroicon name: solid/question-mark-circle -->
+
+                        </label>
+                        <input type="number" name="contribucionfinancierainstitucion" id="fecha" autocomplete="cc-csc"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                            value="0">
+                    </div>
+                </div>
+                <br>
+                <hr><br>
+                <h2>Otros</h2>
+                <div class="mt-6 grid grid-cols-4 gap-6">
+                    <div class="col-span-4 sm:col-span-4">
+
+                        <label for="expiration_date" class="block text-sm font-medium text-gray-700">Comentarios</label>
+                        <textarea id="comentarios" name="comentarios" rows="3"
+                            class="shadow-sm focus:ring-light-blue-500 focus:border-light-blue-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                            maxlength="2000"></textarea>
+
+                    </div>
                 </div>
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -130,11 +171,11 @@
         </div>
     </form>
     <script>
-        $(function() { 
+        $(function() {
             $('#academicos').select2();
-            $('#proyectos').select2();
+            $('#proyecto').select2();
+            $('#institucion').select2();
         });
-        
     </script>
 
 </div>

@@ -15,7 +15,7 @@ class notificacionviajes extends Component
 
     public function render()
     {
-        $number = Formularioviajes::where('is_valid','=',1)->where('procesado','=',0)->get()->count();
+        $number = Formularioviajes::where('is_valid','=',1)->where('procesado','=',0)->where('rechazado','=',0)->get()->count();
         return view('livewire.notificacion.viajes',[
             'number' => $number
         ]);

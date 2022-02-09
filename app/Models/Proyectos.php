@@ -36,17 +36,7 @@ class Proyectos extends Model
     {
         return $this->belongsToMany(Articulos::class, 'proyectos_articulos', 'id_proyecto', 'id_articulo')->where('proyectos_articulos.is_valid', '=', 1);
     }
-/*
-    public function coinvestigadores()
-    {
-        return $this->belongsToMany(Personas::class, 'proyectos_personas_coinvestigadores', 'id_proyecto', 'id_persona')->where('proyectos_personas_coinvestigadores.is_valid', '=', 1);
-    }
 
-    public function colaboradores()
-    {
-        return $this->belongsToMany(Personas::class, 'proyectos_personas_colaboradores', 'id_proyecto', 'id_persona')->where('proyectos_personas_colaboradores.is_valid', '=', 1);
-    }
-    */
 
     public function tesistas()
     {

@@ -12,16 +12,18 @@ class viajesformulario extends Component
 {
     public $allAcademicos = [];
     public $allProyectos = [];
+    public $allInstituciones = [];
 
     public function mount()
     {
-        $this->allProyectos = Proyectos::where('is_valid', '=', 1)->orderBy('titulo','asc')->get();
+        $this->allProyectos = Proyectos::where('is_valid', '=', 1)->orderBy('titulo', 'asc')->get();
+        $this->allInstituciones = Institucionfinanciadora::where('is_valid', '=', 1)->get();
         $this->allAcademicos =  Academicos::with('persona')->select('academicos.*')
-        ->where('academicos.is_valid','=',1)
-        ->join('personas', 'personas.id', '=', 'academicos.id_Persona')
-        ->orderBy('personas.primer_apellido')
-        ->orderBy('personas.segundo_apellido')
-        ->get();
+            ->where('academicos.is_valid', '=', 1)
+            ->join('personas', 'personas.id', '=', 'academicos.id_Persona')
+            ->orderBy('personas.primer_apellido')
+            ->orderBy('personas.segundo_apellido')
+            ->get();
     }
 
     public function render()
