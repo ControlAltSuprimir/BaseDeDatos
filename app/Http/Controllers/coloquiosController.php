@@ -32,13 +32,7 @@ class coloquiosController extends Controller
     public function create()
     {
         //
-        $expositores = Personas::where('is_valid','=',1)
-            ->orderBy('primer_apellido','asc')
-            ->get();
-        $instituciones = Instituciones::where('is_valid','=',1)
-            ->get();
-        $data=compact('expositores','instituciones');
-        return view('coloquios.create', ['data' => $data]);
+        return view('coloquios.create');
     }
 
     /**
@@ -49,8 +43,7 @@ class coloquiosController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        //return $request;
+        
         $coloquio = new Coloquios;
         $coloquio->id_persona = $request->expositor;
         $coloquio->id_institucion = $request->institucion;
@@ -66,6 +59,7 @@ class coloquiosController extends Controller
 
         return redirect('/coloquios/'.$coloquio->id);
     }
+
 
     /**
      * Display the specified resource.
@@ -90,13 +84,7 @@ class coloquiosController extends Controller
     public function edit($id)
     {
         //
-        $coloquio= Coloquios::find($id);
-        $expositores = Personas::where('is_valid','=',1)
-            ->orderBy('primer_apellido','asc')
-            ->get();
-        $instituciones = Instituciones::where('is_valid','=',1)
-            ->get();
-        $data=compact('coloquio','expositores','instituciones');
+        $data=compact('id');
         return view('coloquios.edit', ['data' => $data]);
     }
 

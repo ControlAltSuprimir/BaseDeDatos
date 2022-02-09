@@ -10,12 +10,13 @@
             {{-- <button type="button" class="order-1 ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-0 sm:ml-0">
                 Share
               </button> --}}
-              <a href="/">
+            {{-- <a href="/">
             <button type="button" wire:click.prevent="create"
                 class="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3">
                 Añadir Participante
             </button>
-        </a>
+            
+        </a> --}}
 
         </div>
     </div>
@@ -45,7 +46,7 @@
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Viaje
+                                    
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -67,10 +68,10 @@
                           {{$persona}}
                         </td> --}}
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $product->descripción }}
+                                        {{ $product->descripcion }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{--{{ $product->leViaje->name() }}--}}
+                                        {{-- {{ $product->leViaje->name() }} --}}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <button
@@ -166,52 +167,16 @@
                     </div>
                     <br>
 
-                    <div class="col-span-4 sm:col-span-1" gap-6>
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">
-                            Selecciona el Viaje Asociado
-                        </label>
-                        <select wire:model.defer="product.id_viaje"
-                            class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                            @if ($productId)
-                                @if ($lesViajes->isNotEmpty())
-                                    <option value="">Sin viaje asociado</option>
-                                    @foreach ($lesViajes as $viaje)
-                                        <option value="{{ $viaje->id }}">
-                                            {{--{{ $viaje->name() }}--}}
-                                        </option>
-                                    @endforeach
-                                @else
-                                    <option value="">Sin viajes asociados</option>
-                                @endif
-
-                            @else
-                                <option value="">Sin viaje asociado</option>
-                                @forelse ($allViajes as $viaje)
-                                    <option value="{{ $viaje->id }}">
-                                        {{ $viaje->full_name() }}
-                                    </option>
-                                @empty
-                                    <option value="">Sin viajes asociados</option>
-                                @endforelse
-                            @endif
-
-
-                        </select>
-
-                    </div>
+                    
 
                     <div class="mt-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 sm:col-span-2">
+                        <div class="col-span-4 sm:col-span-4">
                             <label for="last_name" class="block text-sm font-medium text-gray-700">Tipo de
-                                Participación</label>
-                            <select wire:model.defer="product.descripcion"
-                                class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                <option value="">-- Selecciona la Participación --</option>
-                                <option value=1>Activo</option>
-                                <option value=2>Finalizado</option>
-                                <option value=3>No Terminado</option>
-                                <option value=4>Congelado</option>
-                            </select>
+                                Participación (puedes poner más de un tipo de participación, por ejemplo: Organizador, Charlista)</label>
+                                <input type="text" autocomplete="cc-family-name"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                                wire:model.defer="product.descripcion"
+                                placeholder="Invitado, Charlista, Organizador">
 
 
                         </div>

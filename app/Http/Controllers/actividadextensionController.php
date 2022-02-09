@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ActividadExtension;
 use App\Models\ProyectosActividadesExtension;
 use App\Models\PersonasActividadesExtension;
+use App\Models\ActividadFinanciacion;
+use App\Models\ActividadViaje;
 use Illuminate\Http\Request;
 
 class actividadextensionController extends Controller
@@ -79,13 +81,37 @@ class actividadextensionController extends Controller
 
         if (isset($request->proyectos)) {
             foreach ($request->proyectos as $proyecto) {
-                $academicaProyecto = new ProyectosActividadesExtension;
+                $academicaProyecto = new ActividadFinanciacion;
                 $academicaProyecto->id_proyecto = $proyecto;
-                $academicaProyecto->id_actividad = $extension->id;
+                $academicaProyecto->id_extension = $extension->id;
                 $academicaProyecto->created_by = auth()->id();
                 $academicaProyecto->updated_by = auth()->id();
                 $academicaProyecto->is_valid = 1;
                 $academicaProyecto->save();
+            }
+        }
+
+        if (isset($request->instituciones)) {
+            foreach ($request->instituciones as $institucion) {
+                $academicaInstitucion = new ActividadFinanciacion;
+                $academicaInstitucion->id_institucionfinanciadora = $institucion;
+                $academicaInstitucion->id_extension = $extension->id;
+                $academicaInstitucion->created_by = auth()->id();
+                $academicaInstitucion->updated_by = auth()->id();
+                $academicaInstitucion->is_valid = 1;
+                $academicaInstitucion->save();
+            }
+        }
+
+        if (isset($request->viajes)) {
+            foreach ($request->viajes as $viaje) {
+                $academicaViaje = new ActividadViaje;
+                $academicaViaje->id_viaje = $viaje;
+                $academicaViaje->id_extension = $extension->id;
+                $academicaViaje->created_by = auth()->id();
+                $academicaViaje->updated_by = auth()->id();
+                $academicaViaje->is_valid = 1;
+                $academicaViaje->save();
             }
         }
 
@@ -103,13 +129,7 @@ class actividadextensionController extends Controller
         //
         $extension = ActividadExtension::find($id);
 
-        //return $extension;
-        //$participantes = $extension->participantes()->get();
-        $proyectos = $extension->proyectos()->get();
-
-
-
-        $data = compact('extension',  'proyectos');
+        $data = compact('extension');
 
         return view('actividad_extension.show', ['data' => $data]);
     }
@@ -187,32 +207,6 @@ class actividadextensionController extends Controller
         } else {
             //Si el request está vacío entonces borramos todo lo asociado a la actividad
             PersonasActividadesExtension::where('id_actividad', '=', $extension->id)->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
-        }
-
-
-        //proyectos
-        $losParticipantes = $extension->proyectos()->select('proyectos.id')->get()->makeHidden('pivot');
-        $losParticipantes = collectionToArrayId($losParticipantes);
-
-        if (isset($request->proyectos)) {
-            //borrar
-            $borrar = array_diff($losParticipantes, $request->proyectos);
-            PersonasActividadesExtension::where('id_actividad', '=', $extension->id)->whereIn('id_proyecto', $borrar)->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
-            //agregando
-            $agregando = [];
-            $agregando = array_diff($request->proyectos, $losParticipantes);
-            foreach ($agregando as $item) {
-                $academicaProyecto = new ProyectosActividadesExtension;
-                $academicaProyecto->id_proyecto = $item;
-                $academicaProyecto->id_actividad = $extension->id;
-                $academicaProyecto->created_by = auth()->id();
-                $academicaProyecto->updated_by = auth()->id();
-                $academicaProyecto->is_valid = 1;
-                $academicaProyecto->save();
-            }
-        } else {
-            //Si el request está vacío entonces borramos todo lo asociado a la actividad
-            ProyectosActividadesExtension::where('id_actividad', '=', $extension->id)->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
         }
 
         return redirect('/actividadextension/' . $extension->id);

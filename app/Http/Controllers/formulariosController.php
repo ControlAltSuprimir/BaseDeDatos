@@ -90,10 +90,14 @@ class formulariosController extends Controller
     public function viaje()
     {
         //formulario de viaje
-        $allAcademicos = Academicos::where('is_valid', '=', 1)
+        $allAcademicos = Academicos::with('persona')
+            ->select('academicos.*')
+            ->where('academicos.is_valid', '=', 1)
+            ->join('personas', 'personas.id', '=', 'academicos.id_Persona')
+            ->orderBy('personas.primer_apellido')
             ->get();
 
-        $allProyectos = Proyectos::where('is_valid', '=', 1)
+        $allProyectos = Proyectos::where('is_valid', '=', 1)->orderBy('titulo', 'asc')
             ->get();
 
         $data = compact('allAcademicos', 'allProyectos');

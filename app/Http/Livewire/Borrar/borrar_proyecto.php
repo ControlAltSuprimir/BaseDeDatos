@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Borrar;
 
+use App\Models\ActividadFinanciacion;
 use App\Models\Personas;
 use App\Models\Proyectos;
 use App\Models\PersonasProgramas;
@@ -83,8 +84,7 @@ class borrar_proyecto extends Component
             ProyectosTesistas::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             PersonaProyecto::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             ProyectosArticulos::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
-            ProyectosActividadesExtension::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
-            ProyectosActividadesAcademicas::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
+            ActividadFinanciacion::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             ProyectosPersonasColaboradores::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             ProyectosPersonasCoinvestigadores::where('id_proyecto','=',$product->id)->update(['is_valid' => 0]);
             $product->save();

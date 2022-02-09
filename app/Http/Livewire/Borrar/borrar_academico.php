@@ -2,20 +2,7 @@
 
 namespace App\Http\Livewire\Borrar;
 
-use App\Models\Personas;
 use App\Models\Academicos;
-use App\Models\PersonasProgramas;
-use App\Models\PersonasTesisTutores;
-use App\Models\PersonasTesisComision;
-use App\Models\Persona_Articulo;
-use App\Models\ProyectosPersonasCoinvestigadores;
-use App\Models\ProyectosPersonasColaboradores;
-use App\Models\PersonasActividadesAcademicas;
-use App\Models\PersonasActividadesExtension;
-use App\Models\Tesis;
-use App\Models\Viajes;
-use App\Models\ProyectosViajes;
-
 
 
 
@@ -43,16 +30,12 @@ class borrar_academico extends Component
 
     public function mount($edit)
     {
-        
         $this->items = $edit;
-        
-
     }
+
     public function render()
-    {
-        
-        
-        return view('livewire.borrar.academicos', [
+    {    
+        return view('livewire.borrar.academico', [
             'products' => $this->items
         ]);
     }
@@ -70,13 +53,10 @@ class borrar_academico extends Component
 
     public function delete($productId)
     {
-
         $product = Academicos::find($productId);
         if ($product) {
             $product->is_valid=0;
-            //ProyectosViajes::where('id_persona','=',$product->id)->update(['is_valid' => 0]);
             $product->save();
-
             return redirect()->to('/academicos');
         }
     }

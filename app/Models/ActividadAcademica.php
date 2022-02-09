@@ -27,7 +27,7 @@ class ActividadAcademica extends Model
 
     public function viajes()
     {
-        return $this->belongsToMany(Viajes::class, 'personas_academica', 'id_academica', 'id_viaje')->where('personas_academica.is_valid', '=', 1);
+        return $this->belongsToMany(Viajes::class, 'actividad_viaje', 'id_academica', 'id_viaje')->where('actividad_viaje.is_valid', '=', 1);
     }
 
     public function institucion_financiadora()
@@ -40,10 +40,28 @@ class ActividadAcademica extends Model
         return $this->belongsTo(PersonasActividadesAcademicas::class, 'id_academica')->where('personas_academica.is_valid', '=', 1);
     }
 
+    //Hay que tratar de eliminar esta función por motivos de seguridad
     public function nombre_Link()
     {
         return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/actividadacademica/$this->id\" > {$this->nombre} </a>";
     }
+
+    // Relaciones en cuanto a la financiación
+
+    public function proyectosFinanciantes()
+    {
+        return $this->belongsToMany(Proyectos::class, 'actividad_financiacion', 'id_academica', 'id_proyecto')->where('actividad_financiacion.is_valid', '=', 1);
+    }
+
+    public function institucionesFinanciantes()
+    {
+        return $this->belongsToMany(Institucionfinanciadora::class, 'actividad_financiacion', 'id_academica', 'id_institucionfinanciadora')->where('actividad_financiacion.is_valid', '=', 1);
+    }
+
+
+    //
+    // Otras funciones
+    //
 
     public function intervalo()
     {

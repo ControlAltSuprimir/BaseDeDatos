@@ -51,9 +51,7 @@
                         </h3>
                         <div class="mt-2">
                             <p class="text-sm text-gray-500">
-                                ¿Estás seguro(a) que quieres borrar a este académico? Todos los datos serán relacionados a
-                                este académico será permanentemente removida de la base de datos como también el registro
-                                de esta acción y el usuario que la ejecuta. Si quieres borrar a la persona, debes borrarla después.
+                                ¿Estás seguro(a) que quieres borrar a este académico? El registro de la persona no será eliminado, únicamente su estado como académico.
                             </p>
                         </div>
                     </div>

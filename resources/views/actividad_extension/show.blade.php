@@ -20,6 +20,65 @@
       </div>
     </div>
 
+    @if (session()->has('success'))
+
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div id="successModal">
+            <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+                aria-modal="true">
+                <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+                    <!-- This element is to trick the browser into centering the modal contents. -->
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+
+                    <div
+                        class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                        <div>
+                            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                                <!-- Heroicon name: outline/check -->
+                                <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-5">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    {{ session('success')['titulo'] }}
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">
+
+                                        {{ session('success')['contenido'] }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 sm:mt-6">
+                            <button type="button" onclick="closeModalFunction()"
+                                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Cerrando modal--}}
+        <script>
+            var modal = document.getElementById("successModal");
+            // When the user clicks on the button, close the modal
+            function closeModalFunction(){
+                modal.style.display = "none";
+            }
+        </script>
+
+
+    @endif
     
     <div class="mt-6 sm:mt-2 2xl:mt-5">
       <div class="border-b border-gray-200">
@@ -83,29 +142,6 @@
             {{$data['extension']->fecha_comienzo}} / {{$data['extension']->fecha_termino}}
           </dd>
         </div>
-
-        <div class="sm:col-span-1">
-          
-          <dt class="text-sm font-medium text-gray-500">
-            Institución que Financia la Actividad
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{$data['extension']->institucion_financiadora->nombre}}
-          </dd>
-          
-        </div>
-
-        <div class="sm:col-span-1">
-          
-          <dt class="text-sm font-medium text-gray-500">
-            Monto Financiado
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{$data['extension']->montofinanciado}}
-          </dd>
-          
-        </div>
-
         <div class="sm:col-span-1">
           <dt class="text-sm font-medium text-gray-500">
             Comentarios
@@ -118,41 +154,12 @@
         
 
         <div class="sm:col-span-1">
-          {{--
-          <dt class="text-sm font-medium text-gray-500">
-            Salary
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            $145,000
-          </dd>
-          --}}
         </div>
 
         <div class="sm:col-span-1">
-          {{--
-          <dt class="text-sm font-medium text-gray-500">
-            Birthday
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            June 8, 1990
-          </dd>
-          --}}
         </div>
 
         <div class="sm:col-span-2">
-          {{--
-          <dt class="text-sm font-medium text-gray-500">
-            About
-          </dt>
-          <dd class="mt-1 max-w-prose text-sm text-gray-900 space-y-5">
-            <p>
-              Tincidunt quam neque in cursus viverra orci, dapibus nec tristique. Nullam ut sit dolor consectetur urna, dui cras nec sed. Cursus risus congue arcu aenean posuere aliquam.
-            </p>
-            <p>
-              Et vivamus lorem pulvinar nascetur non. Pulvinar a sed platea rhoncus ac mauris amet. Urna, sem pretium sit pretium urna, senectus vitae. Scelerisque fermentum, cursus felis dui suspendisse velit pharetra. Augue et duis cursus maecenas eget quam lectus. Accumsan vitae nascetur pharetra rhoncus praesent dictum risus suspendisse.
-            </p>
-          </dd>
-          --}}
         </div>
       </dl>
     </div>
@@ -179,6 +186,16 @@
                           onclick="openCity(event, 'Tokyo')">
                           Proyectos
                       </a>
+                      <a href="#"
+                          class="tablinks border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                          onclick="openCity(event, 'Seoul')">
+                          Instituciones Financiadoras
+                      </a>
+                      <a href="#"
+                          class="tablinks border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                          onclick="openCity(event, 'Shanghai')">
+                          Viajes Asociados
+                      </a>
                   </nav>
               </div>
           </div>
@@ -197,82 +214,24 @@
           {{-- Formación --}}
 
           <div id="Tokyo" class="tabcontent ">
+            <?php $edit = $data['extension']->id;
+                $type = 0; ?> {{-- 1=>academica, 0=>extension --}}
+                @livewire('modals.proyectosactividad',['edit'=>$edit, 'type' =>$type])
 
-            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                  <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                      <table class="min-w-full divide-y divide-gray-200">
-                          <thead class="bg-gray-50">
-                              <tr>
-                                  <th wire:click="sortBy('titulo')" style="cursor: pointer;" scope="col"
-                                      class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Nombre
-                                      
-                                  </th>
-
-                                  <th scope="col"
-                                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Código
-                                  </th>{{--
-                                  <th scope="col"
-                                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Correo
-                                  </th>--}}
-                                  {{--
-                                  <th scope="col"
-                                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                      Fecha Comienzo-Término
-                                  </th>
-                                  --}}
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <!-- Odd row -->
-                              @foreach ($data['proyectos'] as $proyecto)
-                                  <tr class="bg-white">
-                                      <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                          {!! $proyecto->tituloLink() !!}
-                                      </td>
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                          {!! $proyecto->codigo !!}
-                                      </td>
-                                      {{--
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                          {!! $participante->email !!}
-                                      </td>
-                                      --}}
-                                      {{--
-                                      <td scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                          {{$academica->intervalo()}}
-                                      </td>
-                                      --}}
-                                  </tr>
-                              @endforeach
-  
-                              <!-- Even row -->
-  
-  
-                              <!-- More people... -->
-                          </tbody>
-                      </table>
-                  </div>
-                  <div class="mt-6 max-w-12xl mx-auto px-4 sm:px-6 lg:px-8">
-  
-                    <div class="sm:col-span-1">
-        
-                     <dt class="text-sm font-medium text-gray-500">
-                      </dt> 
-                        <dd class="mt-1 text-sm text-gray-900">
-                           
-        
-                        </dd>
-        
-                    </div>
-        
-                </div>
-              </div>
+            
+              
           </div>
 
+          <div id="Seoul" class="tabcontent ">
+            <?php $edit = $data['extension']->id;
+                $type = 0; ?> {{-- 1=>academica, 0=>extension --}}
+                @livewire('modals.institucionesactividad',['edit'=>$edit, 'type' =>$type])
+          </div>
+          <div id="Shanghai" class="tabcontent ">
+            <?php $edit = $data['extension']->id;
+                $type = 0; ?> {{-- 1=>academica, 0=>extension --}}
+                @livewire('modals.viajesactividad',['edit'=>$edit, 'type' =>$type])
+          </div>
 
 
           </div>
@@ -304,6 +263,8 @@
               " border-pink-500 text-gray-900 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm";
 
       }
+
+     
 
   </script>
 

@@ -10,17 +10,14 @@
             {{-- <button type="button" class="order-1 ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-0 sm:ml-0">
                 Share
               </button> --}}
-{{--
-            <button type="button" wire:click.prevent="create"
+            {{-- <button type="button" wire:click.prevent="create"
                 class="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3">
-                Añadir Proyecto
-            </button>
-            --}}
+                Añadir Viaje
+            </button> --}}
 
         </div>
     </div>
     <!-- Pinned projects -->
-
 
     <!-- Projects list (only on smallest breakpoint) -->
 
@@ -34,18 +31,18 @@
                             <tr>
                                 <th scope="col"
                                     class="px-12 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-
+                                
                                 </th>
                                 {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Title
                         </th> --}}
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Responsable del Proyecto
+                                    Origen / Destino
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Contribución Financiera
+                                    {{-- Contribución Financiera --}}
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -61,29 +58,20 @@
                                 {{-- @foreach ($data['personas'] as $persona) --}}
                                 <tr class="bg-white">
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        <a href="/proyectos/{{ $product->elProyecto->id }} ">{{ $product->elProyecto->titulo }} </a>
+
+                                        <a
+                                            href="/personas/{{ $product->elViaje->persona->id }}">{{ $product->elViaje->persona->full_name() }}</a>
+
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <a href="/personas/{{ $product->elProyecto->responsable->id }}">{{ $product->elProyecto->responsable->full_name() }}</a>
-                                        {{--{!! $product->elProyecto->responsable->full_nameLink() !!}--}}
+                                        {{ $product->elViaje->name() }}
+                                        {{-- {!! $product->elProyecto->responsable->full_nameLink() !!} --}}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        
-                                        {{ $product->contribucion_financiera }} 
+
+                                        {{-- {{ $product->contribucion_financiera }} --}}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button
-                                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"
-                                            wire:click.prevent="edit({{ $product->id }})">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                <path fill-rule="evenodd"
-                                                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </button>
                                         <button
                                             class="bg-red-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-900"
                                             wire:click.prevent="delete({{ $product->id }})"
@@ -95,14 +83,12 @@
                                                     clip-rule="evenodd" />
                                             </svg>
                                         </button>
-                                        {{-- <a href="#" class="text-indigo-600 hover:text-indigo-900">Editar</a> /
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Borrar</a> --}}
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">
-                                        Proyectos no encontrados
+                                        Viajes no encontrados
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">
 
@@ -137,7 +123,8 @@
                 <div class="flex flex-col items-start p-4">
                     <div class="flex items-center w-full border-b pb-4">
                         <div class="text-gray-900 font-medium text-lg">
-                            {{ $productId ? 'Editar Proyecto Involucrado' : 'Añadir Proyecto Involucrado' }}</div>
+                            {{ $productId ? 'Editar Institución Involucrado' : 'Añadir Institución Involucrada' }}
+                        </div>
                         <svg wire:click="close" class="ml-auto fill-current text-gray-700 w-6 h-6 cursor-pointer"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                             <path
@@ -149,32 +136,40 @@
                 <div class="bg-white py-6 px-4 sm:p-6">
                     <div class="col-span-4 sm:col-span-1" gap-6>
                         <label for="last_name" class="block text-sm font-medium text-gray-700">
-                            Proyectosss
+                            Viaje
                         </label>
-                        <select  wire:model.defer="product.id_proyecto"
-                            class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                            <option value="">-- Selecciona el Proyecto --</option>
 
-                            @foreach ($allProyectos as $proyecto)
-                                <option value="{{ $proyecto->id }}">
-                                    {{ $proyecto->full_name() }}
-                                </option>
-                            @endforeach
-                        </select>
+                        
+                            <select wire:model.defer="product.id_viaje"
+                                class="select2 mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                <option value="">-- Selecciona el Viaje --</option>
 
+                                @foreach ($allViajes as $viaje)
+                                    <option value="{{ $viaje->id }}">
+                                        {{ $viaje->name() }}
+                                    </option>
+                                @endforeach
+                            </select>
                     </div>
+                    <script>
+                        $(function() {
+                            //Initialize Select2 Elements
+                            $('.select2').select2()
+                        });
+                    </script>
                     <br>
 
-                    
+
 
                     <div class="mt-6 grid grid-cols-4 gap-6">
 
 
                         <div class="col-span-4 sm:col-span-2">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">Escribe el monto aportado a la actividad (deja 0 si no realizó contribución alguna)</label>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700">Escribe el monto
+                                aportado a la actividad</label>
                             <input type="number" autocomplete="cc-family-name"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                                wire:model.defer="product.contribucion_financiera" required>
+                                wire:model.defer="product.contribucion_financiera">
                         </div>
                     </div>
                     <br>
@@ -204,8 +199,9 @@
         </div>
     </div>
 
-   
-  
+
+
+
 
 
 

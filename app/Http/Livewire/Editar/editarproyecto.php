@@ -72,7 +72,7 @@ class editarproyecto extends Component
         foreach($losarticulos as $articulo) { $this->articulos[] = $articulo->id; }
         foreach($tesises as $tesis) { $this->tesis[] = $tesis->id; }
         foreach($lasacademicas as $academica) { $this->academicas[] = $academica->id_academica; }
-        foreach($extensiones as $extension) { $this->extensiones[] = $extension->id_actividad; }
+        foreach($extensiones as $extension) { $this->extensiones[] = $extension->id_extension; }
 
         $this->perfil = $proyecto;
     }

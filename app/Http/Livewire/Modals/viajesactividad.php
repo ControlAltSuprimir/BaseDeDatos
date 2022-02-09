@@ -2,17 +2,18 @@
 
 namespace App\Http\Livewire\Modals;
 
-use App\Models\Programas;
-use App\Models\Articulos;
+use App\Models\Proyectos;
+use App\Models\ActividadFinanciacion;
+use App\Models\ActividadViaje;
+use App\Models\Institucionfinanciadora;
 use App\Models\PersonasActividadesAcademicas;
 use App\Models\PersonasActividadesExtension;
 use App\Models\PersonasProgramas;
-use App\Models\Viajes;
-use App\Models\Personas;
+use App\Models\Viajes; 
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class participantesactividad extends Component
+class viajesactividad extends Component
 {
     use WithPagination;
 
@@ -22,14 +23,12 @@ class participantesactividad extends Component
     public $product;
 
     protected $rules = [
-        'product.id_persona' => 'required|numeric',
-        'product.id_viaje' => '',
-        'product.descripcion' => '',
-        'product.is_funded' => '',
-        //'product.is_valid' => 'required',
+        'product.id_viaje' => 'required|numeric',
+        'product.contribucion_financiera'=> ''
     ];
 
     public $allViajes;
+    public $allInstituciones;
     public $lesViajes;
     public $allPersonas;
     public $items = null;
@@ -43,23 +42,25 @@ class participantesactividad extends Component
     {
         //$this->search = "";
         $this->type = $type;
-        $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->orderBy('segundo_apellido')->get();
+        $this->allViajes = Viajes::where('is_valid', '=', 1)->get();
         $this->items = $edit;
 
     }
     public function render()
     {
-        return view('livewire.modals.participantesactividad', [
-            'products' => ($this->type == 1) ? PersonasActividadesAcademicas::where('is_valid', '=', 1)->where('id_academica', '=', $this->items)->latest()->paginate(10) : PersonasActividadesExtension::where('is_valid', '=', 1)->where('id_actividad', '=', $this->items)->latest()->paginate(10)
+        return view('livewire.modals.viajesactividad', [
+            'products' => ($this->type == 1) ? ActividadViaje::where('is_valid', '=', 1)->whereNotNull('id_viaje')->where('id_academica', '=', $this->items)->latest()->paginate(10) : ActividadViaje::where('is_valid', '=', 1)->whereNotNull('id_viaje')->where('id_extension', '=', $this->items)->latest()->paginate(10)
         ]);
     }
 
 
+    //Esta función no se está usando en este momento
     public function edit($productId)
     {
         $this->showModal = true;
         $this->productId = $productId;
-        $this->product = ($this->type == 1) ? PersonasActividadesAcademicas::find($productId) : PersonasActividadesExtension::find($productId);        
+        $this->product =  ActividadFinanciacion::find($productId);
+        
     }
 
     public function create()
@@ -79,6 +80,10 @@ class participantesactividad extends Component
         if (!is_null($this->productId)) {
             //
             $this->product->save();
+        } else {
+            $programa = PersonasProgramas::create($this->product);
+            $programa->id_Persona = $this->items;
+            //$programa->save();
         }
         $this->showModal = false;
     }
@@ -90,12 +95,10 @@ class participantesactividad extends Component
 
     public function delete($productId)
     {
-        $product = ($this->type == 1) ? PersonasActividadesAcademicas::find($productId) : PersonasActividadesExtension::find($productId);        
+        $product = ActividadViaje::find($productId);
         if ($product) {
-            if ($product) {
-                $product->is_valid=0;
-                $product->save();
-            }
+            $product->is_valid=0;
+            $product->save();
         }
     }
 }

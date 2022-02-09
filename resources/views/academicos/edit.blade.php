@@ -232,5 +232,5 @@
     </form>
 
     <?php $edit = $data['academico']->id; ?>
-    {{-- @livewire('borrar.borrar_academico',['edit' =>$edit]) --}}
+     @livewire('borrar.borrar_academico',['edit' =>$edit])
 </x-app-layout>

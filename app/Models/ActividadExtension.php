@@ -30,7 +30,7 @@ class ActividadExtension extends Model
 
     public function viajes()
     {
-        return $this->belongsToMany(Viajes::class, 'personas_extension', 'id_extension', 'id_viaje')->where('personas_extension.is_valid', '=', 1);
+        return $this->belongsToMany(Viajes::class, 'actividad_viaje', 'id_extension', 'id_viaje')->where('actividad_viaje.is_valid', '=', 1);
     }
 
     public function institucion_financiadora()
@@ -48,6 +48,19 @@ class ActividadExtension extends Model
         return $this->belongsTo(PersonasActividadesExtension::class, 'id_academica')->where('personas_extension.is_valid', '=', 1);
     }
 
+    // Relaciones en cuanto a la financiación
+
+    public function proyectosFinanciantes()
+    {
+        return $this->belongsToMany(Proyectos::class, 'actividad_financiacion', 'id_extension', 'id_proyecto')->where('actividad_financiacion.is_valid', '=', 1);
+    }
+
+    public function institucionesFinanciantes()
+    {
+        return $this->belongsToMany(Institucionfinanciadora::class, 'actividad_financiacion', 'id_extension', 'id_institucionfinanciadora')->where('actividad_financiacion.is_valid', '=', 1);
+    }
+
+    //Por motivos de seguridad hay que borrar esta función
     public function nombre_Link()
     {
         return "<a class=\" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500\" href=\"/actividadextension/$this->id\" > {$this->nombre} </a>";

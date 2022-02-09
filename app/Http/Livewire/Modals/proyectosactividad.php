@@ -3,13 +3,7 @@
 namespace App\Http\Livewire\Modals;
 
 use App\Models\Proyectos;
-use App\Models\Articulos;
-use App\Models\PersonasActividadesAcademicas;
-use App\Models\PersonasActividadesExtension;
-use App\Models\PersonasProgramas;
-use App\Models\Viajes;
-use App\Models\Personas;
-use App\Models\ProyectosActividadesAcademicas;
+use App\Models\ActividadFinanciacion;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,11 +17,8 @@ class proyectosactividad extends Component
     public $product;
 
     protected $rules = [
-        'product.id_persona' => 'required|numeric',
         'product.id_proyecto' => 'required|numeric',
-        'product.id_viaje' => '',
-        'product.descripcion' => '',
-        'product.is_funded' => '',
+        'product.contribucion_financiera'=> ''
     ];
 
     public $allViajes;
@@ -46,15 +37,12 @@ class proyectosactividad extends Component
         //$this->search = "";
         $this->type = $type;
         $this->allProyectos = Proyectos::where('is_valid', '=', 1)->orderBy('titulo')->get();
-        $this->allViajes = Viajes::where('is_valid', '=', 1)->orderBy('fecha','desc')->get();
-        $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->orderBy('segundo_apellido')->get();
         $this->items = $edit;
-
     }
     public function render()
     {
         return view('livewire.modals.proyectosactividad', [
-            'products' => ($this->type == 1) ? ProyectosActividadesAcademicas::where('is_valid', '=', 1)->where('id_academica', '=', $this->items)->latest()->paginate(10) : PersonasActividadesExtension::where('is_valid', '=', 1)->where('id_actividad', '=', $this->items)->latest()->paginate(10)
+            'products' => ($this->type == 1) ? ActividadFinanciacion::where('is_valid', '=', 1)->whereNotNull('id_proyecto')->where('id_academica', '=', $this->items)->latest()->paginate(10) : ActividadFinanciacion::where('is_valid', '=', 1)->whereNotNull('id_proyecto')->where('id_extension', '=', $this->items)->latest()->paginate(10)
         ]);
     }
 
@@ -63,34 +51,20 @@ class proyectosactividad extends Component
     {
         $this->showModal = true;
         $this->productId = $productId;
-        $this->product = ($this->type == 1) ? PersonasActividadesAcademicas::find($productId) : PersonasActividadesExtension::find($productId);
-        //$this->search = $this->product->leParticipante->full_nameLink();
-        $this->lesViajes = Viajes::where('id_persona','=',$this->product->id_persona)->where('is_valid', '=', 1)->orderBy('fecha','desc')->get();
+        $this->product = ($this->type == 1) ? ActividadFinanciacion::find($productId) : ActividadFinanciacion::find($productId);
         
     }
 
-    public function create()
-    {
-        //$this->allViajes = Viajes::where('is_Valid', '=', 1)->get();
-        $this->search = '';
-        $this->showModal = true;
-        $this->product = null;
-        $this->productId = null;
-    }
+    
 
     public function save()
     {
-        //$this->product->id_Persona=$this->items;
         $this->validate();
 
         if (!is_null($this->productId)) {
             //
             $this->product->save();
-        } else {
-            $programa = PersonasProgramas::create($this->product);
-            $programa->id_Persona = $this->items;
-            $programa->save();
-        }
+        } 
         $this->showModal = false;
     }
 
@@ -101,9 +75,10 @@ class proyectosactividad extends Component
 
     public function delete($productId)
     {
-        $product = PersonasProgramas::find($productId);
+        $product = ActividadFinanciacion::find($productId);
         if ($product) {
-            $product->delete();
+            $product->is_valid=0;
+            $product->save();
         }
     }
 }

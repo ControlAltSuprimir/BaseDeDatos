@@ -3,6 +3,7 @@
 use App\Http\Controllers\academicosController;
 use App\Http\Controllers\actividadacademicaController;
 use App\Http\Controllers\actividadextensionController;
+use App\Http\Controllers\actividadRelacionesController;
 use App\Http\Controllers\articulosController;
 use App\Http\Controllers\cargosController;
 use App\Http\Controllers\coloquiosController;
@@ -84,6 +85,8 @@ Route::resource('tesisintera',tesisinternaController::class);
 Route::resource('user',userController::class);
 Route::resource('viajes',viajesController::class);
 Route::resource('visita',visitaController::class);
+
+
 
 
 //estudiantes

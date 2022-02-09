@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActividadAcademica;
+use App\Models\ActividadFinanciacion;
+use App\Models\ActividadViaje;
 use App\Models\Personas;
 use App\Models\PersonasActividadesAcademicas;
 use App\Models\ProyectosActividadesAcademicas;
@@ -46,9 +48,6 @@ class actividadacademicaController extends Controller
         //return $request;
         $academica = new ActividadAcademica;
 
-        $academica->id_financiamiento = $request->institucionFinanciadora;
-        $academica->montofinanciado = $request->montofinanciado;
-
         $academica->tipo = $request->tipo;
         $academica->nombre = $request->nombre;
         //$academica->financiamiento = $request->financiamiento;
@@ -79,7 +78,7 @@ class actividadacademicaController extends Controller
 
         if (isset($request->proyectos)) {
             foreach ($request->proyectos as $proyecto) {
-                $academicaProyecto = new ProyectosActividadesAcademicas;
+                $academicaProyecto = new ActividadFinanciacion;
                 $academicaProyecto->id_proyecto = $proyecto;
                 $academicaProyecto->id_academica = $academica->id;
                 $academicaProyecto->created_by = auth()->id();
@@ -88,6 +87,31 @@ class actividadacademicaController extends Controller
                 $academicaProyecto->save();
             }
         }
+
+        if (isset($request->instituciones)) {
+            foreach ($request->instituciones as $institucion) {
+                $academicaInstitucion = new ActividadFinanciacion;
+                $academicaInstitucion->id_institucionfinanciadora = $institucion;
+                $academicaInstitucion->id_academica = $academica->id;
+                $academicaInstitucion->created_by = auth()->id();
+                $academicaInstitucion->updated_by = auth()->id();
+                $academicaInstitucion->is_valid = 1;
+                $academicaInstitucion->save();
+            }
+        }
+
+        if (isset($request->viajes)) {
+            foreach ($request->viajes as $viaje) {
+                $academicaViaje = new ActividadViaje;
+                $academicaViaje->id_viaje = $viaje;
+                $academicaViaje->id_academica = $academica->id;
+                $academicaViaje->created_by = auth()->id();
+                $academicaViaje->updated_by = auth()->id();
+                $academicaViaje->is_valid = 1;
+                $academicaViaje->save();
+            }
+        }
+
 
         return redirect('/actividadacademica/' . $academica->id);
     }
@@ -102,12 +126,7 @@ class actividadacademicaController extends Controller
     {
         //
         $academica = ActividadAcademica::find($id);
-        $participantes = $academica->participantes()->get();
-        $proyectos = $academica->proyectos()->get();
-
-
-
-        $data = compact('academica', 'participantes', 'proyectos');
+        $data = compact('academica');
 
         return view('actividad_academica.show', ['data' => $data]);
     }
@@ -187,19 +206,19 @@ class actividadacademicaController extends Controller
         }
 
 
-        //proyectos
-        $losParticipantes = $academica->proyectos()->select('proyectos.id')->get()->makeHidden('pivot');
-        $losParticipantes = collectionToArrayId($losParticipantes);
+        //proyectos involucrados
+        $losProyectosInvolucrados = $academica->proyectosFinanciantes()->select('proyectos.id')->get();
+        $losProyectosInvolucrados = collectionToArrayId($losProyectosInvolucrados);
 
         if (isset($request->proyectos)) {
             //borrar
-            $borrar = array_diff($losParticipantes, $request->proyectos);
-            ProyectosActividadesAcademicas::where('id_academica','=',$academica->id)->whereIn('id_proyecto', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            $borrar = array_diff($losProyectosInvolucrados, $request->proyectos);
+            ActividadFinanciacion::where('id_academica', '=', $academica->id)->whereNotNull('id_proyecto')->whereIn('id_proyecto', $borrar)->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
             //agregando
-            $agregando =[];
-            $agregando = array_diff($request->proyectos, $losParticipantes);
+            $agregando = [];
+            $agregando = array_diff($request->proyectos, $losProyectosInvolucrados);
             foreach ($agregando as $item) {
-                $academicaProyecto = new ProyectosActividadesAcademicas;
+                $academicaProyecto = new ActividadFinanciacion;
                 $academicaProyecto->id_proyecto = $item;
                 $academicaProyecto->id_academica = $academica->id;
                 $academicaProyecto->created_by = auth()->id();
@@ -209,8 +228,65 @@ class actividadacademicaController extends Controller
             }
         } else {
             //Si el request está vacío entonces borramos todo lo asociado a la actividad
-            ProyectosActividadesAcademicas::where('id_academica','=',$academica->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            ActividadFinanciacion::where('id_academica', '=', $academica->id)->whereNotNull('id_proyecto')->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
         }
+
+
+        //instituciones involucrados
+        
+        $lasInstitucionesInvolucradas = $academica->institucionesFinanciantes()->select('institucionfinanciadora.id')->get();
+        $lasInstitucionesInvolucradas = collectionToArrayId($lasInstitucionesInvolucradas);
+
+        if (isset($request->instituciones)) {
+            //borrar
+            $borrar = array_diff($lasInstitucionesInvolucradas, $request->instituciones);
+            ActividadFinanciacion::where('id_academica', '=', $academica->id)->whereNotNull('id_institucionfinanciadora')->whereIn('id_institucionfinanciadora', $borrar)->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
+            //agregando
+            $agregando = [];
+            $agregando = array_diff($request->instituciones, $lasInstitucionesInvolucradas);
+            foreach ($agregando as $item) {
+                $academicaProyecto = new ActividadFinanciacion;
+                $academicaProyecto->id_institucionfinanciadora = $item;
+                $academicaProyecto->id_academica = $academica->id;
+                $academicaProyecto->created_by = auth()->id();
+                $academicaProyecto->updated_by = auth()->id();
+                $academicaProyecto->is_valid = 1;
+                $academicaProyecto->save();
+            }
+        } else {
+            //Si el request está vacío entonces borramos todo lo asociado a la actividad
+            ActividadFinanciacion::where('id_academica', '=', $academica->id)->whereNotNull('id_institucionfinanciadora')->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
+        }
+
+
+        //viajes involucrados
+        
+        $losViajesInvolucrados = $academica->viajes()->select('viajes.id')->get();
+        $losViajesInvolucrados = collectionToArrayId($losViajesInvolucrados);
+
+        if (isset($request->viajes)) {
+            //borrar
+            $borrar = array_diff($losViajesInvolucrados, $request->viajes);
+            ActividadViaje::where('id_academica', '=', $academica->id)->whereIn('id_viaje', $borrar)->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
+            //agregando
+            $agregando = [];
+            $agregando = array_diff($request->viajes, $losViajesInvolucrados);
+            foreach ($agregando as $item) {
+                $academicaProyecto = new ActividadViaje;
+                $academicaProyecto->id_viaje = $item;
+                $academicaProyecto->id_academica = $academica->id;
+                $academicaProyecto->created_by = auth()->id();
+                $academicaProyecto->updated_by = auth()->id();
+                $academicaProyecto->is_valid = 1;
+                $academicaProyecto->save();
+            }
+        } else {
+            //Si el request está vacío entonces borramos todo lo asociado a la actividad
+            ActividadViaje::where('id_academica', '=', $academica->id)->update(['updated_by' => auth()->id(), 'is_valid' => 0]);
+        }
+
+
+
 
         return redirect('/actividadacademica/' . $academica->id);
     }

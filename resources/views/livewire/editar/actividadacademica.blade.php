@@ -57,36 +57,8 @@
                         <input type="date" name="fecha_termino" id="fecha_termino" autocomplete="cc-family-name"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                             value="{{ $perfil->fecha_termino }}">
-                    </div> 
-                    <div class="col-span-4 sm:col-span-2">
-                        <label for="first_name" class="block text-sm font-medium text-gray-700">Institución que financia
-                            (si seleccionas Institución externa u Otra especificar en descripción de la
-                            actividad)</label>
-                        <select name="institucionFinanciadora" id="institucionFinanciadora"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            @foreach ($allFinanciadoras as $financiadora)
-                                @if ($perfil->id_financiamiento == $financiadora->id)
-                                    <option value="{{ $financiadora->id }}" selected>{{ $financiadora->nombre }}
-                                    </option>
-                                @else
-                                    <option value="{{ $financiadora->id }}">{{ $financiadora->nombre }}</option>
-                                @endif
-                            @endforeach
-                        </select>
                     </div>
-                    {{-- <div class="col-span-4 sm:col-span-2">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">Financiamiento</label>
-                        <input type="text" name="financiamiento" id="financiamiento" autocomplete="cc-family-name"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                            placeholder="">
-                    </div> --}}
-                    <div class="col-span-4 sm:col-span-2">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">Monto financiado (en
-                            pesos chilenos)</label>
-                        <input type="number" name="montofinanciado" id="montofinanciado" autocomplete="cc-family-name"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
-                            placeholder="" value="{{ $perfil->montofinanciado }}">
-                    </div>
+
 
                     <div class="col-span-4 sm:col-span-2">
                         <label for="first_name" class="block text-sm font-medium text-gray-700">Descripción de la
@@ -131,26 +103,19 @@
                         Nombre de Participante(s)</label>
                     <select id="location" name="participantes[]" multiple="multiple"
                         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        @forelse ($participantes as $participante)
-                            @foreach ($allPersonas as $persona)
-                                @if ($persona->id == $participante->id)
-                                    <option value="{{ $persona->id }}" selected>
-                                        {{ $persona->full_name() }}
-                                    </option>
-                                @else
-                                    <option value="{{ $persona->id }}">
-                                        {{ $persona->full_name() }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        @empty
-                            @foreach ($allPersonas as $persona)
+                        @foreach ($allPersonas as $persona)
+
+                            @if (in_array($persona->id, $participantes))
+                                <option value="{{ $persona->id }}" selected>
+                                    {{ $persona->full_name() }}
+                                </option>
+                            @else
                                 <option value="{{ $persona->id }}">
                                     {{ $persona->full_name() }}
                                 </option>
-                            @endforeach
+                            @endif
 
-                        @endforelse
+                        @endforeach
                     </select>
                 </div>
 
@@ -181,26 +146,19 @@
                     <select id="project" name="proyectos[]" multiple="multiple"
                         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
 
-                        @forelse ($proyectos as $proyectoAsociado)
-                            @foreach ($allProyectos as $proyecto)
-                                @if ($proyecto->id == $proyectoAsociado->id)
-                                    <option value="{{ $proyecto->id }}" selected>
-                                        {{ $proyecto->full_name() }}
-                                    </option>
-                                @else
-                                    <option value="{{ $proyecto->id }}">
-                                        {{ $proyecto->full_name() }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        @empty
-                            @foreach ($allProyectos as $proyecto)
+                        @foreach ($allProyectos as $proyecto)
+
+                            @if (in_array($proyecto->id, $proyectos))
+                                <option value="{{ $proyecto->id }}" selected>
+                                    {{ $proyecto->full_name() }}
+                                </option>
+                            @else
                                 <option value="{{ $proyecto->id }}">
                                     {{ $proyecto->full_name() }}
                                 </option>
-                            @endforeach
+                            @endif
 
-                        @endforelse
+                        @endforeach
 
 
                     </select>
@@ -208,6 +166,91 @@
 
 
 
+
+
+            </div>
+        </div>
+
+
+        <hr>
+        <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="bg-white py-6 px-4 sm:p-6">
+                <div>
+                    <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">
+                        Instituciones Financiadoras
+                    </h2>
+                    <p class="mt-1 text-sm text-gray-500"> Una vez guardada la actividad podrás asignar financiamientos
+                        correspondientes (en caso de que existan). En caso de que seleccione "Otra", usted podrá dar
+                        especificaciones más tarde.</p>
+                </div>
+
+                <div class="mt-6 grid grid-cols-4 gap-6">
+
+                </div>
+
+                <div wire:ignore>
+                    <label for="proyectos" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Institución(es)</label>
+                    <select id="institutions" name="instituciones[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+
+                        @foreach ($allFinanciadoras as $financiadora)
+
+                            @if (in_array($financiadora->id, $instituciones))
+                                <option value="{{ $financiadora->id }}" selected>
+                                    {{ $financiadora->nombre }}
+                                </option>
+                            @else
+                                <option value="{{ $financiadora->id }}">
+                                    {{ $financiadora->nombre }}
+                                </option>
+                            @endif
+                        @endforeach
+
+                    </select>
+                </div>
+
+
+            </div>
+        </div>
+        <hr>
+        <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="bg-white py-6 px-4 sm:p-6">
+                <div>
+                    <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">
+                        Viajes Asociados
+                    </h2>
+                    <p class="mt-1 text-sm text-gray-500"> El viaje debe ser agregado separadamente del(de la)
+                        participante.</p>
+                </div>
+
+                <div class="mt-6 grid grid-cols-4 gap-6">
+
+                </div>
+
+                <div wire:ignore>
+                    <label for="proyectos" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
+                        Viaje(s)</label>
+                    <select id="viajes" name="viajes[]" multiple="multiple"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+
+
+                        @foreach ($allViajes as $viaje)
+                            @if (in_array($viaje->id, $viajes))
+                                <option value="{{ $viaje->id }}" selected>
+                                    {{ $viaje->full_name() }}
+                                </option>
+                            @else
+                                <option value="{{ $viaje->id }}">
+                                    {{ $viaje->full_name() }}
+                                </option>
+
+                            @endif
+                        @endforeach
+
+
+                    </select>
+                </div>
 
 
             </div>
@@ -231,6 +274,8 @@
         $(document).ready(function() {
             $('#project').select2();
             $('#location').select2();
+            $('#institutions').select2();
+            $('#viajes').select2();
         });
     </script>
 

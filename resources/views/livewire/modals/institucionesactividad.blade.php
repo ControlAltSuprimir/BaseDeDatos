@@ -10,17 +10,16 @@
             {{-- <button type="button" class="order-1 ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-0 sm:ml-0">
                 Share
               </button> --}}
-{{--
-            <button type="button" wire:click.prevent="create"
+            {{-- <a href="/actividadextension/{{$items}}/editarrelaciones/{{$items}}">
+            <button type="button" 
                 class="order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3">
-                Añadir Proyecto
-            </button>
-            --}}
+                Añadir Institución
+            </button> --}}
+            </a>
 
         </div>
     </div>
     <!-- Pinned projects -->
-
 
     <!-- Projects list (only on smallest breakpoint) -->
 
@@ -41,7 +40,7 @@
                         </th> --}}
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Responsable del Proyecto
+
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -61,15 +60,15 @@
                                 {{-- @foreach ($data['personas'] as $persona) --}}
                                 <tr class="bg-white">
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        <a href="/proyectos/{{ $product->elProyecto->id }} ">{{ $product->elProyecto->titulo }} </a>
+                                        {{ $product->laInstitucion->nombre }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <a href="/personas/{{ $product->elProyecto->responsable->id }}">{{ $product->elProyecto->responsable->full_name() }}</a>
-                                        {{--{!! $product->elProyecto->responsable->full_nameLink() !!}--}}
+                                        {{-- <a href="/personas/{{ $product->elProyecto->responsable->id }}">{{ $product->elProyecto->responsable->full_name() }}</a> --}}
+                                        {{-- {!! $product->elProyecto->responsable->full_nameLink() !!} --}}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        
-                                        {{ $product->contribucion_financiera }} 
+
+                                        {{ $product->contribucion_financiera }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <button
@@ -102,7 +101,7 @@
                             @empty
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">
-                                        Proyectos no encontrados
+                                        Instituciones no Encontradas
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">
 
@@ -137,7 +136,8 @@
                 <div class="flex flex-col items-start p-4">
                     <div class="flex items-center w-full border-b pb-4">
                         <div class="text-gray-900 font-medium text-lg">
-                            {{ $productId ? 'Editar Proyecto Involucrado' : 'Añadir Proyecto Involucrado' }}</div>
+                            {{ $productId ? 'Editar Institución Involucrado' : 'Añadir Institución Involucrada' }}
+                        </div>
                         <svg wire:click="close" class="ml-auto fill-current text-gray-700 w-6 h-6 cursor-pointer"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                             <path
@@ -149,15 +149,15 @@
                 <div class="bg-white py-6 px-4 sm:p-6">
                     <div class="col-span-4 sm:col-span-1" gap-6>
                         <label for="last_name" class="block text-sm font-medium text-gray-700">
-                            Proyectosss
+                            Institución
                         </label>
-                        <select  wire:model.defer="product.id_proyecto"
+                        <select wire:model.defer="product.id_institucionfinanciadora"
                             class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                            <option value="">-- Selecciona el Proyecto --</option>
+                            <option value="">-- Selecciona la Institucion --</option>
 
-                            @foreach ($allProyectos as $proyecto)
-                                <option value="{{ $proyecto->id }}">
-                                    {{ $proyecto->full_name() }}
+                            @foreach ($allInstituciones as $institucion)
+                                <option value="{{ $institucion->id }}">
+                                    {{ $institucion->nombre }}
                                 </option>
                             @endforeach
                         </select>
@@ -165,7 +165,7 @@
                     </div>
                     <br>
 
-                    
+
 
                     <div class="mt-6 grid grid-cols-4 gap-6">
 
@@ -204,8 +204,8 @@
         </div>
     </div>
 
-   
-  
+
+
 
 
 

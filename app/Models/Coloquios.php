@@ -16,13 +16,12 @@ class Coloquios extends Model
 
     public function expositor()
     {
-        return $this->belongsTo(Personas::class,'id_persona');
+        return $this->belongsTo(Personas::class,'id_persona')->first();
     }
 
     public function institucion()
     {
-        return $this->belongsTo(Instituciones::class,'id_institucion');
+        return $this->belongsTo(Instituciones::class,'id_institucion')->first();
     }
 
-    
 }

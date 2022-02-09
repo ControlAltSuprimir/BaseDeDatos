@@ -2,17 +2,19 @@
 
 namespace App\Http\Livewire\Modals;
 
-use App\Models\Programas;
-use App\Models\Articulos;
+use App\Models\Proyectos;
+use App\Models\ActividadFinanciacion;
+use App\Models\Institucionfinanciadora;
 use App\Models\PersonasActividadesAcademicas;
 use App\Models\PersonasActividadesExtension;
 use App\Models\PersonasProgramas;
 use App\Models\Viajes;
 use App\Models\Personas;
+use App\Models\ProyectosActividadesAcademicas;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class participantesactividad extends Component
+class institucionesactividad extends Component
 {
     use WithPagination;
 
@@ -22,14 +24,12 @@ class participantesactividad extends Component
     public $product;
 
     protected $rules = [
-        'product.id_persona' => 'required|numeric',
-        'product.id_viaje' => '',
-        'product.descripcion' => '',
-        'product.is_funded' => '',
-        //'product.is_valid' => 'required',
+        'product.id_institucionfinanciadora' => 'required|numeric',
+        'product.contribucion_financiera'=> ''
     ];
 
     public $allViajes;
+    public $allInstituciones;
     public $lesViajes;
     public $allPersonas;
     public $items = null;
@@ -43,14 +43,14 @@ class participantesactividad extends Component
     {
         //$this->search = "";
         $this->type = $type;
-        $this->allPersonas = Personas::where('is_valid', '=', 1)->orderBy('primer_apellido')->orderBy('segundo_apellido')->get();
+        $this->allInstituciones = Institucionfinanciadora::where('is_valid', '=', 1)->get();
         $this->items = $edit;
 
     }
     public function render()
     {
-        return view('livewire.modals.participantesactividad', [
-            'products' => ($this->type == 1) ? PersonasActividadesAcademicas::where('is_valid', '=', 1)->where('id_academica', '=', $this->items)->latest()->paginate(10) : PersonasActividadesExtension::where('is_valid', '=', 1)->where('id_actividad', '=', $this->items)->latest()->paginate(10)
+        return view('livewire.modals.institucionesactividad', [
+            'products' => ($this->type == 1) ? ActividadFinanciacion::where('is_valid', '=', 1)->whereNotNull('id_institucionfinanciadora')->where('id_academica', '=', $this->items)->latest()->paginate(10) : ActividadFinanciacion::where('is_valid', '=', 1)->whereNotNull('id_institucionfinanciadora')->where('id_extension', '=', $this->items)->latest()->paginate(10)
         ]);
     }
 
@@ -59,7 +59,8 @@ class participantesactividad extends Component
     {
         $this->showModal = true;
         $this->productId = $productId;
-        $this->product = ($this->type == 1) ? PersonasActividadesAcademicas::find($productId) : PersonasActividadesExtension::find($productId);        
+        $this->product =  ActividadFinanciacion::find($productId);
+        
     }
 
     public function create()
@@ -79,7 +80,7 @@ class participantesactividad extends Component
         if (!is_null($this->productId)) {
             //
             $this->product->save();
-        }
+        } 
         $this->showModal = false;
     }
 
@@ -90,12 +91,10 @@ class participantesactividad extends Component
 
     public function delete($productId)
     {
-        $product = ($this->type == 1) ? PersonasActividadesAcademicas::find($productId) : PersonasActividadesExtension::find($productId);        
+        $product = ActividadFinanciacion::find($productId);
         if ($product) {
-            if ($product) {
-                $product->is_valid=0;
-                $product->save();
-            }
+            $product->is_valid=0;
+            $product->save();
         }
     }
 }

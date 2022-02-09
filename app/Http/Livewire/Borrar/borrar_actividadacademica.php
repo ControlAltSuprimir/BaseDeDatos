@@ -3,28 +3,10 @@
 namespace App\Http\Livewire\Borrar;
 
 use App\Models\ActividadAcademica;
-use App\Models\ArticulosTesis;
-use App\Models\Indexaciones_Revistas;
-use App\Models\Personas;
-use App\Models\Proyectos;
-use App\Models\PersonasProgramas;
-use App\Models\PersonasTesisTutores;
-use App\Models\PersonasTesisComision;
-use App\Models\Persona_Articulo;
-use App\Models\ProyectosPersonasCoinvestigadores;
-use App\Models\ProyectosPersonasColaboradores;
+use App\Models\ActividadFinanciacion;
+use App\Models\ActividadViaje;
 use App\Models\PersonasActividadesAcademicas;
-use App\Models\PersonasActividadesExtension;
 use App\Models\ProyectosActividadesAcademicas;
-use App\Models\ProyectosActividadesExtension;
-use App\Models\ProyectosArticulos;
-use App\Models\ProyectosTesistas;
-use App\Models\Tesis;
-use App\Models\Revista;
-use App\Models\Viajes;
-use App\Models\ProyectosViajes;
-use App\Models\Revistas;
-use App\Models\TesisInterna;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -81,7 +63,8 @@ class borrar_actividadacademica extends Component
         if ($product) {
             $product->is_valid=0;
             PersonasActividadesAcademicas::where('id_academica','=',$product->id)->update(['is_valid' => 0]);
-            ProyectosActividadesAcademicas::where('id_academica','=',$product->id)->update(['is_valid' => 0]);
+            ActividadFinanciacion::where('id_academica','=',$product->id)->update(['is_valid' => 0]);
+            ActividadViaje::where('id_academica','=',$product->id)->update(['is_valid' => 0]);
 
             $product->save();
 

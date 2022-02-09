@@ -55,22 +55,22 @@ class Proyectos extends Model
 
     public function extensiones()
     {
-        return $this->belongsToMany(ActividadExtension::class, 'proyecto_extension', 'id_proyecto', 'id_actividad')->where('proyecto_extension.is_valid', '=', 1);
+        return $this->belongsToMany(ActividadExtension::class, 'actividad_financiacion', 'id_proyecto', 'id_extension')->whereNotNull('actividad_financiacion.id_extension')->where('actividad_financiacion.is_valid', '=', 1);
     }
 
     public function las_extensiones()
     {
-        return $this->hasMany(ProyectosActividadesExtension::class, 'id_proyecto')->where('proyecto_extension.is_valid', '=', 1);
+        return $this->hasMany(ActividadFinanciacion::class, 'id_proyecto')->whereNotNull('actividad_financiacion.id_extension')->where('actividad_financiacion.is_valid', '=', 1);
     }
 
     public function academicas()
     {
-        return $this->belongsToMany(ActividadAcademica::class, 'proyecto_academica', 'id_proyecto', 'id_academica')->where('proyecto_academica.is_valid', '=', 1);
+        return $this->belongsToMany(ActividadAcademica::class, 'actividad_financiacion', 'id_proyecto', 'id_academica')->whereNotNull('actividad_financiacion.id_academica')->where('actividad_financiacion.is_valid', '=', 1);
     }
 
     public function las_academicas()
     {
-        return $this->hasMany(ProyectosActividadesAcademicas::class, 'id_proyecto')->where('proyecto_academica.is_valid', '=', 1);
+        return $this->hasMany(ActividadFinanciacion::class, 'id_proyecto')->whereNotNull('actividad_financiacion.id_academica')->where('actividad_financiacion.is_valid', '=', 1);
     }
 
     public function participantes()
@@ -89,9 +89,18 @@ class Proyectos extends Model
         return $this->belongsToMany(Viajes::class, 'proyecto_viajes', 'id_proyecto', 'id_viaje')->where('proyecto_viajes.is_valid', '=', 1);
     }
 
+    //Actividades que financia
+    public function las_actividades()
+    {
+        return $this->hasMany(ActividadFinanciacion::class, 'id_proyecto')->where('actividad_financiacion.is_valid', '=', 1);
+    }
+
+    //Hay que borrar esta función por temas de seguridad
     public function full_name(){
         return "$this->codigo_proyecto : $this->titulo (Responsable: " . $this->responsable->full_name() . " )";
     }
+
+    //Otras funciones
 
     public function autoresArray()
     {

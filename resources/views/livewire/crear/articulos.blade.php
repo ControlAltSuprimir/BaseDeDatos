@@ -215,6 +215,7 @@
 
                 <div class="mt-6 grid grid-cols-4 gap-6">
                 </div>
+                
                 <div wire:ignore>
                     <div class="col-span-4 sm:col-span-1" gap-6>
                         <label for="location" class="block text-sm font-medium text-gray-700">Selecciona/Escribe
@@ -226,7 +227,6 @@
                             @foreach ($allRevistas as $revista)
                                 <option value="{{ $revista->id }}">
                                     {{ $revista->nombre }}
-                                    {{-- (${{ number_format($product->price, 2) }}) --}}
                                 </option>
                             @endforeach
                         </select>

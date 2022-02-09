@@ -18,3 +18,4 @@ function collectionToArrayId($collection){
     }
     return $myArray;
 }
+

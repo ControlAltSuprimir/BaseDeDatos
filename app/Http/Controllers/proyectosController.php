@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActividadFinanciacion;
 use App\Models\Proyectos;
 use App\Models\Personas;
 use App\Models\ProyectosActividadesAcademicas;
@@ -126,12 +127,13 @@ class proyectosController extends Controller
         }
 
 
-        //guardando proyectos relacionados
+        //guardando actividad académica relacionada
         if (isset($request->academica)) {
             foreach ($request->academica as $item) {
-                $extensionRelacionada = new ProyectosActividadesAcademicas;
+                $extensionRelacionada = new ActividadFinanciacion;
                 $extensionRelacionada->id_academica = $item;
                 $extensionRelacionada->id_proyecto = $proyecto->id;
+                $extensionRelacionada->contribucion_financiera=0;
                 $extensionRelacionada->created_by = auth()->id();
                 $extensionRelacionada->updated_by = auth()->id();
                 $extensionRelacionada->is_valid = 1;
@@ -144,9 +146,10 @@ class proyectosController extends Controller
         //guardando proyectos relacionados
         if (isset($request->extension)) {
             foreach ($request->extension as $item) {
-                $extensionRelacionada = new ProyectosActividadesExtension;
-                $extensionRelacionada->id_actividad = $item;
+                $extensionRelacionada = new ActividadFinanciacion;
+                $extensionRelacionada->id_extension = $item;
                 $extensionRelacionada->id_proyecto = $proyecto->id;
+                $extensionRelacionada->contribucion_financiera=0;
                 $extensionRelacionada->created_by = auth()->id();
                 $extensionRelacionada->updated_by = auth()->id();
                 $extensionRelacionada->is_valid = 1;
@@ -310,22 +313,23 @@ class proyectosController extends Controller
 
 
         //guardando extensiones
-        $lasExtensiones = $proyecto->extensiones()->select('actividadextension.id')->get()->makeHidden('pivot');
+        $lasExtensiones = $proyecto->extensiones()->select('actividadextension.id')->get();
         $lasExtensiones = collectionToArrayId($lasExtensiones);
         
 
         if (isset($request->extension)) {
             $borrar = [];
             $borrar = array_diff($lasExtensiones, $request->extension);
-            ProyectosActividadesExtension::where('id_proyecto','=',$proyecto->id)->whereIn('id_actividad', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            ActividadFinanciacion::where('id_proyecto','=',$proyecto->id)->whereIn('id_extension', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
             //Agregando
             $agregando =[];
             $agregando = array_diff($request->extension, $lasExtensiones);
 
             foreach ($agregando as $item) {
-                    $extensionRelacionada = new ProyectosActividadesExtension;
-                    $extensionRelacionada->id_actividad = $item;
+                    $extensionRelacionada = new ActividadFinanciacion;
+                    $extensionRelacionada->id_extension = $item;
                     $extensionRelacionada->id_proyecto = $proyecto->id;
+                    $extensionRelacionada->contribucion_financiera = 0;
                     $extensionRelacionada->updated_by = auth()->id();
                     $extensionRelacionada->created_by = auth()->id();
                     $extensionRelacionada->is_valid = 1;
@@ -334,12 +338,12 @@ class proyectosController extends Controller
             }
         } else {
             //Si el request está vacío entonces borramos todo lo asociado al proyecto
-            ProyectosActividadesExtension::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            ActividadFinanciacion::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
 
         //guardando academicas
-        $lasAcademicas = $proyecto->academicas()->select('actividadacademica.id')->get()->makeHidden('pivot');
+        $lasAcademicas = $proyecto->academicas()->select('actividadacademica.id')->get();
         $lasAcademicas = collectionToArrayId($lasAcademicas);
         //return $request->academica;
 
@@ -347,15 +351,16 @@ class proyectosController extends Controller
             $borrar = [];
             $borrar = array_diff($lasAcademicas, $request->academica);
             
-            ProyectosActividadesAcademicas::where('id_proyecto','=',$proyecto->id)->whereIn('id_academica', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            ActividadFinanciacion::where('id_proyecto','=',$proyecto->id)->whereIn('id_academica', $borrar)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
             //Agregando
             $agregando =[];
             $agregando = array_diff($request->academica, $lasAcademicas);
 
             foreach ($agregando as $item) {
-                    $extensionRelacionada = new ProyectosActividadesAcademicas;
+                    $extensionRelacionada = new ActividadFinanciacion;
                     $extensionRelacionada->id_academica = $item;
                     $extensionRelacionada->id_proyecto = $proyecto->id;
+                    $extensionRelacionada->contribucion_financiera=0;
                     $extensionRelacionada->updated_by = auth()->id();
                     $extensionRelacionada->created_by = auth()->id();
                     $extensionRelacionada->is_valid = 1;
@@ -364,7 +369,7 @@ class proyectosController extends Controller
             }
         }  else {
             //Si el request está vacío entonces borramos todo lo asociado al proyecto
-            ProyectosActividadesAcademicas::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
+            ActividadFinanciacion::where('id_proyecto','=',$proyecto->id)->update(['updated_by' =>auth()->id() , 'is_valid' => 0]);
         }
 
 
