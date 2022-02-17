@@ -9,10 +9,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Models\ActividadAcademica;
 use App\Models\ActividadExtension;
+use App\Models\ActividadFinanciacion;
 use App\Models\Curso;
-
-
-
+use App\Models\Institucionfinanciadora;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -35,8 +34,27 @@ class general extends Component
     public function render()
     {
         $searchTerm = '%'.$this->searchTerm . '%';
-        $actividades = ActividadAcademica::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();
-        $extensiones = ActividadExtension::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();;
+        /*
+        deptoMat = Institucionfinanciadora::find(1);
+        $actividades=$deptoMat->actividadesAcademicas()->get();
+        $extensiones=$deptoMat->actividadesExtension()->get();
+        */
+        $actividades=ActividadAcademica::join('actividad_financiacion','actividad_financiacion.id_academica','=','actividadacademica.id')
+                                ->select('actividadacademica.nombre','actividadacademica.fecha_comienzo','actividadacademica.fecha_termino','actividad_financiacion.contribucion_financiera')
+                                ->where('actividad_financiacion.is_valid','=',1)
+                                ->where('actividad_financiacion.id_institucionfinanciadora','=',1)
+                                ->where('actividadacademica.is_valid','=',1)
+                                ->where('actividadacademica.nombre','like',$searchTerm)
+                                ->get();
+        $extensiones=ActividadExtension::join('actividad_financiacion','actividad_financiacion.id_extension','=','actividadextension.id')
+                                ->select('actividadextension.nombre','actividadextension.fecha_comienzo','actividadextension.fecha_termino','actividad_financiacion.contribucion_financiera')
+                                ->where('actividad_financiacion.is_valid','=',1)
+                                ->where('actividad_financiacion.id_institucionfinanciadora','=',1)
+                                ->where('actividadextension.is_valid','=',1)
+                                ->where('actividadextension.nombre','like',$searchTerm)
+                                ->get();
+        //$actividades = ActividadAcademica::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();
+        //$extensiones = ActividadExtension::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();;
 
         $montoFinanciado =0;//Recaudamos el monto total financiado desde hace 10 años
         $myArray = [];//Listamos las actividades en este array. Dante wn ¿Por qué la insistencia en tener una tabla para cada tipo de actividad? Lo mismo con las tesis, mira el temendo baile de código que hay que hacer por eso
@@ -102,16 +120,6 @@ class general extends Component
         return view('livewire.financiamiento.actividades.general', ['data' => $data]);
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortDirection == 'asc') {
-            $this->sortDirection = 'desc';
-        } else {
-            $this->sortDirection = 'asc';
-        }
-
-        return $this->sortBy = $field;
-    }
 
     public function updatingSearch()
     {

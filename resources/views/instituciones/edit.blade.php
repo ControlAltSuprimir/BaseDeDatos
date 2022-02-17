@@ -18,6 +18,7 @@
       <section aria-labelledby="payment_details_heading">
           <form action="{{ route('instituciones.update',$data['institucion']->id) }}" method="POST">
 
+            
               <div class="shadow sm:rounded-md sm:overflow-hidden">
                   <div class="bg-white py-6 px-4 sm:p-6">
                       <div class="col-span-4 sm:col-span-1" gap-6>

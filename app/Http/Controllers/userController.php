@@ -18,6 +18,7 @@ class userController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         //
@@ -30,8 +31,13 @@ class userController extends Controller
             return view('user.index', ['data' => $data]);
         }
 
-        return redirect('/dashboard')->with('success', 'Sólo administradores pueden entrar a la dirección que deseabas');
+        $message= array(
+            'titulo' => 'Acceso denegado.',
+            'contenido' => 'Sólo administradores pueden entrar a la dirección que deseabas'
+        );    
+        return redirect('/dashboard')->with('success',$message);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -49,7 +55,11 @@ class userController extends Controller
             $data = compact('personas', 'roles');
             return view('user.create', ['data' => $data]);
         }
-        return redirect('/dashboard')->with('success', 'Sólo administradores pueden entrar a la dirección que deseabas');
+        $message= array(
+            'titulo' => 'Acceso denegado.',
+            'contenido' => 'Sólo administradores pueden entrar a la dirección que deseabas'
+        );
+        return redirect('/dashboard')->with('success', $message);
     }
 
     /**
@@ -84,8 +94,11 @@ class userController extends Controller
                 'is_valid' => 1
             ]);
         }
-
-        return redirect('/users');
+        $message= array(
+            'titulo' => 'Acceso denegado.',
+            'contenido' => 'Sólo administradores pueden entrar a la dirección que deseabas'
+        );
+        return redirect('/dashboard')->with('success', $message);
     }
 
     /**
@@ -129,7 +142,11 @@ class userController extends Controller
             $data = compact('personas', 'roles','user');
             return view('user.edit', ['data' => $data]);
         }
-        return redirect('/dashboard')->with('success', 'Sólo administradores pueden entrar a la dirección que deseabas');
+        $message= array(
+            'titulo' => 'Acceso denegado.',
+            'contenido' => 'Sólo administradores pueden entrar a la dirección que deseabas'
+        );
+        return redirect('/dashboard')->with('success', $message);
     }
 
     /**
@@ -156,7 +173,7 @@ class userController extends Controller
 
         DB::table('users_personas')
             ->where('id_user', '=', $user->id)
-            ->insert([
+            ->update([
                 'id_persona' => $request->persona,
                 'id_user' => $user->id,
                 'is_valid' => 1
@@ -164,7 +181,7 @@ class userController extends Controller
 
         DB::table('users_roles')
             ->where('id_user', '=', $user->id)
-            ->insert([
+            ->update([
                 'id_rol' => $request->rol,
                 'id_user' => $user->id,
                 'is_valid' => 1

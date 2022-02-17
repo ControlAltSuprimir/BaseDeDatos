@@ -24,7 +24,7 @@ class Viaje extends Component
         $items= Viajes::with('persona')->where('is_valid','=',1)
         ->search($this->search)
         ->orderBy($this->sortBy,$this->sortDirection)
-        ->paginate(5);
+        ->paginate(25);
         /*
         $items = Articulos::query()
         ->search($this->search)

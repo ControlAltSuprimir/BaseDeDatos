@@ -15,6 +15,14 @@ class Institucionfinanciadora extends Model
     const UPDATED_AT = 'updated_at'; 
    
 
+    public function actividadesAcademicas()
+    {
+        return $this->belongsToMany(ActividadAcademica::class, 'actividad_financiacion','id_institucionfinanciadora' , 'id_academica')->where('actividad_financiacion.is_valid', '=', 1);
+    }
     
+    public function actividadesExtension()
+    {
+        return $this->belongsToMany(ActividadExtension::class, 'actividad_financiacion','id_institucionfinanciadora' , 'id_extension')->where('actividad_financiacion.is_valid', '=', 1);
+    }
 
 }

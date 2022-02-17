@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Borrar;
 
+use App\Models\ActividadViaje;
 use App\Models\ArticulosTesis;
 use App\Models\Personas;
 use App\Models\Proyectos;
@@ -21,6 +22,7 @@ use App\Models\Tesis;
 use App\Models\Viajes;
 use App\Models\ProyectosViajes;
 use App\Models\TesisInterna;
+use App\Models\ViajeFinanciacion;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -76,10 +78,12 @@ class borrar_viaje extends Component
         $product = Viajes::find($productId);
         if ($product) {
             $product->is_valid=0;
-            ProyectosViajes::where('id_viaje','=',$product->id)->update(['is_valid' => 0]);
+            $product->updated_by=auth()->id();
+
+            ViajeFinanciacion::where('id_viaje','=',$product->id)->update(['is_valid' => 0,'updated_by'=>auth()->id()]);
+            ActividadViaje::where('id_viaje','=',$product->id)->update(['is_valid' => 0,'updated_by'=>auth()->id()]);
 
             $product->save();
-
             return redirect()->to('/viajes');
         }
     }

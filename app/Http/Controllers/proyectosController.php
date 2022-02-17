@@ -218,6 +218,7 @@ class proyectosController extends Controller
         $proyecto->organizacion_financia = $request->organizacion_financia;
         $proyecto->descripcion = $request->observaciones;
         $proyecto->investigador_responsable = $request->investigador_responsable;
+        
         $proyecto->updated_by = auth()->id();
 
         $proyecto->save();

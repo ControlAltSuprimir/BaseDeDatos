@@ -58,7 +58,7 @@
                     Expositor
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
-                    {{ $data['coloquio']->expositor }}
+                    {{ ($data['expositor']) ? $data['expositor']->full_name() : ''}}
                 </dd>
             </div>
 
@@ -68,7 +68,7 @@
                     Institución
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900">
-                    {{ $data['coloquio']->institucion }}
+                    {{ ($data['institucion']) ? $data['institucion']->nombre : '' }}
                 </dd>
 
             </div>

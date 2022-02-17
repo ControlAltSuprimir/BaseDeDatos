@@ -49,10 +49,8 @@
                         <label for="expiration_date" class="block text-sm font-medium text-gray-700">Resumen de la
                             Charla</label>
                         <textarea id="abstract" name="abstract" rows="3"
-                            class="shadow-sm focus:ring-light-blue-500 focus:border-light-blue-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">
-                  {{ $perfil->abstract }}
-                </textarea>
-                    </div>
+                            class="shadow-sm focus:ring-light-blue-500 focus:border-light-blue-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md">{{ $perfil->abstract }}</textarea>
+                        </div>
 
 
 
@@ -101,7 +99,7 @@
     
                                         @foreach ($allPersonas as $persona)
                                             <option value="{{ $persona->id }}">
-                                                {{ $persona->fullname() }}
+                                                {{ $persona->full_name() }}
                                                 {{-- (${{ number_format($product->price, 2) }}) --}}
                                             </option>
                                         @endforeach

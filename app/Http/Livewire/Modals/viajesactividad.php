@@ -63,14 +63,6 @@ class viajesactividad extends Component
         
     }
 
-    public function create()
-    {
-        //$this->allViajes = Viajes::where('is_Valid', '=', 1)->get();
-        $this->search = '';
-        $this->showModal = true;
-        $this->product = null;
-        $this->productId = null;
-    }
 
     public function save()
     {
@@ -79,11 +71,8 @@ class viajesactividad extends Component
 
         if (!is_null($this->productId)) {
             //
+            $this->product->updated_by = auth()->id();
             $this->product->save();
-        } else {
-            $programa = PersonasProgramas::create($this->product);
-            $programa->id_Persona = $this->items;
-            //$programa->save();
         }
         $this->showModal = false;
     }
@@ -98,6 +87,7 @@ class viajesactividad extends Component
         $product = ActividadViaje::find($productId);
         if ($product) {
             $product->is_valid=0;
+            $product->updated_by = auth()->id();
             $product->save();
         }
     }

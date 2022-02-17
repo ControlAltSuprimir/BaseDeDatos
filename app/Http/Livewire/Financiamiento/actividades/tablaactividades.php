@@ -34,12 +34,42 @@ class tablaactividades extends Component
         
             $searchTerm = '%'.$this->searchTerm . '%';
             if ($this->ano == ''){
-                $actividades = ActividadAcademica::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();
-                $extensiones = ActividadExtension::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();
+                $actividades = ActividadAcademica::join('actividad_financiacion', 'actividad_financiacion.id_academica', '=', 'actividadacademica.id')
+                ->select('actividadacademica.nombre', 'actividadacademica.fecha_comienzo', 'actividadacademica.fecha_termino', 'actividad_financiacion.contribucion_financiera')
+                ->where('actividad_financiacion.is_valid', '=', 1)
+                ->where('actividad_financiacion.id_institucionfinanciadora', '=', 1)
+                ->where('actividadacademica.is_valid', '=', 1)
+                ->where('actividadacademica.nombre', 'like', $searchTerm)
+                ->get();
+            $extensiones = ActividadExtension::join('actividad_financiacion', 'actividad_financiacion.id_extension', '=', 'actividadextension.id')
+                ->select('actividadextension.nombre', 'actividadextension.fecha_comienzo', 'actividadextension.fecha_termino', 'actividad_financiacion.contribucion_financiera')
+                ->where('actividad_financiacion.is_valid', '=', 1)
+                ->where('actividad_financiacion.id_institucionfinanciadora', '=', 1)
+                ->where('actividadextension.is_valid', '=', 1)
+                ->where('actividadextension.nombre', 'like', $searchTerm)
+                ->get();
+                //$actividades = ActividadAcademica::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();
+                //$extensiones = ActividadExtension::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->where('nombre','like',$searchTerm)->get();
             }
             else{
-                $actividades = ActividadAcademica::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->whereYear('fecha_comienzo', $this->ano)->where('nombre','like',$searchTerm)->get();
-                $extensiones = ActividadExtension::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->whereYear('fecha_comienzo', $this->ano)->where('nombre','like',$searchTerm)->get();
+                $actividades = ActividadAcademica::join('actividad_financiacion', 'actividad_financiacion.id_academica', '=', 'actividadacademica.id')
+                ->select('actividadacademica.nombre', 'actividadacademica.fecha_comienzo', 'actividadacademica.fecha_termino', 'actividad_financiacion.contribucion_financiera')
+                ->where('actividad_financiacion.is_valid', '=', 1)
+                ->where('actividad_financiacion.id_institucionfinanciadora', '=', 1)
+                ->where('actividadacademica.is_valid', '=', 1)
+                ->whereYear('academica.fecha_comienzo', $this->ano)
+                ->where('actividadacademica.nombre', 'like', $searchTerm)
+                ->get();
+            $extensiones = ActividadExtension::join('actividad_financiacion', 'actividad_financiacion.id_extension', '=', 'actividadextension.id')
+                ->select('actividadextension.nombre', 'actividadextension.fecha_comienzo', 'actividadextension.fecha_termino', 'actividad_financiacion.contribucion_financiera')
+                ->where('actividad_financiacion.is_valid', '=', 1)
+                ->where('actividad_financiacion.id_institucionfinanciadora', '=', 1)
+                ->where('actividadextension.is_valid', '=', 1)
+                ->whereYear('actividadextension.fecha_comienzo', $this->ano)
+                ->where('actividadextension.nombre', 'like', $searchTerm)
+                ->get();
+                //$actividades = ActividadAcademica::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->whereYear('fecha_comienzo', $this->ano)->where('nombre','like',$searchTerm)->get();
+                //$extensiones = ActividadExtension::where('is_valid', '=', 1)->where('id_financiamiento','=',1)->whereYear('fecha_comienzo', $this->ano)->where('nombre','like',$searchTerm)->get();
             }
 
     

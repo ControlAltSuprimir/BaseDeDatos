@@ -71,7 +71,9 @@ class coloquiosController extends Controller
     {
         //
         $coloquio= Coloquios::find($id);
-        $data=compact('coloquio');
+        $institucion = $coloquio->institucion();
+        $expositor = $coloquio->expositor();
+        $data=compact('coloquio','institucion','expositor');
         return view('coloquios.show', ['data' => $data]);
     }
 

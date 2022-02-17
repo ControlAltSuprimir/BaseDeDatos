@@ -49,6 +49,9 @@
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
                                 </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">Edit</span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,20 +60,19 @@
                                 <tr class="bg-white">
                                     
                                     <td class="px-12 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {!! $user->persona()->full_nameLink() !!}
-                                    </td>
-                                    
-                                    {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {{$persona}}
-                            </td> --}}
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $user->email }}
+                                        <a class=" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500" href="/personas/{{ ($user->persona()) ? $user->persona()->id : '' }}" >{{ ($user->persona()) ? $user->persona()->full_name() : '' }} </a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $user->persona()->rut }}
+                                        {{ ($user->persona()) ? $user->email : ''}}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ ($user->persona()) ? $user->persona()->rut : ''}}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        {{ $user->rol->first()->rol }}
+                                        {{ ($user->persona()) ? $user->rol->first()->rol : '' }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a class=" whitespace-nowrap text-sm text-gray-900 hover:text-indigo-500" href="/user/{{ $user->id }}/edit" >EDITAR</a>
                                     </td>
                                     
                                 </tr>

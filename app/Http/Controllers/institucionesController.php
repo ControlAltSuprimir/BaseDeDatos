@@ -58,9 +58,12 @@ class institucionesController extends Controller
      * @param  \App\Models\Instituciones  $instituciones
      * @return \Illuminate\Http\Response
      */
-    public function show(Instituciones $instituciones)
+    public function show($id)
     {
         //
+        $institucion = Instituciones::find($id);
+        $data = compact('institucion');
+        return view('instituciones.show',['data'=>$data]);
     }
 
     /**

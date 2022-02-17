@@ -28,7 +28,7 @@ class ViajeFinanciacion extends Model
 
     public function laInstitucion()
     {
-        return $this->belongsTo(Institucionfinanciadora::class, 'id_institucionfinanciadora');
+        return $this->belongsTo(Institucionfinanciadora::class, 'id_institucion');
     }
 
 }

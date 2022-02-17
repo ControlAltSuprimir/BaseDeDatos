@@ -63,7 +63,8 @@
                         <h2 id="payment_details_heading" class="text-lg leading-6 font-medium text-gray-900">Nombre
                             del/la Expositor/a
                         </h2>
-                        <p class="mt-1 text-sm text-gray-500"></p>
+                        <p class="mt-1 text-sm text-gray-500">Si la persona no se encuentra en la base de datos,
+                            debes agregarla primero <a href="/personas/create">aquí</a>. </p>
                     </div>
 
                     <div class="mt-6 grid grid-cols-4 gap-6">

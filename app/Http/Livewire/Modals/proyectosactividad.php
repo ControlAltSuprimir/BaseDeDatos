@@ -63,6 +63,7 @@ class proyectosactividad extends Component
 
         if (!is_null($this->productId)) {
             //
+            $this->product->updated_by = auth()->id();
             $this->product->save();
         } 
         $this->showModal = false;
@@ -78,6 +79,7 @@ class proyectosactividad extends Component
         $product = ActividadFinanciacion::find($productId);
         if ($product) {
             $product->is_valid=0;
+            $product->updated_by = auth()->id();
             $product->save();
         }
     }
